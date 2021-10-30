@@ -1,6 +1,6 @@
 {
-    "name": "mrkampf/proxmox-ve",
-    "description": "Proxmox VE API",
+    "name": "stratumpanel/proxmox-wrapper",
+    "description": "Proxmox VE API for PHP",
     "type": "library",
     "keywords": ["Proxmox", "API", "KVM", "OpenVZ", "Virtualization", "PHP"],
     "version": "0.3.0",
@@ -12,11 +12,16 @@
             "email": "hello@mrkampf.com",
             "homepage": "https://mrkampf.com",
             "role": "Developer"
+        },
+        {
+            "name": "Eric Wang",
+            "homepage": "https://performave.com",
+            "role": "Developer"
         }
     ],
     "support": {
-        "issues": "https://github.com/MrKampf/proxmoxVE/issues",
-        "source": "https://github.com/MrKampf/proxmoxVE"
+        "issues": "https://github.com/stratumpanel/proxmox-wrapper/issues",
+        "source": "https://github.com/stratumpanel/proxmox-wrapper"
     },
     "require": {
         "php": ">=7.2",
