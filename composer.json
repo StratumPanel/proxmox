@@ -1,5 +1,5 @@
 {
-    "name": "stratumpanel/proxmox-wrapper",
+    "name": "stratumpanel/proxmox",
     "description": "Proxmox VE API for PHP",
     "type": "library",
     "keywords": ["Proxmox", "API", "KVM", "OpenVZ", "Virtualization", "PHP"],
@@ -20,8 +20,8 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/stratumpanel/proxmox-wrapper/issues",
-        "source": "https://github.com/stratumpanel/proxmox-wrapper"
+        "issues": "https://github.com/stratumpanel/proxmox/issues",
+        "source": "https://github.com/stratumpanel/proxmox"
     },
     "require": {
         "php": ">=7.2",
