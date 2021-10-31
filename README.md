@@ -23,7 +23,7 @@ Or add this to your `composer.json` file:
 ```json
 {
     "require": {
-        "mrkampf/proxmox-ve": "~3.0"
+        "stratumpanel/proxmox": "~3.0"
     }
 }
 ```
