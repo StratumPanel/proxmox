@@ -15,7 +15,7 @@ Recommended installation is using **Composer**, if you do not have **Composer** 
 In the root of your project execute the following:
 
 ```sh
-$ composer require mrkampf/proxmox-ve
+$ composer require stratumpanel/proxmox
 ```
 
 Or add this to your `composer.json` file:
