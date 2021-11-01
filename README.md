@@ -53,10 +53,10 @@ $proxmox = new PVE("hostname", "username", "password", "pve", 8006, false);
 print_r($proxmox->nodes()->get());
 
 //Read all lxc
-print_r($proxmox->nodes()->lxc()->get());
+print_r($proxmox->nodes()->node('example')->lxc()->get());
 
 //Read all qemu
-print_r($proxmox->nodes()->qemu()->get());
+print_r($proxmox->nodes()->node('example')->qemu()->get());
 ```
 
 ---
