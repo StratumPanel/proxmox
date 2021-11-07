@@ -1,5 +1,5 @@
 {
-    "name": "stratumpanel/proxmox",
+    "name": "stratum/proxmox",
     "description": "Proxmox VE API for PHP",
     "type": "library",
     "keywords": ["Proxmox", "API", "KVM", "OpenVZ", "Virtualization", "PHP"],
