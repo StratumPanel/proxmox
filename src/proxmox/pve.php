@@ -2,7 +2,7 @@
 /*
  * @copyright  2020 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace proxmox;
+namespace Stratum\Proxmox;
 
 use GuzzleHttp\Client;
 use Stratum\Proxmox\Api\access;
