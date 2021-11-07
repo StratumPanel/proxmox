@@ -15,7 +15,7 @@ Recommended installation is using **Composer**, if you do not have **Composer** 
 In the root of your project execute the following:
 
 ```sh
-$ composer require stratumpanel/proxmox
+$ composer require stratum/proxmox
 ```
 
 Or add this to your `composer.json` file:
@@ -23,7 +23,7 @@ Or add this to your `composer.json` file:
 ```json
 {
     "require": {
-        "stratumpanel/proxmox": "~3.0"
+        "stratum/proxmox": "~3.0"
     }
 }
 ```
