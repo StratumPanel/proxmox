@@ -2,14 +2,14 @@
 /**
  * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace proxmox\Api\nodes\node;
+namespace Stratum\Proxmox\Api\nodes\node;
 
 use GuzzleHttp\Client;
-use proxmox\Helper\connection;
+use Stratum\Proxmox\Helper\connection;
 
 /**
  * Class vzdump
- * @package proxmox\api\nodes\node
+ * @package Stratum\Proxmox\api\nodes\node
  */
 class vzdump
 {

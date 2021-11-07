@@ -2,18 +2,18 @@
 /**
  * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace proxmox\Api\cluster;
+namespace Stratum\Proxmox\Api\cluster;
 
 use GuzzleHttp\Client;
-use proxmox\Api\cluster\firewall\aliases;
-use proxmox\Api\cluster\firewall\groups;
-use proxmox\Api\cluster\firewall\rules;
-use proxmox\Api\cluster\firewall\ipSet;
-use proxmox\Helper\connection;
+use Stratum\Proxmox\Api\cluster\firewall\aliases;
+use Stratum\Proxmox\Api\cluster\firewall\groups;
+use Stratum\Proxmox\Api\cluster\firewall\rules;
+use Stratum\Proxmox\Api\cluster\firewall\ipSet;
+use Stratum\Proxmox\Helper\connection;
 
 /**
  * Class firewall
- * @package proxmox\api\cluster
+ * @package Stratum\Proxmox\api\cluster
  */
 class firewall
 {

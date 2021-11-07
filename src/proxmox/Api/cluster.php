@@ -2,20 +2,20 @@
 /**
  * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace proxmox\Api;
+namespace Stratum\Proxmox\Api;
 
-use proxmox\Api\cluster\acme;
-use proxmox\Api\cluster\backup;
-use proxmox\Api\cluster\ceph;
-use proxmox\Api\cluster\config;
-use proxmox\Api\cluster\firewall;
-use proxmox\Api\cluster\ha;
-use proxmox\Api\cluster\replication;
-use proxmox\Helper\connection;
+use Stratum\Proxmox\Api\cluster\acme;
+use Stratum\Proxmox\Api\cluster\backup;
+use Stratum\Proxmox\Api\cluster\ceph;
+use Stratum\Proxmox\Api\cluster\config;
+use Stratum\Proxmox\Api\cluster\firewall;
+use Stratum\Proxmox\Api\cluster\ha;
+use Stratum\Proxmox\Api\cluster\replication;
+use Stratum\Proxmox\Helper\connection;
 
 /**
  * Class cluster
- * @package proxmox\api
+ * @package Stratum\Proxmox\api
  */
 class cluster
 {

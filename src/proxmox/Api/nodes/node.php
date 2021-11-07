@@ -2,25 +2,25 @@
 /*
  * @copyright  2020 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace proxmox\Api\nodes;
+namespace Stratum\Proxmox\Api\nodes;
 
 use GuzzleHttp\Client;
-use proxmox\Api\nodes\node\apt;
-use proxmox\Api\nodes\node\ceph;
-use proxmox\Api\nodes\node\certificates;
-use proxmox\Api\nodes\node\disks;
-use proxmox\Api\nodes\node\firewall;
-use proxmox\Api\nodes\node\hardware;
-use proxmox\Api\nodes\node\lxc;
-use proxmox\Api\nodes\node\network;
-use proxmox\Api\nodes\node\qemu;
-use proxmox\Api\nodes\node\storage;
-use proxmox\Api\nodes\node\vzdump;
-use proxmox\Helper\connection;
+use Stratum\Proxmox\Api\nodes\node\apt;
+use Stratum\Proxmox\Api\nodes\node\ceph;
+use Stratum\Proxmox\Api\nodes\node\certificates;
+use Stratum\Proxmox\Api\nodes\node\disks;
+use Stratum\Proxmox\Api\nodes\node\firewall;
+use Stratum\Proxmox\Api\nodes\node\hardware;
+use Stratum\Proxmox\Api\nodes\node\lxc;
+use Stratum\Proxmox\Api\nodes\node\network;
+use Stratum\Proxmox\Api\nodes\node\qemu;
+use Stratum\Proxmox\Api\nodes\node\storage;
+use Stratum\Proxmox\Api\nodes\node\vzdump;
+use Stratum\Proxmox\Helper\connection;
 
 /**
  * Class node
- * @package proxmox\api\nodes
+ * @package Stratum\Proxmox\api\nodes
  */
 class node
 {

@@ -44,7 +44,7 @@ $ composer install --no-dev
 require_once 'vendor/autoload.php';
 
 // Use the library namespace
-use Proxmox\PVE;
+use Stratum\Proxmox\PVE;
 
 // Then simply pass your credentials when creating the API client object.
 $proxmox = new PVE("hostname", "username", "password", "pve", 8006, false);
@@ -71,16 +71,16 @@ print_r($proxmox->nodes()->qemu()->get());
 require_once 'vendor/autoload.php';
 
 // Use the library namespace
-use Proxmox\PVE;
+use Stratum\Proxmox\PVE;
 
 /**
- * Connect established (For version 3.0) 
- * 
+ * Connect established (For version 3.0)
+ *
  * authType and port defaults to 'pam' and '8006' but you can specify them like so
- * 
+ *
  * !!! WARNING !!!
  * This variant is after version 3.0 no longer supported
- * 
+ *
 */
 $credentials = [
     'hostname' => '127.0.0.1',

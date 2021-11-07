@@ -3,13 +3,13 @@
  * @copyright  2020 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace proxmox\Api\nodes\node\storage;
+namespace Stratum\Proxmox\Api\nodes\node\storage;
 
 use GuzzleHttp\Client;
 
 /**
  * Class storageId
- * @package proxmox\Api\nodes\node\storage
+ * @package Stratum\Proxmox\Api\nodes\node\storage
  */
 class storageId
 {

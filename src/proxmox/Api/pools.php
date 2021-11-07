@@ -2,14 +2,14 @@
 /**
  * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace proxmox\Api;
+namespace Stratum\Proxmox\Api;
 
 use GuzzleHttp\Client;
-use proxmox\Helper\connection;
+use Stratum\Proxmox\Helper\connection;
 
 /**
  * Class pools
- * @package proxmox\api
+ * @package Stratum\Proxmox\api
  */
 class pools
 {

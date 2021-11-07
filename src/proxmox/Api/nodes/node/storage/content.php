@@ -4,15 +4,15 @@
  * @copyright 2020 Elias Haisch <elias@eliashaisch.de>
  */
 
-namespace proxmox\Api\nodes\node\storage;
+namespace Stratum\Proxmox\Api\nodes\node\storage;
 
 use GuzzleHttp\Client;
-use proxmox\Api\nodes\node\storage\content\volume;
-use proxmox\Helper\connection;
+use Stratum\Proxmox\Api\nodes\node\storage\content\volume;
+use Stratum\Proxmox\Helper\connection;
 
 /**
  * Class content
- * @package proxmox\api\nodes\node\storage
+ * @package Stratum\Proxmox\api\nodes\node\storage
  */
 class content
 {

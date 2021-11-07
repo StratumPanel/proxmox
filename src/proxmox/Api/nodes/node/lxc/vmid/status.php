@@ -2,14 +2,14 @@
 /**
  * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace proxmox\Api\nodes\node\lxc\vmid;
+namespace Stratum\Proxmox\Api\nodes\node\lxc\vmid;
 
 use GuzzleHttp\Client;
-use proxmox\Helper\connection;
+use Stratum\Proxmox\Helper\connection;
 
 /**
  * Class status
- * @package proxmox\api\nodes\node\lxc\vmid
+ * @package Stratum\Proxmox\api\nodes\node\lxc\vmid
  */
 class status
 {

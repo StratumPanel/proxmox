@@ -2,14 +2,14 @@
 /**
  * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace proxmox\Api\cluster\ceph;
+namespace Stratum\Proxmox\Api\cluster\ceph;
 
 use GuzzleHttp\Client;
-use proxmox\Helper\connection;
+use Stratum\Proxmox\Helper\connection;
 
 /**
  * Class flags
- * @package proxmox\api\cluster\ceph
+ * @package Stratum\Proxmox\api\cluster\ceph
  */
 class flags
 {

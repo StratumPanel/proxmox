@@ -2,17 +2,17 @@
 /**
  * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace proxmox\Api\nodes\node\lxc\vmid;
+namespace Stratum\Proxmox\Api\nodes\node\lxc\vmid;
 
 use GuzzleHttp\Client;
-use proxmox\Api\nodes\lxc\firewall\aliases;
-use proxmox\Api\nodes\lxc\firewall\ipSet;
-use proxmox\Api\nodes\lxc\firewall\rules;
-use proxmox\Helper\connection;
+use Stratum\Proxmox\Api\nodes\lxc\firewall\aliases;
+use Stratum\Proxmox\Api\nodes\lxc\firewall\ipSet;
+use Stratum\Proxmox\Api\nodes\lxc\firewall\rules;
+use Stratum\Proxmox\Helper\connection;
 
 /**
  * Class firewall
- * @package proxmox\api\nodes\node\lxc\vmid
+ * @package Stratum\Proxmox\api\nodes\node\lxc\vmid
  */
 class firewall
 {

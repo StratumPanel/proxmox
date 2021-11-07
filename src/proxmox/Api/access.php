@@ -2,17 +2,17 @@
 /**
  * @copyright 2019 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace proxmox\Api;
+namespace Stratum\Proxmox\Api;
 
-use proxmox\Api\access\domains;
-use proxmox\Api\access\groups;
-use proxmox\Api\access\roles;
-use proxmox\Api\access\users;
-use proxmox\Helper\connection;
+use Stratum\Proxmox\Api\access\domains;
+use Stratum\Proxmox\Api\access\groups;
+use Stratum\Proxmox\Api\access\roles;
+use Stratum\Proxmox\Api\access\users;
+use Stratum\Proxmox\Helper\connection;
 
 /**
  * Class access
- * @package proxmox\api
+ * @package Stratum\Proxmox\api
  */
 class access
 {

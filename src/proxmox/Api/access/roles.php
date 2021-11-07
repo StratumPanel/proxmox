@@ -2,14 +2,14 @@
 /**
  * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace proxmox\Api\access;
+namespace Stratum\Proxmox\Api\access;
 
 use GuzzleHttp\Client;
-use proxmox\Helper\connection;
+use Stratum\Proxmox\Helper\connection;
 
 /**
  * Class roles
- * @package proxmox\api\access
+ * @package Stratum\Proxmox\api\access
  */
 class roles
 {

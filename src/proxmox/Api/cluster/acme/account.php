@@ -2,14 +2,14 @@
 /**
  * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace proxmox\Api\cluster\acme;
+namespace Stratum\Proxmox\Api\cluster\acme;
 
 use GuzzleHttp\Client;
-use proxmox\Helper\connection;
+use Stratum\Proxmox\Helper\connection;
 
 /**
  * Class account
- * @package proxmox\api\cluster\acme
+ * @package Stratum\Proxmox\api\cluster\acme
  */
 class account
 {

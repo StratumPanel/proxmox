@@ -5,14 +5,14 @@
 namespace proxmox;
 
 use GuzzleHttp\Client;
-use proxmox\Api\access;
-use proxmox\Api\cluster;
-use proxmox\Api\nodes;
-use proxmox\Api\pools;
-use proxmox\Api\storage;
-use proxmox\Api\version;
-use proxmox\Exception\AuthenticationException;
-use proxmox\Helper\connection;
+use Stratum\Proxmox\Api\access;
+use Stratum\Proxmox\Api\cluster;
+use Stratum\Proxmox\Api\nodes;
+use Stratum\Proxmox\Api\pools;
+use Stratum\Proxmox\Api\storage;
+use Stratum\Proxmox\Api\version;
+use Stratum\Proxmox\Exception\AuthenticationException;
+use Stratum\Proxmox\Helper\connection;
 
 /**
  * Class pve

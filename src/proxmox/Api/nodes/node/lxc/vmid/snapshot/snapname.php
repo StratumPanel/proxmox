@@ -2,14 +2,14 @@
 /**
  * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace proxmox\Api\nodes\lxc\snapshot;
+namespace Stratum\Proxmox\Api\nodes\lxc\snapshot;
 
 use GuzzleHttp\Client;
-use proxmox\Helper\connection;
+use Stratum\Proxmox\Helper\connection;
 
 /**
  * Class snapname
- * @package proxmox\api\nodes\lxc\snapshot
+ * @package Stratum\Proxmox\api\nodes\lxc\snapshot
  */
 class snapname
 {

@@ -3,15 +3,15 @@
  * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace proxmox\Helper;
+namespace Stratum\Proxmox\Helper;
 
 use GuzzleHttp\Cookie\CookieJar;
-use proxmox\Exception\AuthenticationException;
-use proxmox\pve;
+use Stratum\Proxmox\Exception\AuthenticationException;
+use Stratum\Proxmox\pve;
 
 /**
  * Class connection
- * @package proxmox\helper
+ * @package Stratum\Proxmox\helper
  */
 class connection
 {

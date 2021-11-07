@@ -2,15 +2,15 @@
 /**
  * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace proxmox\Api;
+namespace Stratum\Proxmox\Api;
 
 use GuzzleHttp\Client;
-use proxmox\Api\nodes\node;
-use proxmox\Helper\connection;
+use Stratum\Proxmox\Api\nodes\node;
+use Stratum\Proxmox\Helper\connection;
 
 /**
  * Class nodes
- * @package proxmox\api
+ * @package Stratum\Proxmox\api
  */
 class nodes
 {

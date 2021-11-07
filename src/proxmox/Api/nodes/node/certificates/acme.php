@@ -2,14 +2,14 @@
 /**
  * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace proxmox\Api\nodes\node\certificates;
+namespace Stratum\Proxmox\Api\nodes\node\certificates;
 
 use GuzzleHttp\Client;
-use proxmox\Helper\connection;
+use Stratum\Proxmox\Helper\connection;
 
 /**
  * Class acme
- * @package proxmox\api\nodes\node\certificates
+ * @package Stratum\Proxmox\api\nodes\node\certificates
  */
 class acme
 {

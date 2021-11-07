@@ -3,15 +3,15 @@
  * @copyright  2020 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace proxmox\Helper;
+namespace Stratum\Proxmox\Helper;
 
 use GuzzleHttp\Exception\GuzzleException;
-use proxmox\pve;
+use Stratum\Proxmox\pve;
 use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class api
- * @package proxmox\Helper
+ * @package Stratum\Proxmox\Helper
  */
 class api
 {

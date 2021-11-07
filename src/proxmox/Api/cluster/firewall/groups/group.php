@@ -2,14 +2,14 @@
 /**
  * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace proxmox\Api\cluster\firewall\groups;
+namespace Stratum\Proxmox\Api\cluster\firewall\groups;
 
 use GuzzleHttp\Client;
-use proxmox\Helper\connection;
+use Stratum\Proxmox\Helper\connection;
 
 /**
  * Class group
- * @package proxmox\api\cluster\firewall\groups
+ * @package Stratum\Proxmox\api\cluster\firewall\groups
  */
 class group
 {

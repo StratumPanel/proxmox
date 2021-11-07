@@ -3,14 +3,14 @@
  * @copyright  2020 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace proxmox\Api\nodes\node\storage;
+namespace Stratum\Proxmox\Api\nodes\node\storage;
 
 use GuzzleHttp\Client;
-use proxmox\Helper\connection;
+use Stratum\Proxmox\Helper\connection;
 
 /**
  * Class content
- * @package proxmox\api\nodes\node\storage
+ * @package Stratum\Proxmox\api\nodes\node\storage
  */
 class rrdData
 {

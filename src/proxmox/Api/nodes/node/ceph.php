@@ -2,21 +2,21 @@
 /**
  * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace proxmox\Api\nodes\node;
+namespace Stratum\Proxmox\Api\nodes\node;
 
 use GuzzleHttp\Client;
-use proxmox\Api\nodes\node\ceph\flags;
-use proxmox\Api\nodes\node\ceph\fs;
-use proxmox\Api\nodes\node\ceph\mds;
-use proxmox\Api\nodes\node\ceph\mgr;
-use proxmox\Api\nodes\node\ceph\mon;
-use proxmox\Api\nodes\node\ceph\osd;
-use proxmox\Api\nodes\node\ceph\pools;
-use proxmox\Helper\connection;
+use Stratum\Proxmox\Api\nodes\node\ceph\flags;
+use Stratum\Proxmox\Api\nodes\node\ceph\fs;
+use Stratum\Proxmox\Api\nodes\node\ceph\mds;
+use Stratum\Proxmox\Api\nodes\node\ceph\mgr;
+use Stratum\Proxmox\Api\nodes\node\ceph\mon;
+use Stratum\Proxmox\Api\nodes\node\ceph\osd;
+use Stratum\Proxmox\Api\nodes\node\ceph\pools;
+use Stratum\Proxmox\Helper\connection;
 
 /**
  * Class ceph
- * @package proxmox\api\nodes\node
+ * @package Stratum\Proxmox\api\nodes\node
  */
 class ceph
 {

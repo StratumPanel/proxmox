@@ -2,15 +2,15 @@
 /**
  * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace proxmox\Api\nodes\node\ceph;
+namespace Stratum\Proxmox\Api\nodes\node\ceph;
 
 use GuzzleHttp\Client;
-use proxmox\Api\nodes\node\ceph\osd\osdid;
-use proxmox\Helper\connection;
+use Stratum\Proxmox\Api\nodes\node\ceph\osd\osdid;
+use Stratum\Proxmox\Helper\connection;
 
 /**
  * Class osd
- * @package proxmox\api\nodes\node\ceph
+ * @package Stratum\Proxmox\api\nodes\node\ceph
  */
 class osd
 {

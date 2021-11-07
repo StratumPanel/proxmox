@@ -2,14 +2,14 @@
 /**
  * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace proxmox\Api\cluster\firewall\ipset;
+namespace Stratum\Proxmox\Api\cluster\firewall\ipset;
 
 use GuzzleHttp\Client;
-use proxmox\Helper\connection;
+use Stratum\Proxmox\Helper\connection;
 
 /**
  * Class name
- * @package proxmox\api\cluster\firewall\ipset
+ * @package Stratum\Proxmox\api\cluster\firewall\ipset
  */
 class name
 {

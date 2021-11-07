@@ -2,14 +2,14 @@
 /**
  * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace proxmox\Api\nodes\lxc\firewall;
+namespace Stratum\Proxmox\Api\nodes\lxc\firewall;
 
 use GuzzleHttp\Client;
-use proxmox\Helper\connection;
+use Stratum\Proxmox\Helper\connection;
 
 /**
  * Class aliases
- * @package proxmox\api\nodes\lxc\firewall
+ * @package Stratum\Proxmox\api\nodes\lxc\firewall
  */
 class aliases
 {

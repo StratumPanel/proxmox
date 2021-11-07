@@ -2,14 +2,14 @@
 /**
  * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace proxmox\Api\nodes\qemu\firewall;
+namespace Stratum\Proxmox\Api\nodes\qemu\firewall;
 
 use GuzzleHttp\Client;
-use proxmox\Helper\connection;
+use Stratum\Proxmox\Helper\connection;
 
 /**
  * Class aliases
- * @package proxmox\api\nodes\qemu\firewall
+ * @package Stratum\Proxmox\api\nodes\qemu\firewall
  */
 class aliases
 {

@@ -2,19 +2,19 @@
 /**
  * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace proxmox\Api\nodes\node\qemu;
+namespace Stratum\Proxmox\Api\nodes\node\qemu;
 
 use GuzzleHttp\Client;
-use proxmox\Api\nodes\node\qemu\vmid\agent;
-use proxmox\Api\nodes\node\qemu\vmid\cloudinit;
-use proxmox\Api\nodes\node\qemu\vmid\firewall;
-use proxmox\Api\nodes\node\qemu\vmid\snapshot;
-use proxmox\Api\nodes\node\qemu\vmid\status;
-use proxmox\Helper\connection;
+use Stratum\Proxmox\Api\nodes\node\qemu\vmid\agent;
+use Stratum\Proxmox\Api\nodes\node\qemu\vmid\cloudinit;
+use Stratum\Proxmox\Api\nodes\node\qemu\vmid\firewall;
+use Stratum\Proxmox\Api\nodes\node\qemu\vmid\snapshot;
+use Stratum\Proxmox\Api\nodes\node\qemu\vmid\status;
+use Stratum\Proxmox\Helper\connection;
 
 /**
  * Class vmid
- * @package proxmox\api\nodes\node\qemu
+ * @package Stratum\Proxmox\api\nodes\node\qemu
  */
 class vmid
 {

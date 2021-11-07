@@ -2,17 +2,17 @@
 /**
  * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace proxmox\Api\cluster;
+namespace Stratum\Proxmox\Api\cluster;
 
 use GuzzleHttp\Client;
-use proxmox\Api\cluster\firewall\groups\group;
-use proxmox\Api\cluster\ha\resources;
-use proxmox\Api\cluster\ha\status;
-use proxmox\Helper\connection;
+use Stratum\Proxmox\Api\cluster\firewall\groups\group;
+use Stratum\Proxmox\Api\cluster\ha\resources;
+use Stratum\Proxmox\Api\cluster\ha\status;
+use Stratum\Proxmox\Helper\connection;
 
 /**
  * Class ha
- * @package proxmox\api\cluster
+ * @package Stratum\Proxmox\api\cluster
  */
 class ha
 {

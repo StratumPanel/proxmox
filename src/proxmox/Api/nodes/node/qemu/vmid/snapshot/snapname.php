@@ -2,14 +2,14 @@
 /**
  * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace proxmox\Api\nodes\qemu\snapshot;
+namespace Stratum\Proxmox\Api\nodes\qemu\snapshot;
 
 use GuzzleHttp\Client;
-use proxmox\Helper\connection;
+use Stratum\Proxmox\Helper\connection;
 
 /**
  * Class snapname
- * @package proxmox\api\nodes\qemu\snapshot
+ * @package Stratum\Proxmox\api\nodes\qemu\snapshot
  */
 class snapname
 {

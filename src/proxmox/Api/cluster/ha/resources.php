@@ -2,15 +2,15 @@
 /**
  * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace proxmox\Api\cluster\ha;
+namespace Stratum\Proxmox\Api\cluster\ha;
 
 use GuzzleHttp\Client;
-use proxmox\Api\cluster\ha\resources\sid;
-use proxmox\Helper\connection;
+use Stratum\Proxmox\Api\cluster\ha\resources\sid;
+use Stratum\Proxmox\Helper\connection;
 
 /**
  * Class resources
- * @package proxmox\api\cluster\ha
+ * @package Stratum\Proxmox\api\cluster\ha
  */
 class resources
 {

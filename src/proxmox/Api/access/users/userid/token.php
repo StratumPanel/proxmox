@@ -2,14 +2,14 @@
 /**
  * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace proxmox\Api\access\users\userid;
+namespace Stratum\Proxmox\Api\access\users\userid;
 
 use GuzzleHttp\Client;
-use proxmox\Helper\connection;
+use Stratum\Proxmox\Helper\connection;
 
 /**
  * Class token
- * @package proxmox\api\access\users\userid
+ * @package Stratum\Proxmox\api\access\users\userid
  */
 class token
 {

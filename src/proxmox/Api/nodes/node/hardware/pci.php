@@ -2,15 +2,15 @@
 /**
  * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace proxmox\Api\nodes\node\hardware;
+namespace Stratum\Proxmox\Api\nodes\node\hardware;
 
 use GuzzleHttp\Client;
-use proxmox\Api\nodes\node\hardware\pci\pciid;
-use proxmox\Helper\connection;
+use Stratum\Proxmox\Api\nodes\node\hardware\pci\pciid;
+use Stratum\Proxmox\Helper\connection;
 
 /**
  * Class pci
- * @package proxmox\api\nodes\node\hardware
+ * @package Stratum\Proxmox\api\nodes\node\hardware
  */
 class pci
 {

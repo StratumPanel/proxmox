@@ -2,14 +2,14 @@
 /**
  * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace proxmox\Api\cluster;
+namespace Stratum\Proxmox\Api\cluster;
 
 use GuzzleHttp\Client;
-use proxmox\Helper\connection;
+use Stratum\Proxmox\Helper\connection;
 
 /**
  * Class replication
- * @package proxmox\api\cluster
+ * @package Stratum\Proxmox\api\cluster
  */
 class replication
 {

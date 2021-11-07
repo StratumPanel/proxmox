@@ -2,17 +2,17 @@
 /**
  * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace proxmox\Api\nodes\node\qemu\vmid;
+namespace Stratum\Proxmox\Api\nodes\node\qemu\vmid;
 
 use GuzzleHttp\Client;
-use proxmox\Api\nodes\qemu\firewall\aliases;
-use proxmox\Api\nodes\qemu\firewall\ipSet;
-use proxmox\Api\nodes\qemu\firewall\rules;
-use proxmox\Helper\connection;
+use Stratum\Proxmox\Api\nodes\qemu\firewall\aliases;
+use Stratum\Proxmox\Api\nodes\qemu\firewall\ipSet;
+use Stratum\Proxmox\Api\nodes\qemu\firewall\rules;
+use Stratum\Proxmox\Helper\connection;
 
 /**
  * Class firewall
- * @package proxmox\api\nodes\node\qemu\vmid
+ * @package Stratum\Proxmox\api\nodes\node\qemu\vmid
  */
 class firewall
 {

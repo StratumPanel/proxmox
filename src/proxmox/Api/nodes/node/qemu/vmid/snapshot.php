@@ -2,15 +2,15 @@
 /**
  * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace proxmox\Api\nodes\node\qemu\vmid;
+namespace Stratum\Proxmox\Api\nodes\node\qemu\vmid;
 
 use GuzzleHttp\Client;
-use proxmox\Api\nodes\qemu\snapshot\snapname;
-use proxmox\Helper\connection;
+use Stratum\Proxmox\Api\nodes\qemu\snapshot\snapname;
+use Stratum\Proxmox\Helper\connection;
 
 /**
  * Class snapshot
- * @package proxmox\api\nodes\qemu\vmid
+ * @package Stratum\Proxmox\api\nodes\qemu\vmid
  */
 class snapshot
 {
@@ -66,7 +66,7 @@ class snapshot
     public function post($params){
         return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL,$this->cookie,$params));
     }
-    
+
         /**
      * POST
      */
