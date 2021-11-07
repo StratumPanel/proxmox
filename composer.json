@@ -35,12 +35,12 @@
         "guzzlehttp/guzzle": "*"
     },
     "autoload": {
-        "psr-0": {
+        "psr-4": {
             "Stratum\\Proxmox": "src/"
         }
     },
     "autoload-dev": {
-        "psr-0": {
+        "psr-4": {
             "Stratum\\Proxmox": "src/"
         }
     }
