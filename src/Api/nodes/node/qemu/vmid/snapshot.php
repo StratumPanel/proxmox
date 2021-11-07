@@ -90,7 +90,7 @@ class snapshot
      * @param $params array
      * @return mixed|null
      */
-    public function delete($name, $params){
-        return connection::processHttpResponse(connection::deleteAPI($this->httpClient,$this->apiURL.$name,$this->cookie,$params));
+    public function delete($name){
+        return connection::processHttpResponse(connection::deleteAPI($this->httpClient,$this->apiURL.$name,$this->cookie));
     }
 }
