@@ -36,12 +36,12 @@
     },
     "autoload": {
         "psr-0": {
-            "proxmox": "src/"
+            "Stratum\\Proxmox": "src/"
         }
     },
     "autoload-dev": {
         "psr-0": {
-            "proxmox": "src/"
+            "Stratum\\Proxmox": "src/"
         }
     }
 }
