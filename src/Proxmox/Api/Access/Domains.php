@@ -3,15 +3,15 @@
  * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Access;
+namespace Stratum\Proxmox\Api\Access;
 
-use Proxmox\Api\Access\Domains\Realm;
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Api\Access\Domains\Realm;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Domains
- * @package proxmox\api\access
+ * @package Stratum\Proxmox\api\access
  */
 class Domains extends PVEPathClassBase
 {

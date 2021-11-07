@@ -3,16 +3,16 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node\Tasks;
+namespace Stratum\Proxmox\Api\Nodes\Node\Tasks;
 
-use Proxmox\Api\Nodes\Node\Tasks\UpId\Log;
-use Proxmox\Api\Nodes\Node\Tasks\UpId\Status;
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Api\Nodes\Node\Tasks\UpId\Log;
+use Stratum\Proxmox\Api\Nodes\Node\Tasks\UpId\Status;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class UpId
- * @package Proxmox\Api\Nodes\Node\Tasks
+ * @package Stratum\Proxmox\Api\Nodes\Node\Tasks
  */
 class UpId extends PVEPathClassBase
 {
@@ -29,7 +29,7 @@ class UpId extends PVEPathClassBase
     /**
      * Read task log.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/tasks/{upid}/log
-     * @return \Proxmox\Api\Nodes\Node\Tasks\UpId\Log
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Tasks\UpId\Log
      */
     public function log(): Log
     {
@@ -39,7 +39,7 @@ class UpId extends PVEPathClassBase
     /**
      * Read task status.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/tasks/{upid}/status
-     * @return \Proxmox\Api\Nodes\Node\Tasks\UpId\Status
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Tasks\UpId\Status
      */
     public function status(): Status
     {

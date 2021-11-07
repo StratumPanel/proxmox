@@ -3,30 +3,30 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api;
+namespace Stratum\Proxmox\Api;
 
-use Proxmox\Api\Cluster\Acme;
-use Proxmox\Api\Cluster\Backup;
-use Proxmox\Api\Cluster\BackupInfo;
-use Proxmox\Api\Cluster\Ceph;
-use Proxmox\Api\Cluster\Config;
-use Proxmox\Api\Cluster\Firewall;
-use Proxmox\Api\Cluster\Ha;
-use Proxmox\Api\Cluster\Log;
-use Proxmox\Api\Cluster\Metrics;
-use Proxmox\Api\Cluster\NextId;
-use Proxmox\Api\Cluster\Options;
-use Proxmox\Api\Cluster\Replication;
-use Proxmox\Api\Cluster\Resources;
-use Proxmox\Api\Cluster\Sdn;
-use Proxmox\Api\Cluster\Status;
-use Proxmox\Api\Cluster\Tasks;
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Api\Cluster\Acme;
+use Stratum\Proxmox\Api\Cluster\Backup;
+use Stratum\Proxmox\Api\Cluster\BackupInfo;
+use Stratum\Proxmox\Api\Cluster\Ceph;
+use Stratum\Proxmox\Api\Cluster\Config;
+use Stratum\Proxmox\Api\Cluster\Firewall;
+use Stratum\Proxmox\Api\Cluster\Ha;
+use Stratum\Proxmox\Api\Cluster\Log;
+use Stratum\Proxmox\Api\Cluster\Metrics;
+use Stratum\Proxmox\Api\Cluster\NextId;
+use Stratum\Proxmox\Api\Cluster\Options;
+use Stratum\Proxmox\Api\Cluster\Replication;
+use Stratum\Proxmox\Api\Cluster\Resources;
+use Stratum\Proxmox\Api\Cluster\Sdn;
+use Stratum\Proxmox\Api\Cluster\Status;
+use Stratum\Proxmox\Api\Cluster\Tasks;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Cluster
- * @package Proxmox\Api
+ * @package Stratum\Proxmox\Api
  */
 class Cluster extends PVEPathClassBase
 {

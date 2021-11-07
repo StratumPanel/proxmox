@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node\Qemu\VmId\Agent;
+namespace Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent;
 
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class SuspendHybrid
- * @package Proxmox\Api\Nodes\Node\Qemu\VmId\Agent
+ * @package Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent
  */
 class SuspendHybrid extends PVEPathClassBase
 {

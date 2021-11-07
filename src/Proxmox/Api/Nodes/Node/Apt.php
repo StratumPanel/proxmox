@@ -3,18 +3,18 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node;
+namespace Stratum\Proxmox\Api\Nodes\Node;
 
-use Proxmox\Api\Nodes\Node\Apt\Changelog;
-use Proxmox\Api\Nodes\Node\Apt\Repositories;
-use Proxmox\Api\Nodes\Node\Apt\Update;
-use Proxmox\Api\Nodes\Node\Apt\Versions;
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Api\Nodes\Node\Apt\Changelog;
+use Stratum\Proxmox\Api\Nodes\Node\Apt\Repositories;
+use Stratum\Proxmox\Api\Nodes\Node\Apt\Update;
+use Stratum\Proxmox\Api\Nodes\Node\Apt\Versions;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Apt
- * @package Proxmox\Api\Nodes\Node
+ * @package Stratum\Proxmox\Api\Nodes\Node
  */
 class Apt extends PVEPathClassBase
 {

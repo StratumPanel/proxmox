@@ -3,20 +3,20 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node\Qemu\VmId;
+namespace Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId;
 
-use Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall\Aliases;
-use Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall\IpSet;
-use Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall\Log;
-use Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall\Options;
-use Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall\Refs;
-use Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall\Rules;
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall\Aliases;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall\IpSet;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall\Log;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall\Options;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall\Refs;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall\Rules;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Firewall
- * @package Proxmox\Api\Nodes\Node\Qemu\VmId
+ * @package Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId
  */
 class Firewall extends PVEPathClassBase
 {
@@ -33,7 +33,7 @@ class Firewall extends PVEPathClassBase
     /**
      * Directory index.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/firewall/aliases
-     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall\Aliases
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall\Aliases
      */
     public function aliases(): Aliases
     {
@@ -43,7 +43,7 @@ class Firewall extends PVEPathClassBase
     /**
      * List IPSets
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/firewall/ipset
-     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall\IpSet
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall\IpSet
      */
     public function ipSet(): IpSet
     {
@@ -53,7 +53,7 @@ class Firewall extends PVEPathClassBase
     /**
      * List rules.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/firewall/rules
-     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall\Rules
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall\Rules
      */
     public function rules(): Rules
     {
@@ -63,7 +63,7 @@ class Firewall extends PVEPathClassBase
     /**
      * Read firewall log
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/firewall/log
-     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall\Log
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall\Log
      */
     public function log(): Log
     {
@@ -73,7 +73,7 @@ class Firewall extends PVEPathClassBase
     /**
      * Get VM firewall options.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/firewall/options
-     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall\Options
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall\Options
      */
     public function options(): Options
     {
@@ -83,7 +83,7 @@ class Firewall extends PVEPathClassBase
     /**
      * Read firewall log
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/firewall/log
-     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall\Refs
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall\Refs
      */
     public function refs(): Refs
     {

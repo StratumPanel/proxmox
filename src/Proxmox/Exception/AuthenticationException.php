@@ -3,7 +3,7 @@
  * @copyright 2019 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Exception;
+namespace Stratum\Proxmox\Exception;
 
 
 use RuntimeException;

@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Cluster\Acme\Account;
+namespace Stratum\Proxmox\Api\Cluster\Acme\Account;
 
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Name
- * @package Proxmox\Api\Cluster\Acme\Account
+ * @package Stratum\Proxmox\Api\Cluster\Acme\Account
  */
 class Name extends PVEPathClassBase
 {

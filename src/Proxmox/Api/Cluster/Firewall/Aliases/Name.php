@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Cluster\Firewall\Aliases;
+namespace Stratum\Proxmox\Api\Cluster\Firewall\Aliases;
 
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Name
- * @package Proxmox\Api\Cluster\Firewall\Aliases
+ * @package Stratum\Proxmox\Api\Cluster\Firewall\Aliases
  */
 class Name extends PVEPathClassBase
 {

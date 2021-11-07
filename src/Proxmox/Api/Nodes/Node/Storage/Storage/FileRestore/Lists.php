@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node\Storage\Storage\FileRestore;
+namespace Stratum\Proxmox\Api\Nodes\Node\Storage\Storage\FileRestore;
 
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Lists
- * @package Proxmox\Api\Nodes\Node\Storage\Storage\Content
+ * @package Stratum\Proxmox\Api\Nodes\Node\Storage\Storage\Content
  */
 class Lists extends PVEPathClassBase
 {

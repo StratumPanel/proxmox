@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Cluster\Ceph\Flags;
+namespace Stratum\Proxmox\Api\Cluster\Ceph\Flags;
 
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Flag
- * @package Proxmox\Api\Cluster\Ceph\Flags
+ * @package Stratum\Proxmox\Api\Cluster\Ceph\Flags
  */
 class Flag extends PVEPathClassBase
 {

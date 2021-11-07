@@ -3,16 +3,16 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node\Capabilities;
+namespace Stratum\Proxmox\Api\Nodes\Node\Capabilities;
 
-use Proxmox\Api\Nodes\Node\Capabilities\Qemu\Cpu;
-use Proxmox\Api\Nodes\Node\Capabilities\Qemu\Machines;
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Api\Nodes\Node\Capabilities\Qemu\Cpu;
+use Stratum\Proxmox\Api\Nodes\Node\Capabilities\Qemu\Machines;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Qemu
- * @package Proxmox\Api\Nodes\Node\Capabilities
+ * @package Stratum\Proxmox\Api\Nodes\Node\Capabilities
  */
 class Qemu extends PVEPathClassBase
 {

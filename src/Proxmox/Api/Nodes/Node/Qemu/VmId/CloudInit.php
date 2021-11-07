@@ -3,15 +3,15 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node\Qemu\VmId;
+namespace Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId;
 
-use Proxmox\Api\Nodes\Node\Qemu\VmId\CloudInit\Dump;
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\CloudInit\Dump;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class CloudInit
- * @package Proxmox\Api\Nodes\Node\Qemu\VmId
+ * @package Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId
  */
 class CloudInit extends PVEPathClassBase
 {
@@ -28,7 +28,7 @@ class CloudInit extends PVEPathClassBase
     /**
      * Get automatically generated cloudinit config.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/cloudinit/dump
-     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\CloudInit\Dump
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\CloudInit\Dump
      */
     public function dump(): Dump
     {

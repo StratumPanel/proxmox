@@ -3,16 +3,16 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Cluster\Ha\Resources;
+namespace Stratum\Proxmox\Api\Cluster\Ha\Resources;
 
-use Proxmox\Api\Cluster\Ha\Resources\Sid\Migrate;
-use Proxmox\Api\Cluster\Ha\Resources\Sid\Relocate;
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Api\Cluster\Ha\Resources\Sid\Migrate;
+use Stratum\Proxmox\Api\Cluster\Ha\Resources\Sid\Relocate;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Sid
- * @package Proxmox\Api\Cluster\Ha\Resources
+ * @package Stratum\Proxmox\Api\Cluster\Ha\Resources
  */
 class Sid extends PVEPathClassBase
 {

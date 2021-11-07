@@ -3,22 +3,22 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node;
+namespace Stratum\Proxmox\Api\Nodes\Node;
 
-use Proxmox\Api\Nodes\Node\Scan\Cifs;
-use Proxmox\Api\Nodes\Node\Scan\Glusterfs;
-use Proxmox\Api\Nodes\Node\Scan\Iscsi;
-use Proxmox\Api\Nodes\Node\Scan\Lvm;
-use Proxmox\Api\Nodes\Node\Scan\Lvmthin;
-use Proxmox\Api\Nodes\Node\Scan\Nfs;
-use Proxmox\Api\Nodes\Node\Scan\Pbs;
-use Proxmox\Api\Nodes\Node\Scan\Zfs;
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Api\Nodes\Node\Scan\Cifs;
+use Stratum\Proxmox\Api\Nodes\Node\Scan\Glusterfs;
+use Stratum\Proxmox\Api\Nodes\Node\Scan\Iscsi;
+use Stratum\Proxmox\Api\Nodes\Node\Scan\Lvm;
+use Stratum\Proxmox\Api\Nodes\Node\Scan\Lvmthin;
+use Stratum\Proxmox\Api\Nodes\Node\Scan\Nfs;
+use Stratum\Proxmox\Api\Nodes\Node\Scan\Pbs;
+use Stratum\Proxmox\Api\Nodes\Node\Scan\Zfs;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Scan
- * @package Proxmox\Api\Nodes\Node
+ * @package Stratum\Proxmox\Api\Nodes\Node
  */
 class Scan extends PVEPathClassBase
 {
@@ -35,7 +35,7 @@ class Scan extends PVEPathClassBase
     /**
      * Scan remote CIFS server.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/scan/cifs
-     * @return \Proxmox\Api\Nodes\Node\Scan\Cifs
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Scan\Cifs
      */
     public function cifs(): Cifs
     {
@@ -45,7 +45,7 @@ class Scan extends PVEPathClassBase
     /**
      * Scan remote GlusterFS server.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/scan/glusterfs
-     * @return \Proxmox\Api\Nodes\Node\Scan\Glusterfs
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Scan\Glusterfs
      */
     public function glusterfs(): Glusterfs
     {
@@ -55,7 +55,7 @@ class Scan extends PVEPathClassBase
     /**
      * Scan remote iSCSI server.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/scan/iscsi
-     * @return \Proxmox\Api\Nodes\Node\Scan\Iscsi
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Scan\Iscsi
      */
     public function iscsi(): Iscsi
     {
@@ -65,7 +65,7 @@ class Scan extends PVEPathClassBase
     /**
      * List local LVM volume groups.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/scan/lvm
-     * @return \Proxmox\Api\Nodes\Node\Scan\Lvm
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Scan\Lvm
      */
     public function lvm(): Lvm
     {
@@ -75,7 +75,7 @@ class Scan extends PVEPathClassBase
     /**
      * List local LVM Thin Pools.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/scan/lvmthin
-     * @return \Proxmox\Api\Nodes\Node\Scan\Lvmthin
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Scan\Lvmthin
      */
     public function lvmthin(): Lvmthin
     {
@@ -85,7 +85,7 @@ class Scan extends PVEPathClassBase
     /**
      * Scan remote NFS server.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/scan/nfs
-     * @return \Proxmox\Api\Nodes\Node\Scan\Nfs
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Scan\Nfs
      */
     public function nfs(): Nfs
     {
@@ -95,7 +95,7 @@ class Scan extends PVEPathClassBase
     /**
      * Scan remote Proxmox Backup Server.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/scan/pbs
-     * @return \Proxmox\Api\Nodes\Node\Scan\Pbs
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Scan\Pbs
      */
     public function pbs(): Pbs
     {
@@ -105,7 +105,7 @@ class Scan extends PVEPathClassBase
     /**
      * Scan zfs pool list on local node.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/scan/zfs
-     * @return \Proxmox\Api\Nodes\Node\Scan\Zfs
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Scan\Zfs
      */
     public function zfs(): Zfs
     {

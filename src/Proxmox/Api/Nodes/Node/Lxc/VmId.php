@@ -3,31 +3,31 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node\Lxc;
+namespace Stratum\Proxmox\Api\Nodes\Node\Lxc;
 
-use Proxmox\Api\Nodes\Node\Lxc\VmId\CloneVm;
-use Proxmox\Api\Nodes\Node\Lxc\VmId\Config;
-use Proxmox\Api\Nodes\Node\Lxc\VmId\Feature;
-use Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall;
-use Proxmox\Api\Nodes\Node\Lxc\VmId\Migration;
-use Proxmox\Api\Nodes\Node\Lxc\VmId\MoveVolume;
-use Proxmox\Api\Nodes\Node\Lxc\VmId\Pending;
-use Proxmox\Api\Nodes\Node\Lxc\VmId\Resize;
-use Proxmox\Api\Nodes\Node\Lxc\VmId\Rrd;
-use Proxmox\Api\Nodes\Node\Lxc\VmId\RrdData;
-use Proxmox\Api\Nodes\Node\Lxc\VmId\Snapshot;
-use Proxmox\Api\Nodes\Node\Lxc\VmId\SpiceProxy;
-use Proxmox\Api\Nodes\Node\Lxc\VmId\Status;
-use Proxmox\Api\Nodes\Node\Lxc\VmId\Template;
-use Proxmox\Api\Nodes\Node\Lxc\VmId\Termproxy;
-use Proxmox\Api\Nodes\Node\Lxc\VmId\VncProxy;
-use Proxmox\Api\Nodes\Node\Lxc\VmId\VncWebsocket;
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\CloneVm;
+use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Config;
+use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Feature;
+use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall;
+use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Migration;
+use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\MoveVolume;
+use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Pending;
+use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Resize;
+use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Rrd;
+use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\RrdData;
+use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Snapshot;
+use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\SpiceProxy;
+use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Status;
+use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Template;
+use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Termproxy;
+use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\VncProxy;
+use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\VncWebsocket;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class VmId
- * @package Proxmox\Api\Nodes\Node\Lxc
+ * @package Stratum\Proxmox\Api\Nodes\Node\Lxc
  */
 class VmId extends PVEPathClassBase
 {
@@ -44,7 +44,7 @@ class VmId extends PVEPathClassBase
     /**
      * Directory index.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/firewall
-     * @return \Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall
      */
     public function firewall(): Firewall
     {
@@ -54,7 +54,7 @@ class VmId extends PVEPathClassBase
     /**
      * List all snapshots.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/snapshot
-     * @return \Proxmox\Api\Nodes\Node\Lxc\VmId\Snapshot
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Snapshot
      */
     public function snapshot(): Snapshot
     {
@@ -64,7 +64,7 @@ class VmId extends PVEPathClassBase
     /**
      * Directory index.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/status
-     * @return \Proxmox\Api\Nodes\Node\Lxc\VmId\Status
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Status
      */
     public function status(): Status
     {
@@ -74,7 +74,7 @@ class VmId extends PVEPathClassBase
     /**
      * Create a container clone/copy
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/clone
-     * @return \Proxmox\Api\Nodes\Node\Lxc\VmId\CloneVm
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\CloneVm
      */
     public function clone(): CloneVm
     {
@@ -84,7 +84,7 @@ class VmId extends PVEPathClassBase
     /**
      * Get container configuration.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/config
-     * @return \Proxmox\Api\Nodes\Node\Lxc\VmId\Config
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Config
      */
     public function config(): Config
     {
@@ -94,7 +94,7 @@ class VmId extends PVEPathClassBase
     /**
      * Check if feature for virtual machine is available.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/feature
-     * @return \Proxmox\Api\Nodes\Node\Lxc\VmId\Feature
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Feature
      */
     public function feature(): Feature
     {
@@ -104,7 +104,7 @@ class VmId extends PVEPathClassBase
     /**
      * Migrate the container to another node. Creates a new migration task.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/migration
-     * @return \Proxmox\Api\Nodes\Node\Lxc\VmId\Migration
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Migration
      */
     public function migration(): Migration
     {
@@ -114,7 +114,7 @@ class VmId extends PVEPathClassBase
     /**
      * Move a rootfs-/mp-volume to a different storage
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/move_volume
-     * @return \Proxmox\Api\Nodes\Node\Lxc\VmId\MoveVolume
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\MoveVolume
      */
     public function move_volume(): MoveVolume
     {
@@ -124,7 +124,7 @@ class VmId extends PVEPathClassBase
     /**
      * Get container configuration, including pending changes.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/pending
-     * @return \Proxmox\Api\Nodes\Node\Lxc\VmId\Pending
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Pending
      */
     public function pending(): Pending
     {
@@ -134,7 +134,7 @@ class VmId extends PVEPathClassBase
     /**
      * Resize a container mount point.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/resize
-     * @return \Proxmox\Api\Nodes\Node\Lxc\VmId\Resize
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Resize
      */
     public function resize(): Resize
     {
@@ -144,7 +144,7 @@ class VmId extends PVEPathClassBase
     /**
      * Read VM RRD statistics (returns PNG)
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/rrd
-     * @return \Proxmox\Api\Nodes\Node\Lxc\VmId\Rrd
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Rrd
      */
     public function rrd(): Rrd
     {
@@ -154,7 +154,7 @@ class VmId extends PVEPathClassBase
     /**
      * Read VM RRD statistics
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/rrddata
-     * @return \Proxmox\Api\Nodes\Node\Lxc\VmId\RrdData
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\RrdData
      */
     public function rrddata(): RrdData
     {
@@ -164,7 +164,7 @@ class VmId extends PVEPathClassBase
     /**
      * Returns a SPICE configuration to connect to the CT.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/spiceProxy
-     * @return \Proxmox\Api\Nodes\Node\Lxc\VmId\SpiceProxy
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\SpiceProxy
      */
     public function spiceproxy(): SpiceProxy
     {
@@ -174,7 +174,7 @@ class VmId extends PVEPathClassBase
     /**
      * Create a Template.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/template
-     * @return \Proxmox\Api\Nodes\Node\Lxc\VmId\Template
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Template
      */
     public function template(): Template
     {
@@ -184,7 +184,7 @@ class VmId extends PVEPathClassBase
     /**
      * Creates a TCP proxy connection.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/termproxy
-     * @return \Proxmox\Api\Nodes\Node\Lxc\VmId\Termproxy
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Termproxy
      */
     public function termproxy(): Termproxy
     {
@@ -194,7 +194,7 @@ class VmId extends PVEPathClassBase
     /**
      * Creates a TCP VNC proxy connections.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/vncproxy
-     * @return \Proxmox\Api\Nodes\Node\Lxc\VmId\VncProxy
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\VncProxy
      */
     public function vncproxy(): VncProxy
     {
@@ -204,7 +204,7 @@ class VmId extends PVEPathClassBase
     /**
      * Opens a weksocket for VNC traffic.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/vncwebsocket
-     * @return \Proxmox\Api\Nodes\Node\Lxc\VmId\VncWebsocket
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\VncWebsocket
      */
     public function vncwebsocket(): VncWebsocket
     {

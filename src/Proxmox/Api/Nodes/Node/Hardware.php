@@ -3,16 +3,16 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node;
+namespace Stratum\Proxmox\Api\Nodes\Node;
 
-use Proxmox\Api\Nodes\Node\Hardware\Pci;
-use Proxmox\Api\Nodes\Node\Hardware\Usb;
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Api\Nodes\Node\Hardware\Pci;
+use Stratum\Proxmox\Api\Nodes\Node\Hardware\Usb;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Hardware
- * @package Proxmox\Api\Nodes\Node
+ * @package Stratum\Proxmox\Api\Nodes\Node
  */
 class Hardware extends PVEPathClassBase
 {
@@ -29,7 +29,7 @@ class Hardware extends PVEPathClassBase
     /**
      * List local USB devices.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/hardware/usb
-     * @return \Proxmox\Api\Nodes\Node\Hardware\Usb
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Hardware\Usb
      */
     public function usb(): Usb
     {
@@ -39,7 +39,7 @@ class Hardware extends PVEPathClassBase
     /**
      * List local PCI devices.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/hardware/pci
-     * @return \Proxmox\Api\Nodes\Node\Hardware\Pci
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Hardware\Pci
      */
     public function pci(): Pci
     {

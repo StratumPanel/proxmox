@@ -3,21 +3,21 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Cluster;
+namespace Stratum\Proxmox\Api\Cluster;
 
-use Proxmox\Api\Cluster\Firewall\Aliases;
-use Proxmox\Api\Cluster\Firewall\Groups;
-use Proxmox\Api\Cluster\Firewall\IpSet;
-use Proxmox\Api\Cluster\Firewall\Macros;
-use Proxmox\Api\Cluster\Firewall\Options;
-use Proxmox\Api\Cluster\Firewall\Refs;
-use Proxmox\Api\Cluster\Firewall\Rules;
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Api\Cluster\Firewall\Aliases;
+use Stratum\Proxmox\Api\Cluster\Firewall\Groups;
+use Stratum\Proxmox\Api\Cluster\Firewall\IpSet;
+use Stratum\Proxmox\Api\Cluster\Firewall\Macros;
+use Stratum\Proxmox\Api\Cluster\Firewall\Options;
+use Stratum\Proxmox\Api\Cluster\Firewall\Refs;
+use Stratum\Proxmox\Api\Cluster\Firewall\Rules;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Firewall
- * @package Proxmox\Api\Cluster
+ * @package Stratum\Proxmox\Api\Cluster
  */
 class Firewall extends PVEPathClassBase
 {

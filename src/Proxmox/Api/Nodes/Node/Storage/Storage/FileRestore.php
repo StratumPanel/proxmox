@@ -3,16 +3,16 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node\Storage\Storage;
+namespace Stratum\Proxmox\Api\Nodes\Node\Storage\Storage;
 
-use Proxmox\Api\Nodes\Node\Storage\Storage\FileRestore\Download;
-use Proxmox\Api\Nodes\Node\Storage\Storage\FileRestore\Lists;
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Api\Nodes\Node\Storage\Storage\FileRestore\Download;
+use Stratum\Proxmox\Api\Nodes\Node\Storage\Storage\FileRestore\Lists;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class FileRestore
- * @package Proxmox\Api\Nodes\Node\Storage\Storage
+ * @package Stratum\Proxmox\Api\Nodes\Node\Storage\Storage
  */
 class FileRestore extends PVEPathClassBase
 {
@@ -30,7 +30,7 @@ class FileRestore extends PVEPathClassBase
      * Extract a file or directory (as zip archive) from a PBS backup.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/storage/{storage}/file-restore/download
      * @param string $Download
-     * @return \Proxmox\Api\Nodes\Node\Storage\Storage\FileRestore\Download
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Storage\Storage\FileRestore\Download
      */
     public function download(string $Download): Download
     {
@@ -41,7 +41,7 @@ class FileRestore extends PVEPathClassBase
      * List files and directories for single file restore under the given path.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/storage/{storage}/file-restore/list
      * @param string $List
-     * @return \Proxmox\Api\Nodes\Node\Storage\Storage\FileRestore\Lists
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Storage\Storage\FileRestore\Lists
      */
     public function list(string $List): Lists
     {

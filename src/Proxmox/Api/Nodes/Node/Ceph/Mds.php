@@ -3,15 +3,15 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node\Ceph;
+namespace Stratum\Proxmox\Api\Nodes\Node\Ceph;
 
-use Proxmox\Api\Nodes\Node\Ceph\Mds\Name;
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Api\Nodes\Node\Ceph\Mds\Name;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Mds
- * @package Proxmox\Api\Nodes\Node\Ceph
+ * @package Stratum\Proxmox\Api\Nodes\Node\Ceph
  */
 class Mds extends PVEPathClassBase
 {

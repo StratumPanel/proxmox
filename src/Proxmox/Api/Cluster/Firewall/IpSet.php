@@ -3,15 +3,15 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Cluster\Firewall;
+namespace Stratum\Proxmox\Api\Cluster\Firewall;
 
-use Proxmox\Api\Cluster\Firewall\IpSet\Name;
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Api\Cluster\Firewall\IpSet\Name;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class IpSet
- * @package Proxmox\Api\Cluster\Firewall
+ * @package Stratum\Proxmox\Api\Cluster\Firewall
  */
 class IpSet extends PVEPathClassBase
 {

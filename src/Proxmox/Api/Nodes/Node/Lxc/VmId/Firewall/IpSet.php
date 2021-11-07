@@ -3,15 +3,15 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall;
+namespace Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall;
 
-use Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall\IpSet\Name;
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall\IpSet\Name;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class IpSet
- * @package Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall
+ * @package Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall
  */
 class IpSet extends PVEPathClassBase
 {
@@ -29,7 +29,7 @@ class IpSet extends PVEPathClassBase
      * List IPSets
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/firewall/ipset/{name}
      * @param string $name
-     * @return \Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall\IpSet\Name
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall\IpSet\Name
      */
     public function name(string $name): Name
     {

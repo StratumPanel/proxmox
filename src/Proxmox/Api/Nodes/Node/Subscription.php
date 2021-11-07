@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node;
+namespace Stratum\Proxmox\Api\Nodes\Node;
 
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Subscription
- * @package Proxmox\Api\Nodes\Node
+ * @package Stratum\Proxmox\Api\Nodes\Node
  */
 class Subscription extends PVEPathClassBase
 {

@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node\Services\Service;
+namespace Stratum\Proxmox\Api\Nodes\Node\Services\Service;
 
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Stop
- * @package Proxmox\Api\Nodes\Node\Services\Service
+ * @package Stratum\Proxmox\Api\Nodes\Node\Services\Service
  */
 class Stop extends PVEPathClassBase
 {

@@ -3,19 +3,19 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Cluster;
+namespace Stratum\Proxmox\Api\Cluster;
 
-use Proxmox\Api\Cluster\Config\ApiVersion;
-use Proxmox\Api\Cluster\Config\Join;
-use Proxmox\Api\Cluster\Config\Nodes;
-use Proxmox\Api\Cluster\Config\QDevice;
-use Proxmox\Api\Cluster\Config\Totem;
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Api\Cluster\Config\ApiVersion;
+use Stratum\Proxmox\Api\Cluster\Config\Join;
+use Stratum\Proxmox\Api\Cluster\Config\Nodes;
+use Stratum\Proxmox\Api\Cluster\Config\QDevice;
+use Stratum\Proxmox\Api\Cluster\Config\Totem;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Config
- * @package Proxmox\Api\Cluster
+ * @package Stratum\Proxmox\Api\Cluster
  */
 class Config extends PVEPathClassBase
 {

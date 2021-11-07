@@ -3,19 +3,19 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Cluster;
+namespace Stratum\Proxmox\Api\Cluster;
 
-use Proxmox\Api\Cluster\Acme\Account;
-use Proxmox\Api\Cluster\Acme\ChallengeSchema;
-use Proxmox\Api\Cluster\Acme\Directories;
-use Proxmox\Api\Cluster\Acme\Plugins;
-use Proxmox\Api\Cluster\Acme\Tos;
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Api\Cluster\Acme\Account;
+use Stratum\Proxmox\Api\Cluster\Acme\ChallengeSchema;
+use Stratum\Proxmox\Api\Cluster\Acme\Directories;
+use Stratum\Proxmox\Api\Cluster\Acme\Plugins;
+use Stratum\Proxmox\Api\Cluster\Acme\Tos;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Acme
- * @package Proxmox\Api\Cluster
+ * @package Stratum\Proxmox\Api\Cluster
  */
 class Acme extends PVEPathClassBase
 {

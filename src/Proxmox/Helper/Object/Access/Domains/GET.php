@@ -3,11 +3,11 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Helper\Object\Access\Domains;
+namespace Stratum\Proxmox\Helper\Object\Access\Domains;
 
 /**
  * Class GET
- * @package Proxmox\Helper\Object\Access\Domain
+ * @package Stratum\Proxmox\Helper\Object\Access\Domain
  */
 class GET
 {

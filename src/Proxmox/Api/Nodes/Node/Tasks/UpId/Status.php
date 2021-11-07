@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node\Tasks\UpId;
+namespace Stratum\Proxmox\Api\Nodes\Node\Tasks\UpId;
 
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Status
- * @package Proxmox\Api\Nodes\Node\Tasks\UpId
+ * @package Stratum\Proxmox\Api\Nodes\Node\Tasks\UpId
  */
 class Status extends PVEPathClassBase
 {

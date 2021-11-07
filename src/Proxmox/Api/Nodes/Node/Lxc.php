@@ -3,15 +3,15 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node;
+namespace Stratum\Proxmox\Api\Nodes\Node;
 
-use Proxmox\Api\Nodes\Node\Lxc\VmId;
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Lxc
- * @package Proxmox\Api\Nodes\Node
+ * @package Stratum\Proxmox\Api\Nodes\Node
  */
 class Lxc extends PVEPathClassBase
 {
@@ -29,7 +29,7 @@ class Lxc extends PVEPathClassBase
      * Directory index
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}
      * @param string $vmId
-     * @return \Proxmox\Api\Nodes\Node\Lxc\VmId
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId
      */
     public function vmId(string $vmId): VmId
     {

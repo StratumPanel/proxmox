@@ -3,10 +3,10 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Helper\Interfaces;
+namespace Stratum\Proxmox\Helper\Interfaces;
 
 
-use Proxmox\PVE;
+use Stratum\Proxmox\PVE;
 
 interface PVEPathClassInterface
 {

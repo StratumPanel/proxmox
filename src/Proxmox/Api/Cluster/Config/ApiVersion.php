@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Cluster\Config;
+namespace Stratum\Proxmox\Api\Cluster\Config;
 
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class ApiVersion
- * @package Proxmox\Api\Cluster\Config
+ * @package Stratum\Proxmox\Api\Cluster\Config
  */
 class ApiVersion extends PVEPathClassBase
 {

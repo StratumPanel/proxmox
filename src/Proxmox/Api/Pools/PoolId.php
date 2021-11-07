@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Pools;
+namespace Stratum\Proxmox\Api\Pools;
 
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class PoolId
- * @package Proxmox\Api\Pools
+ * @package Stratum\Proxmox\Api\Pools
  */
 class PoolId extends PVEPathClassBase
 {

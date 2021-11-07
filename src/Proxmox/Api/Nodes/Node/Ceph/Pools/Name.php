@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node\Ceph\Pools;
+namespace Stratum\Proxmox\Api\Nodes\Node\Ceph\Pools;
 
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Name
- * @package Proxmox\Api\Nodes\Node\Ceph\Pools
+ * @package Stratum\Proxmox\Api\Nodes\Node\Ceph\Pools
  */
 class Name extends PVEPathClassBase
 {

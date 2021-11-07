@@ -3,15 +3,15 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall;
+namespace Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall;
 
-use Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall\Aliases\Name;
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall\Aliases\Name;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Aliases
- * @package Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall
+ * @package Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall
  */
 class Aliases extends PVEPathClassBase
 {
@@ -29,7 +29,7 @@ class Aliases extends PVEPathClassBase
      * Read alias.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/firewall/aliases/{name}
      * @param string $name
-     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall\Aliases\Name
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall\Aliases\Name
      */
     public function name(string $name): Name
     {

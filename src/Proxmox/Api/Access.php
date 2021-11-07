@@ -3,24 +3,24 @@
  * @copyright 2019 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api;
+namespace Stratum\Proxmox\Api;
 
-use Proxmox\Api\Access\Acl;
-use Proxmox\Api\Access\Domains;
-use Proxmox\Api\Access\Groups;
-use Proxmox\Api\Access\OpenId;
-use Proxmox\Api\Access\Password;
-use Proxmox\Api\Access\Permission;
-use Proxmox\Api\Access\Roles;
-use Proxmox\Api\Access\Tfa;
-use Proxmox\Api\Access\Ticket;
-use Proxmox\Api\Access\Users;
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Api\Access\Acl;
+use Stratum\Proxmox\Api\Access\Domains;
+use Stratum\Proxmox\Api\Access\Groups;
+use Stratum\Proxmox\Api\Access\OpenId;
+use Stratum\Proxmox\Api\Access\Password;
+use Stratum\Proxmox\Api\Access\Permission;
+use Stratum\Proxmox\Api\Access\Roles;
+use Stratum\Proxmox\Api\Access\Tfa;
+use Stratum\Proxmox\Api\Access\Ticket;
+use Stratum\Proxmox\Api\Access\Users;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class access
- * @package proxmox\api
+ * @package Stratum\Proxmox\api
  */
 class Access extends PVEPathClassBase
 {

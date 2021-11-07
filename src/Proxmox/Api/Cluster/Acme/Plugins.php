@@ -3,15 +3,15 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Cluster\Acme;
+namespace Stratum\Proxmox\Api\Cluster\Acme;
 
-use Proxmox\Api\Cluster\Acme\Plugins\Id;
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Api\Cluster\Acme\Plugins\Id;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Plugins
- * @package Proxmox\Api\Cluster
+ * @package Stratum\Proxmox\Api\Cluster
  */
 class Plugins extends PVEPathClassBase
 {

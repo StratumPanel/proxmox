@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node\Capabilities\Qemu;
+namespace Stratum\Proxmox\Api\Nodes\Node\Capabilities\Qemu;
 
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Machines
- * @package Proxmox\Api\Nodes\Node\Capabilities\Qemu
+ * @package Stratum\Proxmox\Api\Nodes\Node\Capabilities\Qemu
  */
 class Machines extends PVEPathClassBase
 {

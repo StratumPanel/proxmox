@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node\Hardware;
+namespace Stratum\Proxmox\Api\Nodes\Node\Hardware;
 
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Usb
- * @package Proxmox\Api\Nodes\Node\Hardware
+ * @package Stratum\Proxmox\Api\Nodes\Node\Hardware
  */
 class Usb extends PVEPathClassBase
 {

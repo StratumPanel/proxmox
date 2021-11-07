@@ -3,17 +3,17 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox;
+namespace Stratum\Proxmox;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
-use Proxmox\Api\Access;
-use Proxmox\Api\Cluster;
-use Proxmox\Api\Nodes;
-use Proxmox\Api\Pools;
-use Proxmox\Api\Storage;
-use Proxmox\Api\Version;
-use Proxmox\Helper\Api;
+use Stratum\Proxmox\Api\Access;
+use Stratum\Proxmox\Api\Cluster;
+use Stratum\Proxmox\Api\Nodes;
+use Stratum\Proxmox\Api\Pools;
+use Stratum\Proxmox\Api\Storage;
+use Stratum\Proxmox\Api\Version;
+use Stratum\Proxmox\Helper\Api;
 
 /**
  * Class pve

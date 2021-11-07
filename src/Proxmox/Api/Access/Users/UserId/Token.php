@@ -3,15 +3,15 @@
  * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Access\Users\UserId;
+namespace Stratum\Proxmox\Api\Access\Users\UserId;
 
-use Proxmox\Api\Access\Users\UserId\Token\TokenId;
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Api\Access\Users\UserId\Token\TokenId;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class token
- * @package proxmox\api\access\users\userid
+ * @package Stratum\Proxmox\api\access\users\userid
  */
 class Token extends PVEPathClassBase
 {

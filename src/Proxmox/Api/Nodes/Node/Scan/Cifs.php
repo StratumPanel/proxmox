@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node\Scan;
+namespace Stratum\Proxmox\Api\Nodes\Node\Scan;
 
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Cifs
- * @package Proxmox\Api\Nodes\Node\Scan
+ * @package Stratum\Proxmox\Api\Nodes\Node\Scan
  */
 class Cifs extends PVEPathClassBase
 {

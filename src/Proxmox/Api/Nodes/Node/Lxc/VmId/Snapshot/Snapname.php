@@ -3,16 +3,16 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node\Lxc\VmId\Snapshot;
+namespace Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Snapshot;
 
-use Proxmox\Api\Nodes\Node\Lxc\VmId\Snapshot\Snapname\Config;
-use Proxmox\Api\Nodes\Node\Lxc\VmId\Snapshot\Snapname\Rollback;
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Snapshot\Snapname\Config;
+use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Snapshot\Snapname\Rollback;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Snapname
- * @package Proxmox\Api\Nodes\Node\Lxc\VmId\Snapshot
+ * @package Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Snapshot
  */
 class Snapname extends PVEPathClassBase
 {
@@ -29,7 +29,7 @@ class Snapname extends PVEPathClassBase
     /**
      * Get snapshot configuration
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/snapshot/{snapname}/config
-     * @return \Proxmox\Api\Nodes\Node\Lxc\VmId\Snapshot\Snapname\Config
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Snapshot\Snapname\Config
      */
     public function config(): Config
     {
@@ -39,7 +39,7 @@ class Snapname extends PVEPathClassBase
     /**
      * Rollback LXC state to specified snapshot.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/snapshot/{snapname}/rollback
-     * @return \Proxmox\Api\Nodes\Node\Lxc\VmId\Snapshot\Snapname\Rollback
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Snapshot\Snapname\Rollback
      */
     public function rollback(): Rollback
     {

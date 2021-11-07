@@ -3,15 +3,15 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node;
+namespace Stratum\Proxmox\Api\Nodes\Node;
 
-use Proxmox\Api\Nodes\Node\Replication\Id;
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Api\Nodes\Node\Replication\Id;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Replication
- * @package Proxmox\Api\Nodes\Node
+ * @package Stratum\Proxmox\Api\Nodes\Node
  */
 class Replication extends PVEPathClassBase
 {
@@ -29,7 +29,7 @@ class Replication extends PVEPathClassBase
      * Directory index.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/replication/{id}
      * @param string $id
-     * @return \Proxmox\Api\Nodes\Node\Replication\Id
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Replication\Id
      */
     public function id(string $id): Id
     {

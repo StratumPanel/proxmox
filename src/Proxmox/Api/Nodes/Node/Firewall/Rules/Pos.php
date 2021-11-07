@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node\Firewall\Rules;
+namespace Stratum\Proxmox\Api\Nodes\Node\Firewall\Rules;
 
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Pos
- * @package Proxmox\Api\Nodes\Node\Disks
+ * @package Stratum\Proxmox\Api\Nodes\Node\Disks
  */
 class Pos extends PVEPathClassBase
 {

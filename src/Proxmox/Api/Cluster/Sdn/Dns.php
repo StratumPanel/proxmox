@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Cluster\Sdn;
+namespace Stratum\Proxmox\Api\Cluster\Sdn;
 
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Dns
- * @package Proxmox\Api\Cluster\Sdn
+ * @package Stratum\Proxmox\Api\Cluster\Sdn
  */
 class Dns extends PVEPathClassBase
 {

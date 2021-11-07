@@ -3,17 +3,17 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Cluster;
+namespace Stratum\Proxmox\Api\Cluster;
 
-use Proxmox\Api\Cluster\Ha\Groups;
-use Proxmox\Api\Cluster\Ha\Resources;
-use Proxmox\Api\Cluster\Ha\Status;
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Api\Cluster\Ha\Groups;
+use Stratum\Proxmox\Api\Cluster\Ha\Resources;
+use Stratum\Proxmox\Api\Cluster\Ha\Status;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Ha
- * @package Proxmox\Api\Cluster
+ * @package Stratum\Proxmox\Api\Cluster
  */
 class Ha extends PVEPathClassBase
 {

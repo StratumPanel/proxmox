@@ -3,15 +3,15 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node;
+namespace Stratum\Proxmox\Api\Nodes\Node;
 
-use Proxmox\Api\Nodes\Node\Sdn\Zones;
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Api\Nodes\Node\Sdn\Zones;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Sdn
- * @package Proxmox\Api\Nodes\Node
+ * @package Stratum\Proxmox\Api\Nodes\Node
  */
 class Sdn extends PVEPathClassBase
 {
@@ -28,7 +28,7 @@ class Sdn extends PVEPathClassBase
     /**
      * Get status for all zones.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/sdn/zones
-     * @return \Proxmox\Api\Nodes\Node\Sdn\Zones
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Sdn\Zones
      */
     public function zones(): Zones
     {

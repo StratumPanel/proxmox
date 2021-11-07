@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Cluster\Ha\Status;
+namespace Stratum\Proxmox\Api\Cluster\Ha\Status;
 
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class ManagerStatus
- * @package Proxmox\Api\Cluster\Ha\Status
+ * @package Stratum\Proxmox\Api\Cluster\Ha\Status
  */
 class ManagerStatus extends PVEPathClassBase
 {

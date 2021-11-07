@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node\Qemu\VmId;
+namespace Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId;
 
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Unlink
- * @package Proxmox\Api\Nodes\Node\Qemu\VmId
+ * @package Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId
  */
 class Unlink extends PVEPathClassBase
 {

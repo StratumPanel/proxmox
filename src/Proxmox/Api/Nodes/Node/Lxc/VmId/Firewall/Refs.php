@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall;
+namespace Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall;
 
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Refs
- * @package Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall
+ * @package Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall
  */
 class Refs extends PVEPathClassBase
 {

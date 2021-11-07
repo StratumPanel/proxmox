@@ -3,15 +3,15 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Cluster\Firewall\Groups;
+namespace Stratum\Proxmox\Api\Cluster\Firewall\Groups;
 
-use Proxmox\Api\Cluster\Firewall\Groups\Group\Pos;
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Api\Cluster\Firewall\Groups\Group\Pos;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Group
- * @package Proxmox\Api\Cluster\Firewall\Groups
+ * @package Stratum\Proxmox\Api\Cluster\Firewall\Groups
  */
 class Group extends PVEPathClassBase
 {

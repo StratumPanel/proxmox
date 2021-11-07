@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Access\Users\UserId;
+namespace Stratum\Proxmox\Api\Access\Users\UserId;
 
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Tfa
- * @package Proxmox\Api\Access\Users\UserId
+ * @package Stratum\Proxmox\Api\Access\Users\UserId
  */
 class Tfa extends PVEPathClassBase
 {

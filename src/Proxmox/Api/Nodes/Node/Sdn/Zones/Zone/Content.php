@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node\Sdn\Zones\Zone;
+namespace Stratum\Proxmox\Api\Nodes\Node\Sdn\Zones\Zone;
 
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Content
- * @package Proxmox\Api\Nodes\Node\Sdn\Zones\Zone
+ * @package Stratum\Proxmox\Api\Nodes\Node\Sdn\Zones\Zone
  */
 class Content extends PVEPathClassBase
 {

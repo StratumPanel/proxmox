@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node\Apt;
+namespace Stratum\Proxmox\Api\Nodes\Node\Apt;
 
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Repositories
- * @package Proxmox\Api\Nodes\Node\Apt
+ * @package Stratum\Proxmox\Api\Nodes\Node\Apt
  */
 class Repositories extends PVEPathClassBase
 {

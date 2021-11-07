@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node\Storage\Storage;
+namespace Stratum\Proxmox\Api\Nodes\Node\Storage\Storage;
 
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Prunebackups
- * @package Proxmox\Api\Nodes\Node\Storage\Storage
+ * @package Stratum\Proxmox\Api\Nodes\Node\Storage\Storage
  */
 class Prunebackups extends PVEPathClassBase
 {

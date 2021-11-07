@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node\Qemu\VmId\Snapshot\Snapname;
+namespace Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Snapshot\Snapname;
 
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Rollback
- * @package Proxmox\Api\Nodes\Node\Qemu\VmId\Snapshot\Snapname
+ * @package Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Snapshot\Snapname
  */
 class Rollback extends PVEPathClassBase
 {

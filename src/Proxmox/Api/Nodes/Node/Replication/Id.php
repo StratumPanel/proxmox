@@ -3,17 +3,17 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node\Replication;
+namespace Stratum\Proxmox\Api\Nodes\Node\Replication;
 
-use Proxmox\Api\Nodes\Node\Replication\Id\Log;
-use Proxmox\Api\Nodes\Node\Replication\Id\ScheduleNow;
-use Proxmox\Api\Nodes\Node\Replication\Id\Status;
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Api\Nodes\Node\Replication\Id\Log;
+use Stratum\Proxmox\Api\Nodes\Node\Replication\Id\ScheduleNow;
+use Stratum\Proxmox\Api\Nodes\Node\Replication\Id\Status;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Id
- * @package Proxmox\Api\Nodes\Node\Replication
+ * @package Stratum\Proxmox\Api\Nodes\Node\Replication
  */
 class Id extends PVEPathClassBase
 {
@@ -30,7 +30,7 @@ class Id extends PVEPathClassBase
     /**
      * Read replication job log.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/replication/{id}/log
-     * @return \Proxmox\Api\Nodes\Node\Replication\Id\Log
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Replication\Id\Log
      */
     public function log(): Log
     {
@@ -40,7 +40,7 @@ class Id extends PVEPathClassBase
     /**
      * Schedule replication job to start as soon as possible.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/replication/{id}/schedule_now
-     * @return \Proxmox\Api\Nodes\Node\Replication\Id\ScheduleNow
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Replication\Id\ScheduleNow
      */
     public function scheduleNow(): ScheduleNow
     {
@@ -50,7 +50,7 @@ class Id extends PVEPathClassBase
     /**
      * Get replication job status.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/replication/{id}/status
-     * @return \Proxmox\Api\Nodes\Node\Replication\Id\Status
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Replication\Id\Status
      */
     public function status(): Status
     {

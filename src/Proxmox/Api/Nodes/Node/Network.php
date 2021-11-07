@@ -3,15 +3,15 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node;
+namespace Stratum\Proxmox\Api\Nodes\Node;
 
-use Proxmox\Api\Nodes\Node\Network\Iface;
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Api\Nodes\Node\Network\Iface;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Network
- * @package Proxmox\Api\Nodes\Node
+ * @package Stratum\Proxmox\Api\Nodes\Node
  */
 class Network extends PVEPathClassBase
 {
@@ -29,7 +29,7 @@ class Network extends PVEPathClassBase
      * Read network device configuration
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/network/{iface}
      * @param string $pciId
-     * @return \Proxmox\Api\Nodes\Node\Network\Iface
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Network\Iface
      */
     public function iface(string $pciId): Iface
     {

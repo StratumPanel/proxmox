@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Cluster\Ceph;
+namespace Stratum\Proxmox\Api\Cluster\Ceph;
 
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class MetaData
- * @package Proxmox\Api\Cluster\Ceph
+ * @package Stratum\Proxmox\Api\Cluster\Ceph
  */
 class MetaData extends PVEPathClassBase
 {

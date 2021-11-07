@@ -3,20 +3,20 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node\Ceph\Mgr;
+namespace Stratum\Proxmox\Api\Nodes\Node\Ceph\Mgr;
 
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Id
- * @package Proxmox\Api\Nodes\Node\Ceph\Mgr
+ * @package Stratum\Proxmox\Api\Nodes\Node\Ceph\Mgr
  */
 class Id extends PVEPathClassBase
 {
 
     /**
-     * @param \Proxmox\PVE $pve
+     * @param \Stratum\Proxmox\PVE $pve
      * @param string $parentAdditional
      */
     public function __construct(PVE $pve, string $parentAdditional)

@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Cluster\Ha\Resources\Sid;
+namespace Stratum\Proxmox\Api\Cluster\Ha\Resources\Sid;
 
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Migrate
- * @package Proxmox\Api\Cluster\Ha\Resources\Sid
+ * @package Stratum\Proxmox\Api\Cluster\Ha\Resources\Sid
  */
 class Migrate extends PVEPathClassBase
 {

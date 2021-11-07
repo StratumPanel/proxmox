@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Access\Domains\Realm;
+namespace Stratum\Proxmox\Api\Access\Domains\Realm;
 
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Sync
- * @package Proxmox\Api\Access\Domains\Realm
+ * @package Stratum\Proxmox\Api\Access\Domains\Realm
  */
 class Sync extends PVEPathClassBase
 {

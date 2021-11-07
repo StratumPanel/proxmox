@@ -3,16 +3,16 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Helper;
+namespace Stratum\Proxmox\Helper;
 
 use GuzzleHttp\Cookie\CookieJar;
 use GuzzleHttp\Exception\GuzzleException;
-use Proxmox\PVE;
+use Stratum\Proxmox\PVE;
 use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class api
- * @package proxmox\Helper
+ * @package Stratum\Proxmox\Helper
  */
 class Api
 {

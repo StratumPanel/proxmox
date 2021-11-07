@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Access;
+namespace Stratum\Proxmox\Api\Access;
 
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Acl
- * @package Proxmox\Api\Access
+ * @package Stratum\Proxmox\Api\Access
  */
 class Acl extends PVEPathClassBase
 {

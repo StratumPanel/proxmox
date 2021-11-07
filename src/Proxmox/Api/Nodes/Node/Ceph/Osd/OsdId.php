@@ -3,23 +3,23 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node\Ceph\Osd;
+namespace Stratum\Proxmox\Api\Nodes\Node\Ceph\Osd;
 
-use Proxmox\Api\Nodes\Node\Ceph\Osd\OsdId\In;
-use Proxmox\Api\Nodes\Node\Ceph\Osd\OsdId\Out;
-use Proxmox\Api\Nodes\Node\Ceph\Osd\OsdId\Scrub;
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Api\Nodes\Node\Ceph\Osd\OsdId\In;
+use Stratum\Proxmox\Api\Nodes\Node\Ceph\Osd\OsdId\Out;
+use Stratum\Proxmox\Api\Nodes\Node\Ceph\Osd\OsdId\Scrub;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class OsdId
- * @package Proxmox\Api\Nodes\Node\Ceph\Osd
+ * @package Stratum\Proxmox\Api\Nodes\Node\Ceph\Osd
  */
 class OsdId extends PVEPathClassBase
 {
 
     /**
-     * @param \Proxmox\PVE $pve
+     * @param \Stratum\Proxmox\PVE $pve
      * @param string $parentAdditional
      */
     public function __construct(PVE $pve, string $parentAdditional)

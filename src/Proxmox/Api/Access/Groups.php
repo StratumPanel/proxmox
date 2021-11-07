@@ -3,15 +3,15 @@
  * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Access;
+namespace Stratum\Proxmox\Api\Access;
 
-use Proxmox\Api\Access\Groups\GroupId;
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Api\Access\Groups\GroupId;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class groups
- * @package proxmox\api\access
+ * @package Stratum\Proxmox\api\access
  */
 class Groups extends PVEPathClassBase
 {

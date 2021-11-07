@@ -3,36 +3,36 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node\Qemu;
+namespace Stratum\Proxmox\Api\Nodes\Node\Qemu;
 
-use Proxmox\Api\Nodes\Node\Qemu\VmId\Agent;
-use Proxmox\Api\Nodes\Node\Qemu\VmId\CloneVm;
-use Proxmox\Api\Nodes\Node\Qemu\VmId\CloudInit;
-use Proxmox\Api\Nodes\Node\Qemu\VmId\Config;
-use Proxmox\Api\Nodes\Node\Qemu\VmId\Feature;
-use Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall;
-use Proxmox\Api\Nodes\Node\Qemu\VmId\Migration;
-use Proxmox\Api\Nodes\Node\Qemu\VmId\Monitor;
-use Proxmox\Api\Nodes\Node\Qemu\VmId\MoveDisk;
-use Proxmox\Api\Nodes\Node\Qemu\VmId\Pending;
-use Proxmox\Api\Nodes\Node\Qemu\VmId\Resize;
-use Proxmox\Api\Nodes\Node\Qemu\VmId\Rrd;
-use Proxmox\Api\Nodes\Node\Qemu\VmId\RrdData;
-use Proxmox\Api\Nodes\Node\Qemu\VmId\SendKey;
-use Proxmox\Api\Nodes\Node\Qemu\VmId\Snapshot;
-use Proxmox\Api\Nodes\Node\Qemu\VmId\SpiceProxy;
-use Proxmox\Api\Nodes\Node\Qemu\VmId\Status;
-use Proxmox\Api\Nodes\Node\Qemu\VmId\Template;
-use Proxmox\Api\Nodes\Node\Qemu\VmId\Termproxy;
-use Proxmox\Api\Nodes\Node\Qemu\VmId\Unlink;
-use Proxmox\Api\Nodes\Node\Qemu\VmId\VncProxy;
-use Proxmox\Api\Nodes\Node\Qemu\VmId\VncWebsocket;
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\CloneVm;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\CloudInit;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Config;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Feature;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Migration;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Monitor;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\MoveDisk;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Pending;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Resize;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Rrd;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\RrdData;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\SendKey;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Snapshot;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\SpiceProxy;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Status;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Template;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Termproxy;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Unlink;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\VncProxy;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\VncWebsocket;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class VmId
- * @package Proxmox\Api\Nodes\Node\Qemu
+ * @package Stratum\Proxmox\Api\Nodes\Node\Qemu
  */
 class VmId extends PVEPathClassBase
 {
@@ -49,7 +49,7 @@ class VmId extends PVEPathClassBase
     /**
      * Qemu Agent command index.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/agent
-     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\Agent
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent
      */
     public function agent(): Agent
     {
@@ -59,7 +59,7 @@ class VmId extends PVEPathClassBase
     /**
      * Get the virtual machine configuration with pending configuration changes applied. Set the 'current' parameter to get the current configuration instead.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/cloudinit
-     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\CloudInit
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\CloudInit
      */
     public function cloudinit(): CloudInit
     {
@@ -69,7 +69,7 @@ class VmId extends PVEPathClassBase
     /**
      * Directory index.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/firewall
-     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall
      */
     public function firewall(): Firewall
     {
@@ -79,7 +79,7 @@ class VmId extends PVEPathClassBase
     /**
      * List all snapshots.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/snapshot
-     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\Snapshot
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Snapshot
      */
     public function snapshot(): Snapshot
     {
@@ -89,7 +89,7 @@ class VmId extends PVEPathClassBase
     /**
      * Directory index.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/status
-     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\Status
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Status
      */
     public function status(): Status
     {
@@ -99,7 +99,7 @@ class VmId extends PVEPathClassBase
     /**
      * Create a container clone/copy
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/Qemu/{vmid}/clone
-     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\CloneVm
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\CloneVm
      */
     public function clone(): CloneVm
     {
@@ -109,7 +109,7 @@ class VmId extends PVEPathClassBase
     /**
      * Get container configuration.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/Qemu/{vmid}/config
-     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\Config
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Config
      */
     public function config(): Config
     {
@@ -119,7 +119,7 @@ class VmId extends PVEPathClassBase
     /**
      * Check if feature for virtual machine is available.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/Qemu/{vmid}/feature
-     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\Feature
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Feature
      */
     public function feature(): Feature
     {
@@ -129,7 +129,7 @@ class VmId extends PVEPathClassBase
     /**
      * Migrate the container to another node. Creates a new migration task.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/Qemu/{vmid}/migration
-     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\Migration
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Migration
      */
     public function migration(): Migration
     {
@@ -139,7 +139,7 @@ class VmId extends PVEPathClassBase
     /**
      * Execute Qemu monitor commands.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/monitor
-     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\Monitor
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Monitor
      */
     public function monitor(): Monitor
     {
@@ -149,7 +149,7 @@ class VmId extends PVEPathClassBase
     /**
      * Move a rootfs-/mp-volume to a different storage
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/Qemu/{vmid}/move_disk
-     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\MoveDisk
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\MoveDisk
      */
     public function move_disk(): MoveDisk
     {
@@ -159,7 +159,7 @@ class VmId extends PVEPathClassBase
     /**
      * Get container configuration, including pending changes.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/Qemu/{vmid}/pending
-     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\Pending
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Pending
      */
     public function pending(): Pending
     {
@@ -169,7 +169,7 @@ class VmId extends PVEPathClassBase
     /**
      * Resize a container mount point.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/Qemu/{vmid}/resize
-     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\Resize
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Resize
      */
     public function resize(): Resize
     {
@@ -179,7 +179,7 @@ class VmId extends PVEPathClassBase
     /**
      * Read VM RRD statistics (returns PNG)
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/Qemu/{vmid}/rrd
-     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\Rrd
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Rrd
      */
     public function rrd(): Rrd
     {
@@ -189,7 +189,7 @@ class VmId extends PVEPathClassBase
     /**
      * Read VM RRD statistics
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/Qemu/{vmid}/rrddata
-     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\RrdData
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\RrdData
      */
     public function rrddata(): RrdData
     {
@@ -199,7 +199,7 @@ class VmId extends PVEPathClassBase
     /**
      * Send key event to virtual machine.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/sendkey
-     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\SendKey
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\SendKey
      */
     public function sendkey(): SendKey
     {
@@ -209,7 +209,7 @@ class VmId extends PVEPathClassBase
     /**
      * Returns a SPICE configuration to connect to the CT.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/Qemu/{vmid}/spiceProxy
-     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\SpiceProxy
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\SpiceProxy
      */
     public function spiceproxy(): SpiceProxy
     {
@@ -219,7 +219,7 @@ class VmId extends PVEPathClassBase
     /**
      * Create a Template.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/Qemu/{vmid}/template
-     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\Template
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Template
      */
     public function template(): Template
     {
@@ -229,7 +229,7 @@ class VmId extends PVEPathClassBase
     /**
      * Creates a TCP proxy connection.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/Qemu/{vmid}/termproxy
-     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\Termproxy
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Termproxy
      */
     public function termproxy(): Termproxy
     {
@@ -239,7 +239,7 @@ class VmId extends PVEPathClassBase
     /**
      * Unlink/delete disk images.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/unlink
-     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\Unlink
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Unlink
      */
     public function unlink(): Unlink
     {
@@ -249,7 +249,7 @@ class VmId extends PVEPathClassBase
     /**
      * Creates a TCP VNC proxy connections.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/Qemu/{vmid}/vncproxy
-     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\VncProxy
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\VncProxy
      */
     public function vncproxy(): VncProxy
     {
@@ -259,7 +259,7 @@ class VmId extends PVEPathClassBase
     /**
      * Opens a weksocket for VNC traffic.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/Qemu/{vmid}/vncwebsocket
-     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\VncWebsocket
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\VncWebsocket
      */
     public function vncwebsocket(): VncWebsocket
     {

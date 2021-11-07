@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Access\OpenId;
+namespace Stratum\Proxmox\Api\Access\OpenId;
 
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Login
- * @package Proxmox\Api\Access\OpenId
+ * @package Stratum\Proxmox\Api\Access\OpenId
  */
 class Login extends PVEPathClassBase
 {

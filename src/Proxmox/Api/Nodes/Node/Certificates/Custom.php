@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node\Certificates;
+namespace Stratum\Proxmox\Api\Nodes\Node\Certificates;
 
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Custom
- * @package Proxmox\Api\Nodes\Node\Certificates
+ * @package Stratum\Proxmox\Api\Nodes\Node\Certificates
  */
 class Custom extends PVEPathClassBase
 {

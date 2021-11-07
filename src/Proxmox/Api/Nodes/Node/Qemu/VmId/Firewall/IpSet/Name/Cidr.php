@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall\IpSet\Name;
+namespace Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall\IpSet\Name;
 
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Cidr
- * @package Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall\ipset\name
+ * @package Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall\ipset\name
  */
 class Cidr extends PVEPathClassBase
 {

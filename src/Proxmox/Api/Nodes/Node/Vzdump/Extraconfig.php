@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node\Vzdump;
+namespace Stratum\Proxmox\Api\Nodes\Node\Vzdump;
 
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Extraconfig
- * @package Proxmox\Api\Nodes\Node\Vzdump
+ * @package Stratum\Proxmox\Api\Nodes\Node\Vzdump
  */
 class Extraconfig extends PVEPathClassBase
 {

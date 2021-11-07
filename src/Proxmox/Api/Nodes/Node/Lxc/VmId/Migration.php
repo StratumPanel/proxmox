@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node\Lxc\VmId;
+namespace Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId;
 
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Migration
- * @package Proxmox\Api\Nodes\Node\Lxc\VmId
+ * @package Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId
  */
 class Migration extends PVEPathClassBase
 {

@@ -3,22 +3,22 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Proxmox\Api\Nodes\Node\Storage;
+namespace Stratum\Proxmox\Api\Nodes\Node\Storage;
 
-use Proxmox\Api\Nodes\Node\Storage\Storage\Content;
-use Proxmox\Api\Nodes\Node\Storage\Storage\DownloadUrl;
-use Proxmox\Api\Nodes\Node\Storage\Storage\FileRestore;
-use Proxmox\Api\Nodes\Node\Storage\Storage\Prunebackups;
-use Proxmox\Api\Nodes\Node\Storage\Storage\Rrd;
-use Proxmox\Api\Nodes\Node\Storage\Storage\Rrddata;
-use Proxmox\Api\Nodes\Node\Storage\Storage\Status;
-use Proxmox\Api\Nodes\Node\Storage\Storage\Upload;
-use Proxmox\Helper\PVEPathClassBase;
-use Proxmox\PVE;
+use Stratum\Proxmox\Api\Nodes\Node\Storage\Storage\Content;
+use Stratum\Proxmox\Api\Nodes\Node\Storage\Storage\DownloadUrl;
+use Stratum\Proxmox\Api\Nodes\Node\Storage\Storage\FileRestore;
+use Stratum\Proxmox\Api\Nodes\Node\Storage\Storage\Prunebackups;
+use Stratum\Proxmox\Api\Nodes\Node\Storage\Storage\Rrd;
+use Stratum\Proxmox\Api\Nodes\Node\Storage\Storage\Rrddata;
+use Stratum\Proxmox\Api\Nodes\Node\Storage\Storage\Status;
+use Stratum\Proxmox\Api\Nodes\Node\Storage\Storage\Upload;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class Storage
- * @package Proxmox\Api\Nodes\Node\Storage
+ * @package Stratum\Proxmox\Api\Nodes\Node\Storage
  */
 class Storage extends PVEPathClassBase
 {
@@ -35,7 +35,7 @@ class Storage extends PVEPathClassBase
     /**
      * List storage content.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/storage/{storage}/content
-     * @return \Proxmox\Api\Nodes\Node\Storage\Storage\Content
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Storage\Storage\Content
      */
     public function content(): Content
     {
@@ -44,7 +44,7 @@ class Storage extends PVEPathClassBase
 
     /**
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/storage/{storage}/file-restore
-     * @return \Proxmox\Api\Nodes\Node\Storage\Storage\FileRestore
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Storage\Storage\FileRestore
      */
     public function fileRestore(): FileRestore
     {
@@ -54,7 +54,7 @@ class Storage extends PVEPathClassBase
     /**
      * Download templates and ISO images by using an URL.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/storage/{storage}/download-url
-     * @return \Proxmox\Api\Nodes\Node\Storage\Storage\DownloadUrl
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Storage\Storage\DownloadUrl
      */
     public function downloadUrl(): DownloadUrl
     {
@@ -64,7 +64,7 @@ class Storage extends PVEPathClassBase
     /**
      * Get prune information for backups. NOTE: this is only a preview and might not be what a subsequent prune call does if backups are removed/added in the meantime.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/storage/{storage}/prunebackups
-     * @return \Proxmox\Api\Nodes\Node\Storage\Storage\Prunebackups
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Storage\Storage\Prunebackups
      */
     public function prunebackups(): Prunebackups
     {
@@ -74,7 +74,7 @@ class Storage extends PVEPathClassBase
     /**
      * Read storage RRD statistics (returns PNG).
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/storage/{storage}/rrd
-     * @return \Proxmox\Api\Nodes\Node\Storage\Storage\Rrd
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Storage\Storage\Rrd
      */
     public function rrd(): Rrd
     {
@@ -84,7 +84,7 @@ class Storage extends PVEPathClassBase
     /**
      * Read storage RRD statistics.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/storage/{storage}/rrddata
-     * @return \Proxmox\Api\Nodes\Node\Storage\Storage\Rrddata
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Storage\Storage\Rrddata
      */
     public function rrddata(): Rrddata
     {
@@ -94,7 +94,7 @@ class Storage extends PVEPathClassBase
     /**
      * Read storage status.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/storage/{storage}/status
-     * @return \Proxmox\Api\Nodes\Node\Storage\Storage\Status
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Storage\Storage\Status
      */
     public function status(): Status
     {
@@ -104,7 +104,7 @@ class Storage extends PVEPathClassBase
     /**
      * Upload templates and ISO images.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/storage/{storage}/upload
-     * @return \Proxmox\Api\Nodes\Node\Storage\Storage\Upload
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Storage\Storage\Upload
      */
     public function upload(): Upload
     {
