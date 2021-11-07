@@ -1,70 +1,60 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\nodes\node;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Api\nodes\node\lxc\vmid;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Nodes\Node;
+
+use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class lxc
- * @package Stratum\Proxmox\api\nodes\node
+ * Class Lxc
+ * @package Stratum\Proxmox\Api\Nodes\Node
  */
-class lxc
+class Lxc extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $apiURLWithVmid, //API url with vm id
-        $cookie; //Proxmox auth cookie
+    /**
+     * Ceph constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
+     */
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'lxc/');
+    }
 
     /**
-     * lxc constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * Directory index
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}
+     * @param string $vmId
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
+    public function vmId(string $vmId): VmId
+    {
+        return new VmId($this->getPve(), $this->getPathAdditional() . $vmId . '/');
     }
 
     /**
      * LXC container index (per node).
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/lxc/{vmid}
-     * @param $vmId integer VMID (unique) ID of the vm
-     * @return vmid
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc
+     * @return array|null
      */
-    public function vmid($vmId){
-        return new vmid($this->httpClient,$this->apiURL.$vmId.'/',$this->cookie);
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
     }
-
-    /**
-     * GET
-     */
-
-    /**
-     * LXC container index (per node).
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/lxc
-     * @return mixed
-     */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
-    }
-
-    /**
-     * POST
-     */
 
     /**
      * Create or restore a container.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/lxc
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc
      * @param $params array
-     * @return mixed|null
+     * @return array|null
      */
-    public function post($params){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL,$this->cookie,$params));
+    public function post(array $params = []): ?array
+    {
+        return $this->getPve()->getApi()->post($this->getPathAdditional(), $params);
     }
+
 }

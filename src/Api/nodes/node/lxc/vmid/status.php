@@ -1,115 +1,113 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\nodes\node\lxc\vmid;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId;
+
+use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Status\Current;
+use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Status\Reboot;
+use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Status\Resume;
+use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Status\Shutdown;
+use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Status\Start;
+use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Status\Stop;
+use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Status\Suspend;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class status
- * @package Stratum\Proxmox\api\nodes\node\lxc\vmid
+ * Class Status
+ * @package Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId
  */
-class status
+class Status extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
-
     /**
-     * status constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * Init constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
-    }
-
-    /**
-     * GET
-     */
-
-    /**
-     * Directory index
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/lxc/{vmid}/status
-     * @return mixed|null
-     */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'status/');
     }
 
     /**
      * Get virtual machine status.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/lxc/{vmid}/status/current
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/status/current
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Status\Current
      */
-    public function getCurrent(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'current/',$this->cookie));
+    public function current(): Current
+    {
+        return new Current($this->getPve(), $this->getPathAdditional());
     }
 
     /**
-     * POST
-     */
-
-    /**
      * Reboot the container by shutting it down, and starting it again. Applies pending changes.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/lxc/{vmid}/status/reboot
-     * @param $params array
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/status/reboot
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Status\Reboot
      */
-    public function postReboot($params){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.'reboot/',$this->cookie,$params));
+    public function reboot(): Reboot
+    {
+        return new Reboot($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Resume the container.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/lxc/{vmid}/status/resume
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/status/resume
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Status\Resume
      */
-    public function postResume(){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.'resume/',$this->cookie));
+    public function resume(): Resume
+    {
+        return new Resume($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Shutdown the container. This will trigger a clean shutdown of the container, see lxc-stop(1) for details.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/lxc/{vmid}/status/shutdown
-     * @param $params array
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/status/shutdown
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Status\Shutdown
      */
-    public function postShutdown($params){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.'shutdown/',$this->cookie,$params));
+    public function shutdown(): Shutdown
+    {
+        return new Shutdown($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Start the container.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/lxc/{vmid}/status/start
-     * @param $params array
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/status/start
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Status\Start
      */
-    public function postStart($params){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.'start/',$this->cookie,$params));
+    public function start(): Start
+    {
+        return new Start($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Stop the container. This will abruptly stop all processes running in the container.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/lxc/{vmid}/status/stop
-     * @param $params array
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/status/stop
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Status\Stop
      */
-    public function postStop($params){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.'stop/',$this->cookie,$params));
+    public function stop(): Stop
+    {
+        return new Stop($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Suspend the container.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/lxc/{vmid}/status/suspend
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/status/suspend
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Status\Suspend
      */
-    public function postSuspend(){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.'suspend/',$this->cookie));
+    public function suspend(): Suspend
+    {
+        return new Suspend($this->getPve(), $this->getPathAdditional());
+    }
+
+    /**
+     * Directory index.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/status
+     * @return array|null
+     */
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
     }
 }

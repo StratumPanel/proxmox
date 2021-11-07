@@ -1,87 +1,81 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\nodes\node;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Nodes\Node;
+
+use Stratum\Proxmox\Api\Nodes\Node\Apt\Changelog;
+use Stratum\Proxmox\Api\Nodes\Node\Apt\Repositories;
+use Stratum\Proxmox\Api\Nodes\Node\Apt\Update;
+use Stratum\Proxmox\Api\Nodes\Node\Apt\Versions;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class apt
- * @package Stratum\Proxmox\api\nodes\node
+ * Class Apt
+ * @package Stratum\Proxmox\Api\Nodes\Node
  */
-class apt
+class Apt extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
-
     /**
-     * apt constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * Apt constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
-    }
-
-    /**
-     * GET
-     */
-
-    /**
-     * Directory index for apt (Advanced Package Tool).
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/apt
-     * @return mixed
-     */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'apt/');
     }
 
     /**
      * Get package changelogs.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/apt/changelog
-     * @param $param
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/apt/changelog
+     * @return Changelog
      */
-    public function getChangelog($param){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'changelog/',$this->cookie,$param));
+    public function changelog(): Changelog
+    {
+        return new Changelog($this->getPve(), $this->getPathAdditional());
+    }
+
+    /**
+     * Get APT repository information.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/apt/repositories
+     * @return Repositories
+     */
+    public function repositories(): Repositories
+    {
+        return new Repositories($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * List available updates.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/apt/update
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/apt/update
+     * @return Update
      */
-    public function getUpdate(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'update/',$this->cookie));
+    public function update(): Update
+    {
+        return new Update($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Get package information for important Proxmox packages.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/apt/version
-     * @param $param
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/apt/versions
+     * @return Versions
      */
-    public function getVersion($param){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'version/',$this->cookie,$param));
+    public function versions(): Versions
+    {
+        return new Versions($this->getPve(), $this->getPathAdditional());
     }
 
     /**
-     * POST
+     * Directory index for apt (Advanced Package Tool).
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/apt
+     * @return array|null
      */
-
-    /**
-     * This is used to resynchronize the package index files from their sources (apt-get update).
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/apt/update
-     * @param $param
-     * @return mixed
-     */
-    public function postUpdate($param){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.'update/',$this->cookie,$param));
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
     }
+
 }

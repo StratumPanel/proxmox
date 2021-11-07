@@ -1,74 +1,50 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\cluster\config;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Cluster\Config;
+
+use Stratum\Proxmox\Api\Cluster\Config\Nodes\Node;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class nodes
- * @package Stratum\Proxmox\api\cluster\config
+ * Class Nodes
+ * @package Stratum\Proxmox\Api\Cluster\Config
  */
-class nodes
+class Nodes extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
 
     /**
-     * nodes constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * Nodes constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'nodes/');
     }
-
-    /**
-     * GET
-     */
-
-    /**
-     * Corosync node list.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/config/nodes
-     * @return mixed
-     */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
-    }
-
-    /**
-     * POST
-     */
 
     /**
      * Adds a node to the cluster configuration. This call is for internal use.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/config/nodes/{node}
-     * @param $node string
-     * @param $params array
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/config/nodes/{node}
+     * @param string $node
+     * @return Node
      */
-    public function postNode($node,$params){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.$node.'/',$this->cookie,$params));
+    public function node(string $node): Node
+    {
+        return new Node($this->getPve(), $this->getPathAdditional() . $node . '/');
     }
 
     /**
-     * DELETE
+     * Corosync node list.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/config/nodes
+     * @return array|null
      */
-
-    /**
-     * Removes a node from the cluster configuration.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/config/nodes/{node}
-     * @param $node string
-     * @return mixed
-     */
-    public function deleteNode($node){
-        return connection::processHttpResponse(connection::deleteAPI($this->httpClient,$this->apiURL.$node.'/',$this->cookie));
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
     }
 
 }

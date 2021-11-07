@@ -1,190 +1,214 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
+
 namespace Stratum\Proxmox\Api;
 
-use Stratum\Proxmox\Api\cluster\acme;
-use Stratum\Proxmox\Api\cluster\backup;
-use Stratum\Proxmox\Api\cluster\ceph;
-use Stratum\Proxmox\Api\cluster\config;
-use Stratum\Proxmox\Api\cluster\firewall;
-use Stratum\Proxmox\Api\cluster\ha;
-use Stratum\Proxmox\Api\cluster\replication;
-use Stratum\Proxmox\Helper\connection;
+use Stratum\Proxmox\Api\Cluster\Acme;
+use Stratum\Proxmox\Api\Cluster\Backup;
+use Stratum\Proxmox\Api\Cluster\BackupInfo;
+use Stratum\Proxmox\Api\Cluster\Ceph;
+use Stratum\Proxmox\Api\Cluster\Config;
+use Stratum\Proxmox\Api\Cluster\Firewall;
+use Stratum\Proxmox\Api\Cluster\Ha;
+use Stratum\Proxmox\Api\Cluster\Log;
+use Stratum\Proxmox\Api\Cluster\Metrics;
+use Stratum\Proxmox\Api\Cluster\NextId;
+use Stratum\Proxmox\Api\Cluster\Options;
+use Stratum\Proxmox\Api\Cluster\Replication;
+use Stratum\Proxmox\Api\Cluster\Resources;
+use Stratum\Proxmox\Api\Cluster\Sdn;
+use Stratum\Proxmox\Api\Cluster\Status;
+use Stratum\Proxmox\Api\Cluster\Tasks;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class cluster
- * @package Stratum\Proxmox\api
+ * Class Cluster
+ * @package Stratum\Proxmox\Api
  */
-class cluster
+class Cluster extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $ticket, //Auth ticket
-        $hostname, //Pormxox hostname
-        $cookie; //Proxmox auth cookie
 
     /**
-     * cluster constructor.
-     * @param $httpClient
-     * @param $apiURL
-     * @param $ticket
-     * @param $hostname
+     * Cluster constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$ticket,$hostname){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL.'/api2/json/cluster/'; //Save api url in class variable and change this to current api path
-        $this->ticket = $ticket; //Save auth ticket in class variable
-        $this->hostname = $hostname; //Save hostname in class variable
-        $this->cookie = connection::getCookies($this->ticket,$this->hostname); //Get auth cookie and save in class variable
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'cluster/');
     }
 
     /**
      * ACMEAccount index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/acme
-     * @return acme
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/acme
+     * @return Acme
      */
-    public function acme(){
-        return new acme($this->httpClient,$this->apiURL.'acme/',$this->cookie);
+    public function acme(): Acme
+    {
+        return new Acme($this->getPve(), $this->getPathAdditional());
     }
 
     /**
-     * List vzdump backup schedule.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/backup
-     * @return backup
+     * ACMEAccount index.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/backup
+     * @return Backup
      */
-    public function backup(){
-        return new backup($this->httpClient,$this->apiURL.'backup/',$this->cookie);
+    public function backup(): Backup
+    {
+        return new Backup($this->getPve(), $this->getPathAdditional());
+    }
+
+    /**
+     * Index for backup info related endpoints
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/backup-info
+     * @return BackupInfo
+     */
+    public function backupInfo(): BackupInfo
+    {
+        return new BackupInfo($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Cluster ceph index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ceph
-     * @return ceph
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ceph
+     * @return Ceph
      */
-    public function ceph(){
-        return new ceph($this->httpClient,$this->apiURL.'ceph/',$this->cookie);
+    public function ceph(): Ceph
+    {
+        return new Ceph($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Directory index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/config
-     * @return config
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/config
+     * @return Config
      */
-    public function config(){
-        return new config($this->httpClient,$this->apiURL.'config/',$this->cookie);
+    public function config(): Config
+    {
+        return new Config($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Directory index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/firewall
-     * @return firewall
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/firewall
+     * @return Firewall
      */
-    public function firewall(){
-        return new firewall($this->httpClient,$this->apiURL.'firewall/',$this->cookie);
+    public function firewall(): Firewall
+    {
+        return new Firewall($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Directory index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ha
-     * @return ha
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/ha
+     * @return Ha
      */
-    public function ha(){
-        return new ha($this->httpClient,$this->apiURL.'ha/',$this->cookie);
+    public function ha(): Ha
+    {
+        return new Ha($this->getPve(), $this->getPathAdditional());
+    }
+
+    /**
+     * Metrics index.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/metrics
+     * @return Metrics
+     */
+    public function metrics(): Metrics
+    {
+        return new Metrics($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * List replication jobs.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/replication
-     * @return replication
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/replication
+     * @return Replication
      */
-    public function replication(){
-        return new replication($this->httpClient,$this->apiURL.'replication/',$this->cookie);
+    public function replication(): Replication
+    {
+        return new Replication($this->getPve(), $this->getPathAdditional());
     }
 
     /**
-     * GET
+     * Directory index.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/sdn
+     * @return Sdn
      */
-
-    /**
-     * Cluster index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster
-     * @return mixed
-     */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function sdn(): Sdn
+    {
+        return new Sdn($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Read cluster log
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/log
-     * @param $params array
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/log
+     * @return Log
      */
-    public function getLog($params){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'log/',$this->cookie,$params));
+    public function log(): Log
+    {
+        return new Log($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Get next free VMID. If you pass an VMID it will raise an error if the ID is already used.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/nextid
-     * @param $params array
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/nextid
+     * @return NextId
      */
-    public function getNextid($params){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'nextid/',$this->cookie,$params));
-    }
-
-    /**
-     * Resources index (cluster wide).
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/resources
-     * @param $params array
-     * @return mixed
-     */
-    public function getResources($params){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'resources/',$this->cookie,$params));
+    public function nextId(): NextId
+    {
+        return new NextId($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Get datacenter options.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/options
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/options
+     * @return Options
      */
-    public function getOptions(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'options/',$this->cookie));
+    public function options(): Options
+    {
+        return new Options($this->getPve(), $this->getPathAdditional());
+    }
+
+    /**
+     * Resources index (cluster wide).
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/resources
+     * @return Resources
+     */
+    public function resources(): Resources
+    {
+        return new Resources($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Get cluster status information.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/status
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/status
+     * @return Status
      */
-    public function getStatus(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'status/',$this->cookie));
+    public function status(): Status
+    {
+        return new Status($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * List recent tasks (cluster wide).
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/tasks
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/tasks
+     * @return Tasks
      */
-    public function getTasks(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'tasks/',$this->cookie));
+    public function tasks(): Tasks
+    {
+        return new Tasks($this->getPve(), $this->getPathAdditional());
     }
 
     /**
-     * PUT
+     * Cluster index.
+     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster
+     * @return array|null
      */
-
-    /**
-     * Set datacenter options.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/options
-     * @param $params array
-     * @return mixed
-     */
-    public function putOptions($params){
-        return connection::processHttpResponse(connection::putAPI($this->httpClient,$this->apiURL.'options/',$this->cookie,$params));
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
     }
 
 }

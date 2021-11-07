@@ -1,54 +1,59 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\cluster\ha;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Cluster\Ha;
+
+use Stratum\Proxmox\Api\Cluster\Ha\Status\Current;
+use Stratum\Proxmox\Api\Cluster\Ha\Status\ManagerStatus;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class status
- * @package Stratum\Proxmox\api\cluster\ha
+ * Class Status
+ * @package Stratum\Proxmox\Api\Cluster\Ha
  */
-class status
+class Status extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
-
     /**
-     * status constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * Status constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
-    }
-
-    /**
-     * GET
-     */
-
-    /**
-     * Directory index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ha/status
-     * @return mixed|null
-     */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'status/');
     }
 
     /**
      * Get full HA manger status, including LRM status.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ha/status/manager_status
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/ha/status/manager_status
+     * @return Current
      */
-    public function getManagerStatus(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'manager_status/',$this->cookie));
+    public function current(): Current
+    {
+        return new Current($this->getPve(), $this->getPathAdditional());
+    }
+
+    /**
+     * Get full HA manger status, including LRM status.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/ha/status/manager_status
+     * @return ManagerStatus
+     */
+    public function managerStatus(): ManagerStatus
+    {
+        return new ManagerStatus($this->getPve(), $this->getPathAdditional());
+    }
+
+    /**
+     * List HA resources.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/ha/status
+     * @return array|null
+     */
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
     }
 
 }

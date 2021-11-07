@@ -1,223 +1,213 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\nodes\node;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Api\nodes\node\ceph\flags;
-use Stratum\Proxmox\Api\nodes\node\ceph\fs;
-use Stratum\Proxmox\Api\nodes\node\ceph\mds;
-use Stratum\Proxmox\Api\nodes\node\ceph\mgr;
-use Stratum\Proxmox\Api\nodes\node\ceph\mon;
-use Stratum\Proxmox\Api\nodes\node\ceph\osd;
-use Stratum\Proxmox\Api\nodes\node\ceph\pools;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Nodes\Node;
+
+use Stratum\Proxmox\Api\Nodes\Node\Ceph\Config;
+use Stratum\Proxmox\Api\Nodes\Node\Ceph\ConfigDb;
+use Stratum\Proxmox\Api\Nodes\Node\Ceph\Crush;
+use Stratum\Proxmox\Api\Nodes\Node\Ceph\Fs;
+use Stratum\Proxmox\Api\Nodes\Node\Ceph\Init;
+use Stratum\Proxmox\Api\Nodes\Node\Ceph\Log;
+use Stratum\Proxmox\Api\Nodes\Node\Ceph\Mds;
+use Stratum\Proxmox\Api\Nodes\Node\Ceph\Mgr;
+use Stratum\Proxmox\Api\Nodes\Node\Ceph\Mon;
+use Stratum\Proxmox\Api\Nodes\Node\Ceph\Osd;
+use Stratum\Proxmox\Api\Nodes\Node\Ceph\Pools;
+use Stratum\Proxmox\Api\Nodes\Node\Ceph\Restart;
+use Stratum\Proxmox\Api\Nodes\Node\Ceph\Rules;
+use Stratum\Proxmox\Api\Nodes\Node\Ceph\Start;
+use Stratum\Proxmox\Api\Nodes\Node\Ceph\Status;
+use Stratum\Proxmox\Api\Nodes\Node\Ceph\Stop;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class ceph
- * @package Stratum\Proxmox\api\nodes\node
+ * Class Ceph
+ * @package Stratum\Proxmox\Api\Nodes\Node
  */
-class ceph
+class Ceph extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
-
     /**
-     * ceph constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * Ceph constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
-    }
-
-    /**
-     * get all set ceph flags
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/ceph/flags
-     * @return flags
-     */
-    public function flags(){
-        return new flags($this->httpClient,$this->apiURL.'flags/',$this->cookie);
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'ceph/');
     }
 
     /**
      * Directory index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/ceph/fs
-     * @return fs
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/ceph/fs
+     * @return Fs
      */
-    public function fs(){
-        return new fs($this->httpClient,$this->apiURL.'fs/',$this->cookie);
+    public function fs(): Fs
+    {
+        return new Fs($this->getPve(), $this->getPathAdditional());
     }
 
     /**
-     * Create Ceph Metadata Server (MDS)
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/ceph/mds
-     * @return mds
+     * MDS directory index.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/ceph/mds
+     * @return Mds
      */
-    public function mds(){
-        return new mds($this->httpClient,$this->apiURL.'mds/',$this->cookie);
+    public function mds(): Mds
+    {
+        return new Mds($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * MGR directory index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/ceph/mgr
-     * @return mgr
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/ceph/mgr
+     * @return Mgr
      */
-    public function mgr(){
-        return new mgr($this->httpClient,$this->apiURL.'mgr/',$this->cookie);
+    public function mgr(): Mgr
+    {
+        return new Mgr($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Get Ceph monitor list.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/ceph/mon
-     * @return mon
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/ceph/mon
+     * @return Mon
      */
-    public function mon(){
-        return new mon($this->httpClient,$this->apiURL.'mon/',$this->cookie);
+    public function mon(): Mon
+    {
+        return new Mon($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Get Ceph osd list/tree.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/ceph/osd
-     * @return osd
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/ceph/osd
+     * @return Osd
      */
-    public function osd(){
-        return new osd($this->httpClient,$this->apiURL.'osd/',$this->cookie);
+    public function osd(): Osd
+    {
+        return new Osd($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * List all pools.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/ceph/pools
-     * @return pools
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/ceph/pools
+     * @return Pools
      */
-    public function pools(){
-        return new pools($this->httpClient,$this->apiURL.'pools/',$this->cookie);
-    }
-
-    /**
-     * GET
-     */
-
-    /**
-     * Directory index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/ceph
-     * @return mixed
-     */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function pools(): Pools
+    {
+        return new Pools($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Get Ceph configuration.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/ceph/config
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/ceph/config
+     * @return Config
      */
-    public function getConfig(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'config/',$this->cookie));
+    public function config(): Config
+    {
+        return new Config($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Get Ceph configuration database.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/ceph/configdb
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/ceph/pools
+     * @return ConfigDb
      */
-    public function getConfigDB(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'configdb/',$this->cookie));
+    public function configDb(): ConfigDb
+    {
+        return new ConfigDb($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Get OSD crush map
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/ceph/crush
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/ceph/crush
+     * @return Crush
      */
-    public function getCrush(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'crush/',$this->cookie));
+    public function crush(): Crush
+    {
+        return new Crush($this->getPve(), $this->getPathAdditional());
     }
 
     /**
-     * List local disks.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/ceph/disks
-     * @param $params array
-     * @return mixed
+     * Create initial ceph default configuration and setup symlinks.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/ceph/init
+     * @return Init
      */
-    public function getDisks($params){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'disks/',$this->cookie,$params));
+    public function init(): Init
+    {
+        return new Init($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Read ceph log
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/ceph/log
-     * @param $params array
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/ceph/log
+     * @return Log
      */
-    public function getLog($params){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'log/',$this->cookie,$params));
-    }
-
-    /**
-     * List ceph rules.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/ceph/rules
-     * @return mixed
-     */
-    public function getRules(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'rules/',$this->cookie));
-    }
-
-    /**
-     * Get ceph status.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/ceph/status
-     * @return mixed
-     */
-    public function getStatus(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'status/',$this->cookie));
-    }
-
-    /**
-     * POST
-     */
-
-    /**
-     * Create initial ceph default configuration and setup symlinks.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/ceph/init
-     * @param $param
-     * @return mixed
-     */
-    public function postInit($param){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'init/',$this->cookie,$param));
+    public function log(): Log
+    {
+        return new Log($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Restart ceph services.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/ceph/restart
-     * @param $param
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/ceph/restart
+     * @return Restart
      */
-    public function postRestart($param){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'restart/',$this->cookie,$param));
+    public function restart(): Restart
+    {
+        return new Restart($this->getPve(), $this->getPathAdditional());
+    }
+
+    /**
+     * List ceph rules.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/ceph/rules
+     * @return Rules
+     */
+    public function rules(): Rules
+    {
+        return new Rules($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Start ceph services.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/ceph/start
-     * @param $param
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/ceph/start
+     * @return Start
      */
-    public function postStart($param){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'start/',$this->cookie,$param));
+    public function start(): Start
+    {
+        return new Start($this->getPve(), $this->getPathAdditional());
+    }
+
+    /**
+     * Get ceph status.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/ceph/status
+     * @return Status
+     */
+    public function status(): Status
+    {
+        return new Status($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Stop ceph services.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/ceph/stop
-     * @param $param
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/ceph/stop
+     * @return Stop
      */
-    public function postStop($param){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'stop/',$this->cookie,$param));
+    public function stop(): Stop
+    {
+        return new Stop($this->getPve(), $this->getPathAdditional());
     }
+
+    /**
+     * Directory index.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/ceph
+     * @return array|null
+     */
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
+    }
+
 }

@@ -1,60 +1,59 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\nodes\node;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Nodes\Node;
+
+use Stratum\Proxmox\Api\Nodes\Node\Vzdump\Defaults;
+use Stratum\Proxmox\Api\Nodes\Node\Vzdump\Extraconfig;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class vzdump
- * @package Stratum\Proxmox\api\nodes\node
+ * Class Vzdump
+ * @package Stratum\Proxmox\Api\Nodes\Node
  */
-class vzdump
+class Vzdump extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
-
     /**
-     * vzdump constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * Apt constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'vzdump/');
     }
 
     /**
-     * GET
+     * Get the currently configured vzdump defaults.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/disks/defaults
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Vzdump\Defaults
      */
+    public function defaults(): Defaults
+    {
+        return new Defaults($this->getPve(), $this->getPathAdditional());
+    }
 
     /**
      * Extract configuration from vzdump backup archive.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/vzdump/extractconfig
-     * @param $params array
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/disks/extraconfig
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Vzdump\Extraconfig
      */
-    public function postExtractconfig($params){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.'extractconfig/',$this->cookie,$params));
+    public function extraconfig(): Extraconfig
+    {
+        return new Extraconfig($this->getPve(), $this->getPathAdditional());
     }
-
-    /**
-     * POST
-     */
 
     /**
      * Create backup.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/vzdump
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/vzdump
      * @param $params array
-     * @return mixed
+     * @return array|null
      */
-    public function post($params){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL,$this->cookie,$params));
+    public function post(array $params = []): ?array
+    {
+        return $this->getPve()->getApi()->post($this->getPathAdditional(), $params);
     }
-
 }

@@ -1,80 +1,59 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\cluster\ceph;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Cluster\Ceph;
+
+use Stratum\Proxmox\Api\Cluster\Ceph\Flags\Flag;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class flags
- * @package Stratum\Proxmox\api\cluster\ceph
+ * Class Flags
+ * @package Stratum\Proxmox\Api\Cluster\Ceph
  */
-class flags
+class Flags extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
-
     /**
-     * flags constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * Flags constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
-    }
-
-    /**
-     * GET
-     */
-
-    /**
-     * get the status of all ceph flags
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ceph/flags
-     * @return mixed
-     */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'flags/');
     }
 
     /**
      * Get the status of a specific ceph flag.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ceph/flags/{flag}
-     * @param $flag mixed
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ceph/flags/{flag}
+     * @param string $flag
+     * @return Flag
      */
-    public function getFlag($flag){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.$flag.'/',$this->cookie));
+    public function flag(string $flag): Flag
+    {
+        return new Flag($this->getPve(), $this->getPathAdditional() . $flag . '/');
     }
 
     /**
-     * PUT
+     * Get the status of all ceph flags
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ceph/flags
+     * @return array|null
      */
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
+    }
 
     /**
      * Set/Unset multiple ceph flags at once.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ceph/flags
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ceph/flags
      * @param $params array
-     * @return mixed
+     * @return array|null
      */
-    public function put($params){
-        return connection::processHttpResponse(connection::putAPI($this->httpClient,$this->apiURL,$this->cookie,$params));
+    public function put(array $params = []): ?array
+    {
+        return $this->getPve()->getApi()->put($this->getPathAdditional(), $params);
     }
-
-    /**
-     * Set or clear (unset) a specific ceph flag
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ceph/flags/{flag}
-     * @param $flag mixed
-     * @param $params array
-     * @return mixed
-     */
-    public function putFlag($flag,$params){
-        return connection::processHttpResponse(connection::putAPI($this->httpClient,$this->apiURL.$flag.'/',$this->cookie,$params));
-    }
-
 }

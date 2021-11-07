@@ -1,255 +1,244 @@
 <?php
 /*
- * @copyright  2020 Daniel Engelschalk <hello@mrkampf.com>
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
+
 namespace Stratum\Proxmox;
 
 use GuzzleHttp\Client;
-use Stratum\Proxmox\Api\access;
-use Stratum\Proxmox\Api\cluster;
-use Stratum\Proxmox\Api\nodes;
-use Stratum\Proxmox\Api\pools;
-use Stratum\Proxmox\Api\storage;
-use Stratum\Proxmox\Api\version;
-use Stratum\Proxmox\Exception\AuthenticationException;
-use Stratum\Proxmox\Helper\connection;
+use GuzzleHttp\Cookie\CookieJar;
+use Stratum\Proxmox\Api\Access;
+use Stratum\Proxmox\Api\Cluster;
+use Stratum\Proxmox\Api\Nodes;
+use Stratum\Proxmox\Api\Pools;
+use Stratum\Proxmox\Api\Storage;
+use Stratum\Proxmox\Api\Version;
+use Stratum\Proxmox\Helper\Api;
 
 /**
  * Class pve
  * @package proxmox
  */
-class pve
+class PVE
 {
-    private static $httpClient; //The http client for the connection to the host
 
-    private
-        $username, //Username
-        $password, //The password for user
-        $hostname, //Host, ip or domain
-        $port, //Proxmox api port
-        $authType, //User type (pve or pam)
-        $debug, //Want debug connection
-        $CSRFPreventionToken, //CSRF token for auth
-        $ticket, //Auth ticket
-        $apiURL; //API url
+    /**
+     * @var Client
+     */
+    private Client $httpClient;
+
+    /**
+     * @var Api
+     */
+    private Api $api;
+
+    /**
+     * @var CookieJar
+     */
+    private CookieJar $cookie;
+
+    /**
+     * @var string
+     */
+    private string $hostname, $apiURL, $username, $password, $authType, $CSRFPreventionToken, $ticket;
+
+    /**
+     * @var int
+     */
+    private int $port;
+
+    /**
+     * @var boolean
+     */
+    private bool $debug;
 
     /**
      * pve constructor.
-     * @param $param
+     * @param string $hostname
+     * @param string $username
+     * @param string $password
+     * @param int $port
+     * @param string $authType
      * @param bool $debug
-     * @deprecated Changed in next version
      */
-    public function __construct($param,$debug=false){
-        $this->hostname = $param['hostname']; //Save hostname in class variable
-        $this->username = $param['username']; //Save username in class variable
-        $this->password = $param['password']; //Save user password in class variable
-        $this->port = $param['port']; //Save port in class variable
-        $this->authType = $param['authType']; //Save auth type in class variable
-        $this->debug = $debug; //Save the debug boolean variable
-        $this->apiURL = 'https://'.$this->hostname.':'.$this->port; //Create the basic api url
-        $this->refreshHttpClient();
-        $json = json_decode($this->getCSRFPreventionToken(), true); //Get auth CSRF token
-        $this->setLoginTokens($json); //Set the login data for the proxmox api
-        connection::setCsrfTokenString($this->CSRFPreventionToken);
-    }
-
-    /**
-     * Set the login data for the proxmox api
-     * @param $json
-     * @return bool
-     */
-    private function setLoginTokens($json){
-        if(!is_array($json)){ //Is $json are array
-            throw new AuthenticationException('Can\'t login with this data.');
-        }
-        if(!array_key_exists('data',$json)){//Is key 'data' in array
-            throw new AuthenticationException('Can\'t login with this data.');
-        }
-        $this->CSRFPreventionToken = $json['data']['CSRFPreventionToken']; //Save the CSRF token in class variable
-        $this->ticket = $json['data']['ticket']; //Save the ticket in class variable
-        return true; //Return true when function finish
-    }
-
-    /**
-     * Refresh the CSRF token data from proxmox api for api auth
-     */
-    private function refreshCSRFToket(){
-        $csrfRequest = connection::getCSRFToken($this->apiURL,$this->username,$this->password,$this->authType,$this->debug); //Get CSRF token
-        if($csrfRequest){ //IF CSRF token variable empty/null
-            $this->CSRFPreventionToken = $csrfRequest->getBody();
-        }
-    }
-
-    /**
-     * Refresh the http client
-     */
-    private function refreshHttpClient(){
-        $this->setHttpClient(new Client()); //Create new http client
-    }
-
-    /**
-     * Cluster node index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes
-     * @return nodes
-     * @deprecated Changed in next version
-     */
-    public function nodes(){
-        return new nodes(self::$httpClient,$this->apiURL,$this->ticket,$this->hostname);
-    }
-
-    /**
-     * API version details. The result also includes the global datacenter confguration.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/version
-     * @return version
-     * @deprecated Changed in next version
-     */
-    public function version(){
-        return new version(self::$httpClient,$this->apiURL,$this->ticket,$this->hostname);
-    }
-
-    /**
-     * Storage index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/storage
-     * @return storage
-     * @deprecated Changed in next version
-     */
-    public function storage(){
-        return new storage(self::$httpClient,$this->apiURL,$this->ticket,$this->hostname);
-    }
-
-    /**
-     * Pool index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/pools
-     * @return pools
-     * @deprecated Changed in next version
-     */
-    public function pools(){
-        return new pools(self::$httpClient,$this->apiURL,$this->ticket,$this->hostname);
-    }
-
-    /**
-     * Directory index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/access
-     * @return access
-     * @deprecated Changed in next version
-     */
-    public function access(){
-        return new access(self::$httpClient,$this->apiURL,$this->ticket,$this->hostname);
-    }
-
-    /**
-     * Cluster index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster
-     * @return cluster
-     * @deprecated Changed in next version
-     */
-    public function cluster(){
-        return new cluster(self::$httpClient,$this->apiURL,$this->ticket,$this->hostname);
-    }
-
-    /**
-     * @return Client
-     */
-    public static function getHttpClient()
+    public function __construct(string $hostname, string $username, string $password, int $port = 8006, string $authType = "pam", bool $debug = false)
     {
-        if(!self::$httpClient){
-            self::refreshHttpClient();
-        }
-        return self::$httpClient;
+        $this->setHostname($hostname); //Save hostname in class variable
+        $this->setUsername($username); //Save username in class variable
+        $this->setPassword($password); //Save user password in class variable
+        $this->setPort($port); //Save port in class variable
+        $this->setAuthType($authType); //Save auth type in class variable
+        $this->setDebug($debug); //Save the debug boolean variable
+        $this->setApiURL('https://' . $this->getHostname() . ':' . $this->getPort() . '/api2/json/'); //Create the basic api url
+        $this->setApi(new Api($this));
+        $this->setHttpClient(new Client());
+        $this->getApi()->login();
     }
 
     /**
-     * @param Client $httpClient
+     * @param string $username
      */
-    public function setHttpClient($httpClient)
-    {
-        self::$httpClient = $httpClient;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    /**
-     * @param mixed $username
-     */
-    public function setUsername($username)
+    public function setUsername(string $username): void
     {
         $this->username = $username;
     }
 
     /**
-     * @return mixed
+     * @param string $password
      */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * @param mixed $password
-     */
-    public function setPassword($password)
+    public function setPassword(string $password): void
     {
         $this->password = $password;
     }
 
     /**
-     * @return mixed
+     * @param string $authType
      */
-    public function getHost()
-    {
-        return $this->hostname;
-    }
-
-    /**
-     * @param mixed $host
-     */
-    public function setHost($host)
-    {
-        $this->hostname = $host;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPort()
-    {
-        return $this->port;
-    }
-
-    /**
-     * @param mixed $port
-     */
-    public function setPort($port)
-    {
-        $this->port = $port;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAuthType()
-    {
-        return $this->authType;
-    }
-
-    /**
-     * @param mixed $authType
-     */
-    public function setAuthType($authType)
+    public function setAuthType(string $authType): void
     {
         $this->authType = $authType;
     }
 
     /**
+     * @param string $apiURL
+     */
+    public function setApiURL(string $apiURL): void
+    {
+        $this->apiURL = $apiURL;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHostname(): string
+    {
+        return $this->hostname;
+    }
+
+    /**
+     * @param string $hostname
+     */
+    public function setHostname(string $hostname): void
+    {
+        $this->hostname = $hostname;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPort(): int
+    {
+        return $this->port;
+    }
+
+    /**
+     * @param int $port
+     */
+    public function setPort(int $port): void
+    {
+        $this->port = $port;
+    }
+
+    /**
+     * @return Api
+     */
+    public function getApi(): Api
+    {
+        return $this->api;
+    }
+
+    /**
+     * @param Api $api
+     */
+    public function setApi(Api $api): void
+    {
+        $this->api = $api;
+    }
+
+    /**
+     * @return Client
+     */
+    public function getHttpClient(): Client
+    {
+        return $this->httpClient;
+    }
+
+    /**
+     * @param Client $httpClient
+     */
+    public function setHttpClient(Client $httpClient): void
+    {
+        $this->httpClient = $httpClient;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApiURL(): string
+    {
+        return $this->apiURL;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUsername(): string
+    {
+        return $this->username;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAuthType(): string
+    {
+        return $this->authType;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCSRFPreventionToken(): string
+    {
+        return $this->CSRFPreventionToken;
+    }
+
+    /**
+     * @param string $CSRFPreventionToken
+     */
+    public function setCSRFPreventionToken(string $CSRFPreventionToken): void
+    {
+        $this->CSRFPreventionToken = $CSRFPreventionToken;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTicket(): string
+    {
+        return $this->ticket;
+    }
+
+    /**
+     * @param string $ticket
+     */
+    public function setTicket(string $ticket): void
+    {
+        $this->ticket = $ticket;
+    }
+
+    /**
      * @return bool
      */
-    public function isDebug()
+    public function getDebug(): bool
     {
         return $this->debug;
     }
@@ -257,62 +246,85 @@ class pve
     /**
      * @param bool $debug
      */
-    public function setDebug($debug)
+    public function setDebug(bool $debug): void
     {
         $this->debug = $debug;
     }
 
     /**
-     * @return mixed
+     * @return CookieJar
      */
-    public function getCSRFPreventionToken()
+    public function getCookie(): CookieJar
     {
-        if(!$this->CSRFPreventionToken){
-            self::refreshCSRFToket();
-        }
-        return $this->CSRFPreventionToken;
+        return $this->cookie;
     }
 
     /**
-     * @param mixed $CSRFPreventionToken
+     * @param CookieJar $cookie
      */
-    public function setCSRFPreventionToken($CSRFPreventionToken)
+    public function setCookie(CookieJar $cookie): void
     {
-        $this->CSRFPreventionToken = $CSRFPreventionToken;
+        $this->cookie = $cookie;
     }
 
     /**
-     * @return mixed
+     * Directory index.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/access
+     * @return Access
      */
-    public function getTicket()
+    public function access(): Access
     {
-        return $this->ticket;
+        return new Access($this, "");
     }
 
     /**
-     * @param mixed $ticket
+     * Cluster index.
+     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster
+     * @return Cluster
      */
-    public function setTicket($ticket)
+    public function cluster(): Cluster
     {
-        $this->ticket = $ticket;
+        return new Cluster($this, "");
     }
 
     /**
-     * @return string
+     * Node index.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}
+     * @return Nodes
      */
-    public function getApiURL()
+    public function nodes(): Nodes
     {
-        return $this->apiURL;
+        return new Nodes($this, "");
     }
 
     /**
-     * @param string $apiURL
+     * Storage index.
+     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/storage
+     * @return Storage
      */
-    public function setApiURL($apiURL)
+    public function storage(): Storage
     {
-        $this->apiURL = $apiURL;
+        return new Storage($this, "");
     }
 
+    /**
+     * Pool index.
+     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/pools
+     * @return Pools
+     */
+    public function pools(): Pools
+    {
+        return new Pools($this, "");
+    }
 
+    /**
+     * API version details. The result also includes the global datacenter confguration.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/version
+     * @return Version
+     */
+    public function version(): Version
+    {
+        return new Version($this, "");
+    }
 
 }

@@ -1,98 +1,60 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\cluster;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Cluster;
+
+use Stratum\Proxmox\Api\Cluster\Backup\Id;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class backup
- * @package Stratum\Proxmox\api\cluster
+ * Class Backup
+ * @package Stratum\Proxmox\Api\Cluster
  */
-class backup
+class Backup extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
-
     /**
-     * acme constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * Backup constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
-    }
-
-    /**
-     * GET
-     */
-
-    /**
-     * List vzdump backup schedule.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/backup
-     * @return mixed
-     */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'backup/');
     }
 
     /**
      * Read vzdump backup job definition.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/backup/{id}
-     * @param $id string
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/backup/{id}
+     * @param string $tokenId
+     * @return Id
      */
-    public function getId($id){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.$id.'/',$this->cookie));
+    public function id(string $tokenId): Id
+    {
+        return new Id($this->getPve(), $this->getPathAdditional() . $tokenId . '/');
     }
 
     /**
-     * PUT
+     * ACMEAccount index.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/backup
+     * @return array|null
      */
-
-    /**
-     * Update vzdump backup job definition.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/backup/{id}
-     * @param $id string
-     * @param $params array
-     * @return mixed
-     */
-    public function putId($id,$params){
-        return connection::processHttpResponse(connection::putAPI($this->httpClient,$this->apiURL.$id.'/',$this->cookie,$params));
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
     }
-
-    /**
-     * POST
-     */
 
     /**
      * Create new vzdump backup job.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/backup
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/backup
      * @param $params array
-     * @return mixed
+     * @return array|null
      */
-    public function post($params){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie,$params));
-    }
-
-    /**
-     * DELETE
-     */
-
-    /**
-     * Delete vzdump backup job definition.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/backup/{id}
-     * @param $id string
-     * @return mixed
-     */
-    public function deleteId($id){
-        return connection::processHttpResponse(connection::putAPI($this->httpClient,$this->apiURL.$id.'/',$this->cookie));
+    public function post(array $params = []): ?array
+    {
+        return $this->getPve()->getApi()->post($this->getPathAdditional(), $params);
     }
 
 }

@@ -1,72 +1,49 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\nodes\node\ceph;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Nodes\Node\Ceph;
+
+use Stratum\Proxmox\Api\Nodes\Node\Ceph\Mgr\Id;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class mgr
- * @package Stratum\Proxmox\api\nodes\node\ceph
+ * Class Mgr
+ * @package Stratum\Proxmox\Api\Nodes\Node\Ceph
  */
-class mgr
+class Mgr extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
 
     /**
-     * mgr constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * @param \Stratum\Proxmox\PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'mgr/');
     }
-
-    /**
-     * GET
-     */
 
     /**
      * MGR directory index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/ceph/mgr
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/ceph/mgr
+     * @return array|null
      */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
     }
-
-    /**
-     * POST
-     */
 
     /**
      * Create Ceph Manager
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/ceph/mgr
-     * @param $id string
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/ceph/mgr/{id}
+     * @param string $id
+     * @return Id
      */
-    public function postID($id){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.$id.'/',$this->cookie));
+    public function id(string $id): Id
+    {
+        return new Id($this->getPve(), $this->getPathAdditional() . $id . '/');
     }
 
-    /**
-     * DELETE
-     */
-
-    /**
-     * Destroy Ceph Manager.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/ceph/mgr
-     * @param $id string
-     * @return mixed
-     */
-    public function deleteName($id){
-        return connection::processHttpResponse(connection::deleteAPI($this->httpClient,$this->apiURL.$id.'/',$this->cookie));
-    }
 }

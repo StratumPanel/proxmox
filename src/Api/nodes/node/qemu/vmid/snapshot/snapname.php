@@ -1,96 +1,68 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\nodes\qemu\snapshot;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Snapshot;
+
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Snapshot\Snapname\Config;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Snapshot\Snapname\Rollback;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class snapname
- * @package Stratum\Proxmox\api\nodes\qemu\snapshot
+ * Class Snapname
+ * @package Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Snapshot
  */
-class snapname
+class Snapname extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
-
     /**
-     * snapname constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * Init constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
-    }
-
-    /**
-     * GET
-     */
-
-    /**
-     * -
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/snapshot/{snapname}
-     * @return mixed|null
-     */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional);
     }
 
     /**
      * Get snapshot configuration
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/snapshot/{snapname}/config
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/snapshot/{snapname}/config
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Snapshot\Snapname\Config
      */
-    public function getConfig(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'config/',$this->cookie));
+    public function config(): Config
+    {
+        return new Config($this->getPve(), $this->getPathAdditional());
     }
 
     /**
-     * PUT
+     * Rollback LXC state to specified snapshot.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/snapshot/{snapname}/rollback
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Snapshot\Snapname\Rollback
      */
-
-    /**
-     * Update snapshot metadata.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/snapshot/{snapname}/config
-     * @param $params array
-     * @return mixed|null
-     */
-    public function putConfig($params){
-        return connection::processHttpResponse(connection::putAPI($this->httpClient,$this->apiURL.'config/',$this->cookie,$params));
+    public function rollback(): Rollback
+    {
+        return new Rollback($this->getPve(), $this->getPathAdditional());
     }
 
     /**
-     * POST
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/snapshot/{snapname}
+     * @return array|null
      */
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
 
-    /**
-     * Rollback VM state to specified snapshot.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/snapshot/{snapname}/rollback
-     * @return mixed|null
-     */
-    public function postRollback(){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.'rollback/',$this->cookie));
     }
 
     /**
-     * DELETE
+     * Delete a LXC snapshot.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/snapshot/{snapname}
+     * @return array|null
      */
-
-    /**
-     * Delete a VM snapshot.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/snapshot/{snapname}
-     * @param $params array
-     * @return mixed|null
-     */
-    public function delete($params){
-        return connection::processHttpResponse(connection::deleteAPI($this->httpClient,$this->apiURL,$this->cookie,$params));
+    public function delete(): ?array
+    {
+        return $this->getPve()->getApi()->delete($this->getPathAdditional());
     }
-
-
 }

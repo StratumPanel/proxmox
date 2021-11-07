@@ -1,74 +1,48 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\nodes\node\ceph;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Nodes\Node\Ceph;
+
+use Stratum\Proxmox\Api\Nodes\Node\Ceph\Mon\MonId;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class mon
- * @package Stratum\Proxmox\api\nodes\node\ceph
+ * Class Mon
+ * @package Stratum\Proxmox\Api\Nodes\Node\Ceph
  */
-class mon
+class Mon extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
 
     /**
-     * mon constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'mon/');
     }
-
-    /**
-     * GET
-     */
 
     /**
      * Get Ceph monitor list.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/ceph/mon
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/ceph/mon
+     * @return array|null
      */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
     }
-
-    /**
-     * POST
-     */
 
     /**
      * Create Ceph Monitor and Manager
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/ceph/mon/{monid}
-     * @param $monId string
-     * @param $params array
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/ceph/mon/{monid}
+     * @param string $monId
+     * @return MonId
      */
-    public function postFlag($monId,$params){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.$monId,$this->cookie,$params));
+    public function monId(string $monId): MonId
+    {
+        return new MonId($this->getPve(), $this->getPathAdditional() . $monId . '/');
     }
-
-    /**
-     * DELETE
-     */
-
-    /**
-     * Destroy Ceph Monitor and Manager.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/ceph/mon/{monid}
-     * @param $monId string
-     * @return mixed
-     */
-    public function deleteFlag($monId){
-        return connection::processHttpResponse(connection::deleteAPI($this->httpClient,$this->apiURL.$monId,$this->cookie));
-    }
-
 }

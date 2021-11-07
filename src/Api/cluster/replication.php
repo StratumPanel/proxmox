@@ -1,99 +1,60 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\cluster;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Cluster;
+
+use Stratum\Proxmox\Api\Cluster\Replication\Id;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class replication
- * @package Stratum\Proxmox\api\cluster
+ * Class Replication
+ * @package Stratum\Proxmox\Api\Cluster
  */
-class replication
+class Replication extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
-
     /**
-     * replication constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * Replication constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
-    }
-
-    /**
-     * GET
-     */
-
-    /**
-     * List replication jobs.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/replication
-     * @return mixed|null
-     */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'replication/');
     }
 
     /**
      * Read replication job configuration.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/replication/{id}
-     * @param $id string
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/replication/{id}
+     * @param string $id
+     * @return Id
      */
-    public function getId($id){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.$id.'/',$this->cookie));
+    public function id(string $id): Id
+    {
+        return new Id($this->getPve(), $this->getPathAdditional() . $id . '/');
     }
 
     /**
-     * PUT
+     * List replication jobs.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/replication
+     * @return array|null
      */
-
-    /**
-     * Update replication job configuration.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/replication/{id}
-     * @param $id string
-     * @param $params array
-     * @return mixed|null
-     */
-    public function putId($id,$params){
-        return connection::processHttpResponse(connection::putAPI($this->httpClient,$this->apiURL.$id.'/',$this->cookie,$params));
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
     }
-
-    /**
-     * POST
-     */
 
     /**
      * Create a new replication job
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/replication
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/replication
      * @param $params array
-     * @return mixed|null
+     * @return array|null
      */
-    public function post($params){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL,$this->cookie,$params));
-    }
-
-    /**
-     * DELETE
-     */
-
-    /**
-     * Mark replication job for removal.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/replication/{id}
-     * @param $id string
-     * @param $params array
-     * @return mixed|null
-     */
-    public function deleteId($id,$params){
-        return connection::processHttpResponse(connection::deleteAPI($this->httpClient,$this->apiURL.$id.'/',$this->cookie,$params));
+    public function post(array $params = []): ?array
+    {
+        return $this->getPve()->getApi()->post($this->getPathAdditional(), $params);
     }
 
 }

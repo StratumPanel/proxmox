@@ -1,62 +1,46 @@
 <?php
 /*
- * @copyright  2020 Daniel Engelschalk <hello@mrkampf.com>
- * @copyright 2020 Elias Haisch <elias@eliashaisch.de>
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\nodes\node;
+namespace Stratum\Proxmox\Api\Nodes\Node;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Api\nodes\node\storage\storageId;
-use Stratum\Proxmox\Helper\connection;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class version
- * @package Stratum\Proxmox\api\nodes\node
+ * Class Storage
+ * @package Stratum\Proxmox\Api\Nodes\Node
  */
-class storage
+class Storage extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
-
     /**
-     * storage constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie string
+     * Init constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient, $apiURL, $cookie)
+    public function __construct(PVE $pve, string $parentAdditional)
     {
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
-
+        parent::__construct($pve, $parentAdditional . 'storage/');
     }
 
     /**
-     * Directory index
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/storage/{storage}
-     * @param $storage string
-     * @return storageId
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/storage/{storage}
+     * @param string $Storage
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Storage\Storage
      */
-    public function storageId($storage)
+    public function zone(string $Storage): Storage\Storage
     {
-        return new storageId($this->httpClient, $this->apiURL . $storage . '/', $this->cookie);
+        return new Storage\Storage($this->getPve(), $this->getPathAdditional() . $Storage . '/');
     }
 
     /**
-     * GET
-     */
-
-    /**
-     * Path: /nodes/{node}/storage
      * Get status for all datastores.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/storage
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/storage
+     * @return array|null
      */
-    public function get()
+    public function get(): ?array
     {
-        return connection::processHttpResponse(connection::getAPI($this->httpClient, $this->apiURL, $this->cookie));
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
     }
 }

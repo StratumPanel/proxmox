@@ -1,116 +1,81 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\nodes\node;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Nodes\Node;
+
+use Stratum\Proxmox\Api\Nodes\Node\Network\Iface;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class network
- * @package Stratum\Proxmox\api\nodes\node
+ * Class Network
+ * @package Stratum\Proxmox\Api\Nodes\Node
  */
-class network
+class Network extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
-
     /**
-     * network constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * Apt constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
-    }
-
-    /**
-     * GET
-     */
-
-    /**
-     * List available networks
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/network
-     * @return mixed
-     */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'network/');
     }
 
     /**
      * Read network device configuration
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/network/{iface}
-     * @param $iface string
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/network/{iface}
+     * @param string $pciId
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Network\Iface
      */
-    public function getIface($iface){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.$iface.'/',$this->cookie));
+    public function iface(string $pciId): Iface
+    {
+        return new Iface($this->getPve(), $this->getPathAdditional() . $pciId . '/');
     }
-
-    /**
-     * PUT
-     */
 
     /**
      * List available networks
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/network
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/network
+     * @return array|null
      */
-    public function put(){
-        return connection::processHttpResponse(connection::putAPI($this->httpClient,$this->apiURL,$this->cookie));
-    }
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
 
-    /**
-     * Update network device configuration
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/network/{iface}
-     * @param $iface string
-     * @param $params array
-     * @return mixed
-     */
-    public function putIface($iface,$params){
-        return connection::processHttpResponse(connection::putAPI($this->httpClient,$this->apiURL.$iface.'/',$this->cookie,$params));
     }
-
-    /**
-     * POST
-     */
 
     /**
      * Create network device configuration
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/network
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/network
      * @param $params array
-     * @return mixed
+     * @return array|null
      */
-    public function post($params){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL,$this->cookie,$params));
+    public function post(array $params = []): ?array
+    {
+        return $this->getPve()->getApi()->post($this->getPathAdditional(), $params);
     }
 
     /**
-     * DELETE
+     * Reload network configuration
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/network
+     * @param $params array
+     * @return array|null
      */
-
-    /**
-     * List available networks
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/network
-     * @return mixed
-     */
-    public function delete(){
-        return connection::processHttpResponse(connection::deleteAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function put(array $params = []): ?array
+    {
+        return $this->getPve()->getApi()->put($this->getPathAdditional(), $params);
     }
 
     /**
-     * Delete network device configuration
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/network/{iface}
-     * @param $iface string
-     * @return mixed
+     * Revert network configuration changes.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/network
+     * @return array|null
      */
-    public function deleteIface($iface){
-        return connection::processHttpResponse(connection::deleteAPI($this->httpClient,$this->apiURL.$iface.'/',$this->cookie));
+    public function delete(): ?array
+    {
+        return $this->getPve()->getApi()->delete($this->getPathAdditional());
     }
-
 }

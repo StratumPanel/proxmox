@@ -1,53 +1,47 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\nodes\node\hardware\pci;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Nodes\Node\Hardware\Pci;
+
+use Stratum\Proxmox\Api\Nodes\Node\Hardware\Pci\PciId\Mdev;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class pciid
- * @package Stratum\Proxmox\api\nodes\node\hardware\pci
+ * Class PciId
+ * @package Stratum\Proxmox\Api\Nodes\Node\Qemu
  */
-class pciid
+class PciId extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
-
     /**
-     * pci constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * Init constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional);
     }
 
     /**
-     * GET
+     * List mediated device types for given PCI device.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/hardware/pci/{pciid}/mdev
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Hardware\Pci\PciId\Mdev
      */
-
-    /**
-     * Index of available pci methods
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/hardware/pci/{pciid}
-     * @return mixed|null
-     */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function hardware(): Mdev
+    {
+        return new Mdev($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Index of available pci methods
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/hardware/pci/{pciid}/mdev
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/hardware/pci/{pciid}
+     * @return array|null
      */
-    public function getMdev(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'mdev/',$this->cookie));
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
     }
 }

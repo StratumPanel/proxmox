@@ -1,107 +1,70 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\cluster\firewall\ipset;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Cluster\Firewall\IpSet;
+
+use Stratum\Proxmox\Api\Cluster\Firewall\IpSet\Name\Cidr;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class name
- * @package Stratum\Proxmox\api\cluster\firewall\ipset
+ * Class Name
+ * @package Stratum\Proxmox\Api\Cluster\Firewall\IpSet
  */
-class name
+class Name extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
-
     /**
-     * name constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * Name constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
-    }
-
-    /**
-     * GET
-     */
-
-    /**
-     * List IPSet content
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/firewall/ipset/{name}
-     * @return mixed|null
-     */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient, $this->apiURL, $this->cookie));
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional);
     }
 
     /**
      * Read IP or Network settings from IPSet.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/firewall/ipset/{name}/{cidr}
-     * @param $cidr
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/firewall/ipset/{name}/{cidr}
+     * @param string $cidr
+     * @return Cidr
      */
-    public function getCidr($cidr){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient, $this->apiURL.$cidr.'/', $this->cookie));
+    public function cidr(string $cidr): Cidr
+    {
+        return new Cidr($this->getPve(), $this->getPathAdditional() . $cidr . '/');
     }
 
     /**
-     * PUT
+     * List IPSet content
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/firewall/ipset/{name}
+     * @return array|null
      */
-
-    /**
-     * Update IP or Network settings
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/firewall/ipset/{name}/{cidr}
-     * @param $cidr
-     * @param $param array
-     * @return mixed|null
-     */
-    public function putCidr($cidr,$param){
-        return connection::processHttpResponse(connection::putAPI($this->httpClient, $this->apiURL.$cidr.'/', $this->cookie, $param));
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
     }
-
-    /**
-     * POST
-     */
 
     /**
      * Add IP or Network to IPSet.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/firewall/ipset/{name}
-     * @param $param array
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/firewall/ipset/{name}
+     * @param $params array
+     * @return array|null
      */
-    public function post($param){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient, $this->apiURL, $this->cookie, $param));
+    public function post(array $params = []): ?array
+    {
+        return $this->getPve()->getApi()->post($this->getPathAdditional(), $params);
     }
-
-    /**
-     * DELETE
-     */
 
     /**
      * Delete IPSet
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/firewall/ipset/{name}
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/firewall/ipset/{name}
+     * @return array|null
      */
-    public function delete(){
-        return connection::processHttpResponse(connection::deleteAPI($this->httpClient, $this->apiURL, $this->cookie));
+    public function delete(): ?array
+    {
+        return $this->getPve()->getApi()->delete($this->getPathAdditional());
     }
 
-    /**
-     * Remove IP or Network from IPSet.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/firewall/ipset/{name}/{cidr}
-     * @param $cidr
-     * @param $param array
-     * @return mixed|null
-     */
-    public function deleteCidr($cidr,$param){
-        return connection::processHttpResponse(connection::deleteAPI($this->httpClient, $this->apiURL.$cidr.'/', $this->cookie, $param));
-    }
 }

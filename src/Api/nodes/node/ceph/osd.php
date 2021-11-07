@@ -1,70 +1,59 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\nodes\node\ceph;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Api\nodes\node\ceph\osd\osdid;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Nodes\Node\Ceph;
+
+use Stratum\Proxmox\Api\Nodes\Node\Ceph\Osd\OsdId;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class osd
- * @package Stratum\Proxmox\api\nodes\node\ceph
+ * Class Osd
+ * @package Stratum\Proxmox\Api\Nodes\Node\Ceph
  */
-class osd
+class Osd extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
 
     /**
-     * osd constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'osd/');
+    }
+
+    /**
+     * Get Ceph osd list/tree.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/ceph/osd
+     * @return array|null
+     */
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
+    }
+
+    /**
+     * Create OSD
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/ceph/osd
+     * @param $params array
+     * @return array|null
+     */
+    public function post(array $params = []): ?array
+    {
+        return $this->getPve()->getApi()->post($this->getPathAdditional(), $params);
     }
 
     /**
      * Destroy OSD
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/ceph/osd/{osdid}
-     * @param $osdId integer
-     * @return osdid
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/ceph/osd/{osdId}
+     * @param string $osdId
+     * @return OsdId
      */
-    public function osdid($osdId){
-        return new osdid($this->httpClient,$this->apiURL.$osdId.'/',$this->cookie);
+    public function osdId(string $osdId): OsdId
+    {
+        return new OsdId($this->getPve(), $this->getPathAdditional() . $osdId . '/');
     }
-
-    /**
-     * GET
-     */
-
-    /**
-     * Get Ceph osd list/tree.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/ceph/osd
-     * @return mixed
-     */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
-    }
-
-    /**
-     * POST
-     */
-
-    /**
-     * Create OSD
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/ceph/osd
-     * @param $params array
-     * @return mixed
-     */
-    public function post($params){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL,$this->cookie,$params));
-    }
-
 }

@@ -1,70 +1,60 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\cluster\ha;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Api\cluster\ha\resources\sid;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Cluster\Ha;
+
+use Stratum\Proxmox\Api\Cluster\Ha\Resources\Sid;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class resources
- * @package Stratum\Proxmox\api\cluster\ha
+ * Class Resources
+ * @package Stratum\Proxmox\Api\Cluster\Ha
  */
-class resources
+class Resources extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
-
     /**
-     * resources constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * Resources constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'resources/');
     }
 
     /**
      * Read resource configuration.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ha/resources/{sid}
-     * @param $sid
-     * @return sid
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/ha/resources/{sid}
+     * @param string $sid
+     * @return Sid
      */
-    public function sid($sid){
-        return new sid($this->httpClient,$this->apiURL.$sid.'/',$this->cookie);
+    public function sid(string $sid): Sid
+    {
+        return new Sid($this->getPve(), $this->getPathAdditional() . $sid . '/');
     }
-
-    /**
-     * GET
-     */
 
     /**
      * List HA resources.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ha/resources
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/ha/resources
+     * @return array|null
      */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
     }
 
     /**
-     * POST
-     */
-
-    /**
      * Create a new HA resource.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ha/resources
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/ha/resources
      * @param $params array
-     * @return mixed|null
+     * @return array|null
      */
-    public function post($params){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL,$this->cookie,$params));
+    public function post(array $params = []): ?array
+    {
+        return $this->getPve()->getApi()->post($this->getPathAdditional(), $params);
     }
 
 }

@@ -6,6 +6,8 @@
 namespace Stratum\Proxmox\Exception;
 
 
-class AuthenticationException extends \RuntimeException
+use RuntimeException;
+
+class AuthenticationException extends RuntimeException
 {
 }

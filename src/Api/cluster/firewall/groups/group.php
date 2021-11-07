@@ -1,108 +1,70 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\cluster\firewall\groups;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Cluster\Firewall\Groups;
+
+use Stratum\Proxmox\Api\Cluster\Firewall\Groups\Group\Pos;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class group
- * @package Stratum\Proxmox\api\cluster\firewall\groups
+ * Class Group
+ * @package Stratum\Proxmox\Api\Cluster\Firewall\Groups
  */
-class group
+class Group extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
-
     /**
-     * ipSet constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * Group constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
-    }
-
-    /**
-     * GET
-     */
-
-    /**
-     * List rules.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/firewall/groups/{group}
-     * @return mixed|null
-     */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional);
     }
 
     /**
      * Get single rule data.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/firewall/groups/{group}/{pos}
-     * @param $pos string
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/firewall/groups/{group}/{pos}
+     * @param string $pos
+     * @return Pos
      */
-    public function getPos($pos=""){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.$pos.'/',$this->cookie));
+    public function pos(string $pos): Pos
+    {
+        return new Pos($this->getPve(), $this->getPathAdditional() . $pos . '/');
     }
 
     /**
-     * PUT
+     * List rules.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/firewall/groups/{group}
+     * @return array|null
      */
-
-    /**
-     * Modify rule data.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/firewall/groups/{group}/{pos}
-     * @param $pos string
-     * @param $params array
-     * @return mixed|null
-     */
-    public function putPos($pos="",$params){
-        return connection::processHttpResponse(connection::putAPI($this->httpClient,$this->apiURL.$pos.'/',$this->cookie,$params));
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
     }
-
-    /**
-     * POST
-     */
 
     /**
      * Create new rule.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/firewall/groups/{group}
-     * @param $param array
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/firewall/groups/{group}
+     * @param $params array
+     * @return array|null
      */
-    public function post($param){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL,$this->cookie,$param));
+    public function post(array $params = []): ?array
+    {
+        return $this->getPve()->getApi()->post($this->getPathAdditional(), $params);
     }
-
-    /**
-     * DELETE
-     */
 
     /**
      * Delete security group.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/firewall/groups/{group}
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/firewall/groups/{group}
+     * @return array|null
      */
-    public function delete(){
-        return connection::processHttpResponse(connection::deleteAPI($this->httpClient,$this->apiURL,$this->cookie));
-    }
-
-    /**
-     * Delete rule.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/firewall/groups/{group}/{pos}
-     * @param $pos string
-     * @param $params array
-     * @return mixed|null
-     */
-    public function deletePos($pos="",$params){
-        return connection::processHttpResponse(connection::deleteAPI($this->httpClient,$this->apiURL.$pos.'/',$this->cookie,$params));
+    public function delete(): ?array
+    {
+        return $this->getPve()->getApi()->delete($this->getPathAdditional());
     }
 
 }

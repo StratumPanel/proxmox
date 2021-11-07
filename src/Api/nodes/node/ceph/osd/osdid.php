@@ -1,78 +1,70 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\nodes\node\ceph\osd;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Nodes\Node\Ceph\Osd;
+
+use Stratum\Proxmox\Api\Nodes\Node\Ceph\Osd\OsdId\In;
+use Stratum\Proxmox\Api\Nodes\Node\Ceph\Osd\OsdId\Out;
+use Stratum\Proxmox\Api\Nodes\Node\Ceph\Osd\OsdId\Scrub;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class osdid
- * @package Stratum\Proxmox\api\nodes\node\ceph\osd
+ * Class OsdId
+ * @package Stratum\Proxmox\Api\Nodes\Node\Ceph\Osd
  */
-class osdid
+class OsdId extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
 
     /**
-     * osdid constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * @param \Stratum\Proxmox\PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional);
     }
 
     /**
-     * POST
-     */
-
-    /**
      * ceph osd in
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/ceph/osd/{osdid}/in
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/ceph/osd/{osdid}/in
+     * @return In
      */
-    public function postIn(){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.'in/',$this->cookie));
+    public function in(): In
+    {
+        return new In($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * ceph osd out
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/ceph/osd/{osdid}/out
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/ceph/osd/{osdid}/out
+     * @return Out
      */
-    public function postOut(){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.'out/',$this->cookie));
+    public function out(): Out
+    {
+        return new Out($this->getPve(), $this->getPathAdditional());
     }
 
     /**
-     * Instruct the OSD to scrub.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/ceph/osd/{osdid}/scrub
-     * @param $params array
-     * @return mixed
+     * ceph osd scrub
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/ceph/osd/{osdid}/scrub
+     * @return Scrub
      */
-    public function postScrub($params){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.'scrub/',$this->cookie,$params));
+    public function scrub(): Scrub
+    {
+        return new Scrub($this->getPve(), $this->getPathAdditional());
     }
-
-    /**
-     * DELETE
-     */
 
     /**
      * Destroy OSD
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/ceph/osd/{osdid}
-     * @param $params array
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/ceph/osd/{osdid}
+     * @return array|null
      */
-    public function delete($params){
-        return connection::processHttpResponse(connection::deleteAPI($this->httpClient,$this->apiURL,$this->cookie,$params));
+    public function delete(): ?array
+    {
+        return $this->getPve()->getApi()->delete($this->getPathAdditional());
     }
 
 }

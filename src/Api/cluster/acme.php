@@ -1,74 +1,92 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\cluster;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Api\cluster\acme\account;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Cluster;
+
+use Stratum\Proxmox\Api\Cluster\Acme\Account;
+use Stratum\Proxmox\Api\Cluster\Acme\ChallengeSchema;
+use Stratum\Proxmox\Api\Cluster\Acme\Directories;
+use Stratum\Proxmox\Api\Cluster\Acme\Plugins;
+use Stratum\Proxmox\Api\Cluster\Acme\Tos;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class acme
- * @package Stratum\Proxmox\api\cluster
+ * Class Acme
+ * @package Stratum\Proxmox\Api\Cluster
  */
-class acme
+class Acme extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
-
     /**
-     * acme constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * Acme constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'acme/');
     }
 
     /**
      * ACMEAccount index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/acme/account
-     * @return account
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/acme
+     * @return Account
      */
-    public function account(){
-        return new account($this->httpClient,$this->apiURL.'account/',$this->cookie);
+    public function account(): Account
+    {
+        return new Account($this->getPve(), $this->getPathAdditional());
     }
 
     /**
-     * GET
+     * ACME plugin index.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/acme/account
+     * @return Plugins
      */
+    public function plugins(): Plugins
+    {
+        return new Plugins($this->getPve(), $this->getPathAdditional());
+    }
 
     /**
-     * ACMEAccount index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/acme
-     * @return mixed
+     * Get schema of ACME challenge types.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/acme/challenge-schema
+     * @return ChallengeSchema
      */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function challengeSchema(): ChallengeSchema
+    {
+        return new ChallengeSchema($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Get named known ACME directory endpoints.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/acme/directories
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/acme/directories
+     * @return Directories
      */
-    public function getDirectories(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'directories/',$this->cookie));
+    public function directories(): Directories
+    {
+        return new Directories($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Retrieve ACME TermsOfService URL from CA.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/acme/tos
-     * @param $params array
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/acme/tos
+     * @return Tos
      */
-    public function getTos($params){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'tos/',$this->cookie,$params));
+    public function tos(): Tos
+    {
+        return new Tos($this->getPve(), $this->getPathAdditional());
+    }
+
+    /**
+     * ACMEAccount index.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/acme
+     * @return array|null
+     */
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
     }
 
 }

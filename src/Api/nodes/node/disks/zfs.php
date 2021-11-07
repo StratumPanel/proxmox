@@ -1,68 +1,59 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\nodes\node\disks;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Nodes\Node\Disks;
+
+use Stratum\Proxmox\Api\Nodes\Node\Disks\Zfs\Name;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class zfs
- * @package Stratum\Proxmox\api\nodes\node\disks
+ * Class Zfs
+ * @package Stratum\Proxmox\Api\Nodes\Node\Disks
  */
-class zfs
+class Zfs extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
-
     /**
-     * zfs constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * Init constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
-    }
-
-    /**
-     * GET
-     */
-
-    /**
-     * List Zpools.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/disks/zfs
-     * @return mixed
-     */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'zfs/');
     }
 
     /**
      * Get details about a zpool.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/disks/zfs/{name}
-     * @param $name string
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/disks/zfs/{name}
+     * @param string $name
+     * @return Name
      */
-    public function getName($name){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.$name.'/',$this->cookie));
+    public function name(string $name): Name
+    {
+        return new Name($this->getPve(), $this->getPathAdditional() . $name . '/');
     }
 
     /**
-     * POST
+     * List Zpools.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/disks/zfs
+     * @return array|null
      */
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
+    }
 
     /**
      * Create a ZFS pool.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/disks/zfs
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/disks/zfs
      * @param $params array
-     * @return mixed
+     * @return array|null
      */
-    public function post($params){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL,$this->cookie,$params));
+    public function post(array $params = []): ?array
+    {
+        return $this->getPve()->getApi()->post($this->getPathAdditional(), $params);
     }
 }

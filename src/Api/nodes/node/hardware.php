@@ -1,54 +1,58 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\nodes\node;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Api\nodes\node\hardware\pci;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Nodes\Node;
+
+use Stratum\Proxmox\Api\Nodes\Node\Hardware\Pci;
+use Stratum\Proxmox\Api\Nodes\Node\Hardware\Usb;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class hardware
- * @package Stratum\Proxmox\api\nodes\node
+ * Class Hardware
+ * @package Stratum\Proxmox\Api\Nodes\Node
  */
-class hardware
+class Hardware extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
+    /**
+     * Apt constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
+     */
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'hardware/');
+    }
 
     /**
-     * hardware constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * List local USB devices.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/hardware/usb
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Hardware\Usb
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
+    public function usb(): Usb
+    {
+        return new Usb($this->getPve(), $this->getPathAdditional());
+    }
+
+    /**
+     * List local PCI devices.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/hardware/pci
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Hardware\Pci
+     */
+    public function pci(): Pci
+    {
+        return new Pci($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Index of hardware types
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/hardware
-     * @return pci
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/hardware
+     * @return array|null
      */
-    public function pci(){
-        return new pci($this->httpClient,$this->apiURL.'pci/',$this->cookie);
-    }
-
-    /**
-     * GET
-     */
-
-    /**
-     * Index of hardware types
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/hardware
-     * @return mixed|null
-     */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
     }
 }

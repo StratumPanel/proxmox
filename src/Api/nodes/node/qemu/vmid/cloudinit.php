@@ -1,46 +1,69 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\nodes\node\qemu\vmid;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId;
+
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\CloudInit\Dump;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class cloudinit
- * @package Stratum\Proxmox\api\nodes\node\qemu\vmid
+ * Class CloudInit
+ * @package Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId
  */
-class cloudinit
+class CloudInit extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
-
     /**
-     * cloudinit constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * Init constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'cloudinit/');
     }
-
-    /**
-     * GET
-     */
 
     /**
      * Get automatically generated cloudinit config.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/cloudinit/dump
-     * @param $params array
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/cloudinit/dump
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\CloudInit\Dump
      */
-    public function getDump($params){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'dump/',$this->cookie,$params));
+    public function dump(): Dump
+    {
+        return new Dump($this->getPve(), $this->getPathAdditional());
     }
 
+    /**
+     * Get the virtual machine configuration with pending configuration changes applied. Set the 'current' parameter to get the current configuration instead.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/cloudinit
+     * @return array|null
+     */
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
+    }
+
+    /**
+     * Set virtual machine options (asynchrounous API).
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/cloudinit
+     * @param $params array
+     * @return array|null
+     */
+    public function post(array $params = []): ?array
+    {
+        return $this->getPve()->getApi()->post($this->getPathAdditional(), $params);
+    }
+
+    /**
+     * Set virtual machine options (synchrounous API) - You should consider using the POST method instead for any actions involving hotplug or storage allocation.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/cloudinit
+     * @param $params array
+     * @return array|null
+     */
+    public function put(array $params = []): ?array
+    {
+        return $this->getPve()->getApi()->put($this->getPathAdditional(), $params);
+    }
 }

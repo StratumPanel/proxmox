@@ -1,145 +1,125 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\nodes\node;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Api\nodes\node\disks\zfs;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Nodes\Node;
+
+use Stratum\Proxmox\Api\Nodes\Node\Disks\Directory;
+use Stratum\Proxmox\Api\Nodes\Node\Disks\Initgpt;
+use Stratum\Proxmox\Api\Nodes\Node\Disks\Lists;
+use Stratum\Proxmox\Api\Nodes\Node\Disks\Lvm;
+use Stratum\Proxmox\Api\Nodes\Node\Disks\Lvmthin;
+use Stratum\Proxmox\Api\Nodes\Node\Disks\Smart;
+use Stratum\Proxmox\Api\Nodes\Node\Disks\Wipedisk;
+use Stratum\Proxmox\Api\Nodes\Node\Disks\Zfs;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class disks
- * @package Stratum\Proxmox\api\nodes\node
+ * Class Disks
+ * @package Stratum\Proxmox\Api\Nodes\Node
  */
-class disks
+class Disks extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
-
     /**
-     * disks constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * Ceph constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'disks/');
     }
 
     /**
      * List Zpools.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/disks/zfs
-     * @return zfs
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/disks/zfs
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Disks\Zfs
      */
-    public function zfs(){
-        return new zfs($this->httpClient,$this->apiURL.'zfs/',$this->cookie);
-    }
-
-    /**
-     * GET
-     */
-
-    /**
-     * Node index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/disks
-     * @return mixed
-     */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function zfs(): Zfs
+    {
+        return new Zfs($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * PVE Managed Directory storages.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/disks/directory
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/disks/directory
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Disks\Directory
      */
-    public function getDirectory(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'directory/',$this->cookie));
-    }
-
-    /**
-     * List local disks.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/disks/list
-     * @param $params array
-     * @return mixed
-     */
-    public function getList($params){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'list/',$this->cookie,$params));
-    }
-
-    /**
-     * List LVM Volume Groups
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/disks/lvm
-     * @return mixed
-     */
-    public function getLvm(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'lvm/',$this->cookie));
-    }
-
-    /**
-     * List LVM thinpools
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/disks/lvmthin
-     * @return mixed
-     */
-    public function getLvmThin(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'lvmthin/',$this->cookie));
-    }
-
-    /**
-     * Get SMART Health of a disk.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/disks/smart
-     * @param $params array
-     * @return mixed
-     */
-    public function getSmart($params){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'smart/',$this->cookie,$params));
-    }
-
-    /**
-     * POST
-     */
-
-    /**
-     * Create a Filesystem on an unused disk. Will be mounted under '/mnt/pve/NAME'.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/disks/directory
-     * @param $params array
-     * @return mixed
-     */
-    public function postDirectory($params){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.'directory/',$this->cookie,$params));
+    public function directory(): Directory
+    {
+        return new Directory($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Initialize Disk with GPT
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/disks/initgpt
-     * @param $params array
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/disks/initgpt
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Disks\Initgpt
      */
-    public function postInitgpt($params){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.'initgpt/',$this->cookie,$params));
+    public function initgpt(): Initgpt
+    {
+        return new Initgpt($this->getPve(), $this->getPathAdditional());
     }
 
     /**
-     * Create an LVM Volume Group
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/disks/lvm
-     * @param $params array
-     * @return mixed
+     * List local disks.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/disks/list
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Disks\Lists
      */
-    public function postLvm($params){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.'lvm/',$this->cookie,$params));
+    public function list(): Lists
+    {
+        return new Lists($this->getPve(), $this->getPathAdditional());
     }
 
     /**
-     * Create an LVM thinpool
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/disks/lvmthin
-     * @param $params array
-     * @return mixed
+     * List LVM Volume Groups
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/disks/lvm
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Disks\Lvm
      */
-    public function postLvmThin($params){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.'lvmthin/',$this->cookie,$params));
+    public function lvm(): Lvm
+    {
+        return new Lvm($this->getPve(), $this->getPathAdditional());
     }
+
+    /**
+     * List LVM thinpools
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/disks/lvmthin
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Disks\Lvmthin
+     */
+    public function lvmthin(): Lvmthin
+    {
+        return new Lvmthin($this->getPve(), $this->getPathAdditional());
+    }
+
+    /**
+     * Get SMART Health of a disk.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/disks/smart
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Disks\Smart
+     */
+    public function smart(): Smart
+    {
+        return new Smart($this->getPve(), $this->getPathAdditional());
+    }
+
+    /**
+     * Wipe a disk or partition.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/disks/wipedisk
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Disks\Wipedisk
+     */
+    public function wipedisk(): Wipedisk
+    {
+        return new Wipedisk($this->getPve(), $this->getPathAdditional());
+    }
+
+    /**
+     * Node index.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/disks
+     * @return array|null
+     */
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
+    }
+
 }

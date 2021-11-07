@@ -1,73 +1,48 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\nodes\node\ceph;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Nodes\Node\Ceph;
+
+use Stratum\Proxmox\Api\Nodes\Node\Ceph\Mds\Name;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class mds
- * @package Stratum\Proxmox\api\nodes\node\ceph
+ * Class Mds
+ * @package Stratum\Proxmox\Api\Nodes\Node\Ceph
  */
-class mds
+class Mds extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
-
     /**
-     * mds constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * Mds constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'mds/');
     }
 
     /**
-     * GET
+     * Create a Ceph filesystem
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/ceph/fs/{name}
+     * @param string $name
+     * @return Name
      */
+    public function name(string $name): Name
+    {
+        return new Name($this->getPve(), $this->getPathAdditional() . $name . '/');
+    }
 
     /**
      * MDS directory index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/ceph/mds
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/ceph/mds
+     * @return array|null
      */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
-    }
-
-    /**
-     * POST
-     */
-
-    /**
-     * Create Ceph Metadata Server (MDS)
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/ceph/mds
-     * @param $name string
-     * @param $param array
-     * @return mixed
-     */
-    public function postName($name,$param){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.$name.'/',$this->cookie,$param));
-    }
-
-    /**
-     * DELETE
-     */
-
-    /**
-     * Destroy Ceph Metadata Server
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/ceph/mds
-     * @param $name string
-     * @return mixed
-     */
-    public function deleteName($name){
-        return connection::processHttpResponse(connection::deleteAPI($this->httpClient,$this->apiURL.$name.'/',$this->cookie));
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
     }
 }

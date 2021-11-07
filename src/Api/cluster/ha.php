@@ -1,75 +1,70 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\cluster;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Api\cluster\firewall\groups\group;
-use Stratum\Proxmox\Api\cluster\ha\resources;
-use Stratum\Proxmox\Api\cluster\ha\status;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Cluster;
+
+use Stratum\Proxmox\Api\Cluster\Ha\Groups;
+use Stratum\Proxmox\Api\Cluster\Ha\Resources;
+use Stratum\Proxmox\Api\Cluster\Ha\Status;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class ha
- * @package Stratum\Proxmox\api\cluster
+ * Class Ha
+ * @package Stratum\Proxmox\Api\Cluster
  */
-class ha
+class Ha extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
-
     /**
-     * ha constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * Ha constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'ha/');
     }
 
     /**
      * Get HA groups.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ha/groups
-     * @return group
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/ha/groups
+     * @return Groups
      */
-    public function groups(){
-        return new group($this->httpClient,$this->apiURL.'groups/',$this->cookie);
-    }
-
-    /**
-     * Directory index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ha/status
-     * @return status
-     */
-    public function status(){
-        return new status($this->httpClient,$this->apiURL.'status/',$this->cookie);
+    public function groups(): Groups
+    {
+        return new Groups($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * List HA resources.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ha/resources
-     * @return resources
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/ha/resources
+     * @return Resources
      */
-    public function resources(){
-        return new resources($this->httpClient,$this->apiURL.'resources/',$this->cookie);
+    public function resources(): Resources
+    {
+        return new Resources($this->getPve(), $this->getPathAdditional());
     }
 
     /**
-     * GET
+     * List HA resources.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/ha/status
+     * @return Status
      */
+    public function status(): Status
+    {
+        return new Status($this->getPve(), $this->getPathAdditional());
+    }
 
     /**
      * Directory index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ha
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/ha
+     * @return array|null
      */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
     }
 
 }

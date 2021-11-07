@@ -1,172 +1,215 @@
 <?php
 /*
- * @copyright  2020 Daniel Engelschalk <hello@mrkampf.com>
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
 namespace Stratum\Proxmox\Helper;
 
+use GuzzleHttp\Cookie\CookieJar;
 use GuzzleHttp\Exception\GuzzleException;
-use Stratum\Proxmox\pve;
+use Stratum\Proxmox\PVE;
 use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class api
  * @package Stratum\Proxmox\Helper
  */
-class api
+class Api
 {
-
-    private static $csrfTokenString;
+    /**
+     * @var PVE
+     */
+    private PVE $PVE;
 
     /**
-     * @return mixed
+     * Api constructor.
+     * @param PVE $PVE
      */
-    public static function getCsrfTokenString()
+    public function __construct(PVE $PVE)
     {
-        return self::$csrfTokenString;
-    }
-
-    /**
-     * @param string $csrfTokenString
-     */
-    public static function setCsrfTokenString(string $csrfTokenString)
-    {
-        self::$csrfTokenString = $csrfTokenString;
-    }
-
-    /**
-     * Get CSRF token data from proxmox api for api auth
-     *
-     * @param string $url
-     * @param string $username
-     * @param $password
-     * @param string $authType
-     * @param bool $debug
-     * @return mixed
-     * @throws GuzzleException
-     */
-    public static function getCSRFToken(string $url, string $username, $password, string $authType, bool$debug)
-    {
-        return pve::getHttpClient()->request('POST', $url . '/api2/json/access/ticket', [
-            'verify' => false,
-            'debug' => $debug,
-            'headers' => [
-                'Accept' => 'application/json',
-                'Accept-Encoding' => 'gzip',
-            ],
-            'form_params' => [
-                'username' => $username,
-                'password' => $password,
-                'realm' => $authType,
-            ],
-        ]);
+        $this->PVE = $PVE;
     }
 
     /**
      * Request information from proxmox api over type get
-     *
-     * @param string $url
-     * @param string $authCookie
+     * @param string $path
      * @param array $params
-     * @return ResponseInterface
-     * @throws GuzzleException
+     * @return array | null
      */
-    public static function get(string $url, string $authCookie, array $params = [])
+    public function get(string $path, array $params = []): ?array
     {
-        return pve::getHttpClient()->request('GET', $url, [
-            'verify' => false,
-            'headers' => [
-                'CSRFPreventionToken' => self::getCsrfTokenString(),
-                'Accept' => 'application/json',
-                'Accept-Encoding' => 'gzip',
-            ],
-            'exceptions' => false,
-            'cookies' => $authCookie,
-            'query' => $params,
-        ]);
-    }
-
-    /**
-     * Store new information in proxmox api over type post
-     *
-     * @param string $url
-     * @param string $authCookie
-     * @param array $params
-     * @return ResponseInterface
-     * @throws GuzzleException
-     */
-    public static function post(string $url, string $authCookie, array $params = [])
-    {
-        return pve::getHttpClient()->request('POST', $url, [
-            'verify' => false,
-            'headers' => [
-                'CSRFPreventionToken' => self::getCsrfTokenString(),
-                'Accept' => 'application/json',
-                'Accept-Encoding' => 'gzip',
-            ],
-            'exceptions' => false,
-            'cookies' => $authCookie,
-            'query' => $params,
-        ]);
-    }
-
-    /**
-     * Update new information in proxmox api over type put
-     *
-     * @param string $url
-     * @param string $authCookie
-     * @param array $params
-     * @return ResponseInterface
-     * @throws GuzzleException
-     */
-    public static function put(string $url, string $authCookie, array $params = [])
-    {
-        return pve::getHttpClient()->request('PUT', $url, [
-            'verify' => false,
-            'headers' => [
-                'CSRFPreventionToken' => self::getCsrfTokenString(),
-                'Accept' => 'application/json',
-                'Accept-Encoding' => 'gzip',
-            ],
-            'exceptions' => false,
-            'cookies' => $authCookie,
-            'query' => $params,
-        ]);
-    }
-
-    /**
-     * Delete new information in proxmox api over type delete
-     *
-     * @param string $url
-     * @param string $authCookie
-     * @param array $params
-     * @return ResponseInterface
-     * @throws GuzzleException
-     */
-    public static function delete(string $url, string $authCookie, array $params = [])
-    {
-        return pve::getHttpClient()->request('DELETE', $url, [
-            'verify' => false,
-            'headers' => [
-                'CSRFPreventionToken' => self::getCsrfTokenString(),
-                'Accept' => 'application/json',
-                'Accept-Encoding' => 'gzip',
-            ],
-            'exceptions' => false,
-            'cookies' => $authCookie,
-            'query' => $params,
-        ]);
+        try {
+            return $this->getBody($this->PVE->getHttpClient()->request('GET', $this->PVE->getApiURL() . $path, [
+                'verify' => false,
+                'debug' => $this->PVE->getDebug(),
+                'headers' => [
+                    'CSRFPreventionToken' => $this->PVE->getCSRFPreventionToken(),
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json',
+                    'Accept-Encoding' => 'gzip',
+                ],
+                'exceptions' => false,
+                'cookies' => $this->PVE->getCookie(),
+            ]));
+        } catch (GuzzleException $exception) {
+            if ($this->PVE->getDebug()) {
+                print_r($exception->getMessage());
+            }
+            return null;
+        }
     }
 
     /**
      * Get response information as array
-     *
      * @param ResponseInterface $response
-     * @return mixed
+     * @return array|null
      */
-    public static function getBody(ResponseInterface $response)
+    public function getBody(ResponseInterface $response): ?array
     {
+        if ($response === null) {
+            return null;
+        }
         return json_decode($response->getBody(), true);
+    }
+
+    /**
+     * Store new information in proxmox api over type post
+     * @param string $path
+     * @param array $params
+     * @return array | null
+     */
+    public function post(string $path, array $params = []): ?array
+    {
+        try {
+            return $this->getBody($this->PVE->getHttpClient()->request('POST', $this->PVE->getApiURL() . $path, [
+                'verify' => false,
+                'debug' => $this->PVE->getDebug(),
+                'headers' => [
+                    'CSRFPreventionToken' => $this->PVE->getCSRFPreventionToken(),
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json',
+                    'Accept-Encoding' => 'gzip',
+                ],
+                'exceptions' => false,
+                'cookies' => $this->PVE->getCookie(),
+                'json' => $params,
+            ]));
+        } catch (GuzzleException $exception) {
+            if ($this->PVE->getDebug()) {
+                print_r($exception->getMessage());
+            }
+            return null;
+        }
+    }
+
+    /**
+     * Update new information in proxmox api over type put
+     * @param string $path
+     * @param array $params
+     * @return array | null
+     */
+    public function put(string $path, array $params = []): ?array
+    {
+        try {
+            return $this->getBody($this->PVE->getHttpClient()->request('PUT', $this->PVE->getApiURL() . $path, [
+                'verify' => false,
+                'debug' => $this->PVE->getDebug(),
+                'headers' => [
+                    'CSRFPreventionToken' => $this->PVE->getCSRFPreventionToken(),
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json',
+                    'Accept-Encoding' => 'gzip',
+                ],
+                'exceptions' => false,
+                'cookies' => $this->PVE->getCookie(),
+                'json' => $params,
+            ]));
+        } catch (GuzzleException $exception) {
+            if ($this->PVE->getDebug()) {
+                print_r($exception->getMessage());
+            }
+            return null;
+        }
+    }
+
+    /**
+     * Delete new information in proxmox api over type delete
+     * @param string $path
+     * @param array $params
+     * @return array | null
+     */
+    public function delete(string $path, array $params = []): ?array
+    {
+        try {
+            return $this->getBody($this->PVE->getHttpClient()->request('DELETE', $this->PVE->getApiURL() . $path, [
+                'verify' => false,
+                'debug' => $this->PVE->getDebug(),
+                'headers' => [
+                    'CSRFPreventionToken' => $this->PVE->getCSRFPreventionToken(),
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json',
+                    'Accept-Encoding' => 'gzip',
+                ],
+                'exceptions' => false,
+                'cookies' => $this->PVE->getCookie(),
+                'json' => $params,
+            ]));
+        } catch (GuzzleException $exception) {
+            if ($this->PVE->getDebug()) {
+                print_r($exception->getMessage());
+            }
+            return null;
+        }
+    }
+
+    /**
+     * Login to proxmox ve
+     */
+    public function login()
+    {
+        $requestResult = $this->getCSRFToken();
+        $this->PVE->setCSRFPreventionToken($requestResult['CSRFPreventionToken']);
+        $this->PVE->setTicket($requestResult['ticket']);
+        $this->PVE->setCookie($this->getCookies());
+    }
+
+    /**
+     * Get CSRF token data from proxmox api for api auth
+     * @return array | null
+     */
+    public function getCSRFToken(): ?array
+    {
+        try {
+            return $this->getBody($this->PVE->getHttpClient()->request('POST', $this->PVE->getApiURL() . 'access/ticket', [
+                'verify' => false,
+                'debug' => $this->PVE->getDebug(),
+                'headers' => [
+                    'Accept' => 'application/json',
+                    'Accept-Encoding' => 'gzip',
+                ],
+                'form_params' => [
+                    'username' => $this->PVE->getUsername(),
+                    'password' => $this->PVE->getPassword(),
+                    'realm' => $this->PVE->getAuthType(),
+                ],
+            ]))['data'];
+        } catch (GuzzleException $exception) {
+            if ($this->PVE->getDebug()) {
+                print_r($exception->getMessage());
+            }
+            return null;
+        }
+    }
+
+    /**
+     * Get cookies for auth
+     * @return CookieJar
+     */
+    public function getCookies(): CookieJar
+    {
+        return CookieJar::fromArray([
+            'PVEAuthCookie' => $this->PVE->getTicket(),
+        ], $this->PVE->getHostname());
     }
 
 }

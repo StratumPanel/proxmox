@@ -1,88 +1,69 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\nodes\node;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Api\nodes\node\firewall\rules;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Nodes\Node;
+
+use Stratum\Proxmox\Api\Nodes\Node\Firewall\Log;
+use Stratum\Proxmox\Api\Nodes\Node\Firewall\Options;
+use Stratum\Proxmox\Api\Nodes\Node\Firewall\Rules;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class firewall
- * @package Stratum\Proxmox\api\nodes\node
+ * Class Firewall
+ * @package Stratum\Proxmox\Api\Nodes\Node
  */
-class firewall
+class Firewall extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
-
     /**
-     * firewall constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * Apt constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
-    }
-
-    /**
-     * List rules.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/firewall/rules
-     * @return rules
-     */
-    public function rules(){
-        return new rules($this->httpClient,$this->apiURL.'rules/',$this->cookie);
-    }
-
-    /**
-     * GET
-     */
-
-    /**
-     * Directory index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/firewall
-     * @return mixed|null
-     */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'firewall/');
     }
 
     /**
      * Read firewall log
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/firewall/log
-     * @param $params array
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/firewall/log
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Firewall\Log
      */
-    public function getLog($params){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'log/',$this->cookie,$params));
+    public function log(): Log
+    {
+        return new Log($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Get host firewall options.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/firewall/options
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/firewall/options
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Firewall\Options
      */
-    public function getOptions(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'options/',$this->cookie));
+    public function options(): Options
+    {
+        return new Options($this->getPve(), $this->getPathAdditional());
     }
 
     /**
-     * POST
+     * List rules.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/firewall/rules
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Firewall\Rules
      */
-
-    /**
-     * Set Firewall options.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/firewall/options
-     * @param $params array
-     * @return mixed|null
-     */
-    public function postOptions($params){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.'options/',$this->cookie,$params));
+    public function rules(): Rules
+    {
+        return new Rules($this->getPve(), $this->getPathAdditional());
     }
 
+    /**
+     * Directory index.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/firewall
+     * @return array|null
+     */
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
+    }
 }

@@ -1,115 +1,102 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\nodes\node\lxc\vmid;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Api\nodes\lxc\firewall\aliases;
-use Stratum\Proxmox\Api\nodes\lxc\firewall\ipSet;
-use Stratum\Proxmox\Api\nodes\lxc\firewall\rules;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId;
+
+use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall\Aliases;
+use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall\IpSet;
+use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall\Log;
+use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall\Options;
+use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall\Refs;
+use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall\Rules;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class firewall
- * @package Stratum\Proxmox\api\nodes\node\lxc\vmid
+ * Class Firewall
+ * @package Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId
  */
-class firewall
+class Firewall extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
-
     /**
-     * firewall constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * Init constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'firewall/');
     }
 
     /**
-     * List aliases
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/lxc/{vmid}/firewall/aliases
-     * @return aliases
+     * Directory index.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/firewall/aliases
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall\Aliases
      */
-    public function aliases(){
-        return new aliases($this->httpClient,$this->apiURL.'aliases/',$this->cookie);
+    public function aliases(): Aliases
+    {
+        return new Aliases($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * List IPSets
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes\node/{node}/lxc/{vmid}/firewall/ipset
-     * @return ipSet
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/firewall/ipset
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall\IpSet
      */
-    public function ipSet(){
-        return new ipSet($this->httpClient,$this->apiURL.'ipset/',$this->cookie);
+    public function ipSet(): IpSet
+    {
+        return new IpSet($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * List rules.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/lxc/{vmid}/firewall/rules
-     * @return rules
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/firewall/rules
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall\Rules
      */
-    public function rules(){
-        return new rules($this->httpClient,$this->apiURL.'rules/',$this->cookie);
-    }
-
-    /**
-     * GET
-     */
-
-    /**
-     * Directory index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/lxc/{vmid}/firewall
-     * @return mixed|null
-     */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function rules(): Rules
+    {
+        return new Rules($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Read firewall log
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/lxc/{vmid}/firewall/log
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/firewall/log
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall\Log
      */
-    public function getLog(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'log/',$this->cookie));
+    public function log(): Log
+    {
+        return new Log($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Get VM firewall options.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/lxc/{vmid}/firewall/options
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/firewall/options
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall\Options
      */
-    public function getOptions(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'options/',$this->cookie));
+    public function options(): Options
+    {
+        return new Options($this->getPve(), $this->getPathAdditional());
     }
 
     /**
-     * Lists possible IPSet/Alias reference which are allowed in source/dest properties.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/lxc/{vmid}/firewall/refs
-     * @return mixed|null
+     * Read firewall log
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/firewall/log
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall\Refs
      */
-    public function getRefs(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'refs/',$this->cookie));
+    public function refs(): Refs
+    {
+        return new Refs($this->getPve(), $this->getPathAdditional());
     }
 
     /**
-     * PUT
+     * Directory index.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/firewall
+     * @return array|null
      */
-
-    /**
-     * Set Firewall options.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/lxc/{vmid}/firewall/options
-     * @param $param array
-     * @return mixed|null
-     */
-    public function putOptions($param){
-        return connection::processHttpResponse(connection::putAPI($this->httpClient,$this->apiURL.'options/',$this->cookie,$param));
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
     }
 }

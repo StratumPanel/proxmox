@@ -1,106 +1,103 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\cluster;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Api\cluster\config\nodes;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Cluster;
+
+use Stratum\Proxmox\Api\Cluster\Config\ApiVersion;
+use Stratum\Proxmox\Api\Cluster\Config\Join;
+use Stratum\Proxmox\Api\Cluster\Config\Nodes;
+use Stratum\Proxmox\Api\Cluster\Config\QDevice;
+use Stratum\Proxmox\Api\Cluster\Config\Totem;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class config
- * @package Stratum\Proxmox\api\cluster
+ * Class Config
+ * @package Stratum\Proxmox\Api\Cluster
  */
-class config
+class Config extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
-
     /**
-     * config constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * Config constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'config/');
     }
 
     /**
-     * Corosync node list.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/config/nodes
-     * @return nodes
+     * Adds a node to the cluster configuration. This call is for internal use.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/config/nodes/{node}
+     * @return Nodes
      */
-    public function nodes(){
-        return new nodes($this->httpClient,$this->apiURL.'nodes/',$this->cookie);
+    public function nodes(): Nodes
+    {
+        return new Nodes($this->getPve(), $this->getPathAdditional());
     }
 
     /**
-     * GET
+     * Return the version of the cluster join API available on this node.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/config/apiversion
+     * @return ApiVersion
      */
-
-    /**
-     * Directory index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/config
-     * @return mixed
-     */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function apiVersion(): ApiVersion
+    {
+        return new ApiVersion($this->getPve(), $this->getPathAdditional());
     }
 
     /**
-     * Get information needed to join this cluster over the connected node.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/config/join
-     * @return mixed
+     * Joins this node into an existing cluster. If no links are given, default to IP resolved by node's hostname on single link (fallback fails for clusters with multiple links).
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/config/join
+     * @return Join
      */
-    public function getJoin(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'join/',$this->cookie));
+    public function join(): Join
+    {
+        return new Join($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Get QDevice status
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/config/qdevice
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/config/qdevice
+     * @return QDevice
      */
-    public function getQdevice(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'qdevice/',$this->cookie));
+    public function qDevice(): QDevice
+    {
+        return new QDevice($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Get corosync totem protocol settings.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/config/totem
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/config/totem
+     * @return Totem
      */
-    public function getTotem(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'totem/',$this->cookie));
+    public function totem(): Totem
+    {
+        return new Totem($this->getPve(), $this->getPathAdditional());
     }
 
     /**
-     * POST
+     * Directory index.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/config
+     * @return array|null
      */
-
-    /**
-     * Generate new cluster configuration.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/config
-     * @param $params
-     * @return mixed
-     */
-    public function post($params){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL,$this->cookie,$params));
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
     }
 
     /**
-     * Joins this node into an existing cluster.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/config/join
-     * @param $params
-     * @return mixed
+     * Generate new cluster configuration. If no links given, default to local IP address as link0.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/config
+     * @param $params array
+     * @return array|null
      */
-    public function postJoin($params){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.'join/',$this->cookie,$params));
+    public function post(array $params = []): ?array
+    {
+        return $this->getPve()->getApi()->post($this->getPathAdditional(), $params);
     }
 
 }

@@ -1,94 +1,59 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\nodes\lxc\firewall;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall;
+
+use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall\Aliases\Name;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class aliases
- * @package Stratum\Proxmox\api\nodes\lxc\firewall
+ * Class Aliases
+ * @package Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall
  */
-class aliases
+class Aliases extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
-
     /**
-     * aliases constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * Init constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
-    }
-
-    /**
-     * GET
-     */
-
-    /**
-     * List aliases
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/lxc/{vmid}/firewall/aliases
-     * @return mixed|null
-     */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'aliases/');
     }
 
     /**
      * Read alias.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/lxc/{vmid}/firewall/aliases/{name}
-     * @param $name string
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/firewall/aliases/{name}
+     * @param string $name
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall\Aliases\Name
      */
-    public function getName($name){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient, $this->apiURL.$name.'/', $this->cookie));
+    public function name(string $name): Name
+    {
+        return new Name($this->getPve(), $this->getPathAdditional() . $name . '/');
     }
 
     /**
-     * POST
+     * Directory index.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/firewall/aliases
+     * @return array|null
      */
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
+    }
 
     /**
      * Create IP or Network Alias.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/lxc/{vmid}/firewall/aliases
-     * @param $param array
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/firewall/aliases
+     * @param $params array
+     * @return array|null
      */
-    public function post($param){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL,$this->cookie,$param));
-    }
-
-    /**
-     * Update IP or Network alias.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/lxc/{vmid}/firewall/aliases/{name}
-     * @param $name string
-     * @param $param array
-     * @return mixed|null
-     */
-    public function postName($name,$param){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient, $this->apiURL.$name.'/', $this->cookie, $param));
-    }
-
-    /**
-     * DELETE
-     */
-
-    /**
-     * Remove IP or Network alias.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/lxc/{vmid}/firewall/aliases/{name}
-     * @param $name string
-     * @param $param array
-     * @return mixed|null
-     */
-    public function deleteName($name,$param){
-        return connection::processHttpResponse(connection::deleteAPI($this->httpClient, $this->apiURL.$name.'/', $this->cookie, $param));
+    public function post(array $params = []): ?array
+    {
+        return $this->getPve()->getApi()->post($this->getPathAdditional(), $params);
     }
 }

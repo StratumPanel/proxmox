@@ -1,101 +1,60 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
+
 namespace Stratum\Proxmox\Api;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Helper\connection;
+use Stratum\Proxmox\Api\Pools\PoolId;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class pools
- * @package Stratum\Proxmox\api
+ * Class Pools
+ * @package Stratum\Proxmox\Api
  */
-class pools
+class Pools extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $ticket, //Auth ticket
-        $hostname, //Pormxox hostname
-        $cookie; //Proxmox auth cookie
 
     /**
-     * pools constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $ticket string
-     * @param $hostname string
+     * Pools constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$ticket,$hostname){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL.'/api2/json/pools/'; //Save api url in class variable and change this to current api path
-        $this->ticket = $ticket; //Save auth ticket in class variable
-        $this->hostname = $hostname; //Save hostname in class variable
-        $this->cookie = connection::getCookies($this->ticket,$this->hostname); //Get auth cookie and save in class variable
-    }
-
-    /**
-     * GET
-     */
-
-    /**
-     * Pool index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/pools
-     * @return mixed
-     */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'pools/');
     }
 
     /**
      * Get pool configuration.
      * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/pools/{poolid}
-     * @param $poolId string
-     * @return mixed
+     * @param string $poolId
+     * @return PoolId
      */
-    public function getPoolid($poolId){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.$poolId.'/',$this->cookie));
+    public function poolId(string $poolId): PoolId
+    {
+        return new PoolId($this->getPve(), $this->getPathAdditional() . $poolId . '/');
     }
 
     /**
-     * PUT
+     * Pool index.
+     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/pools
+     * @return array|null
      */
-
-    /**
-     * Update pool data.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/pools/{poolid}
-     * @param $poolId string
-     * @param $params array
-     * @return mixed
-     */
-    public function putPoolid($poolId,$params){
-        return connection::processHttpResponse(connection::putAPI($this->httpClient,$this->apiURL.$poolId.'/',$this->cookie,$params));
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
     }
-
-    /**
-     * POST
-     */
 
     /**
      * Create new pool.
      * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/pools
-     * @return mixed
+     * @param array $params
+     * @return array|null
      */
-    public function post(){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL,$this->cookie));
-    }
-
-    /**
-     * DELETE
-     */
-
-    /**
-     * Delete pool.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/pools/{poolid}
-     * @param $poolId string
-     * @return mixed
-     */
-    public function deletePoolid($poolId){
-        return connection::processHttpResponse(connection::deleteAPI($this->httpClient,$this->apiURL.$poolId.'/',$this->cookie));
+    public function post(array $params = []): ?array
+    {
+        return $this->getPve()->getApi()->post($this->getPathAdditional(), $params);
     }
 }

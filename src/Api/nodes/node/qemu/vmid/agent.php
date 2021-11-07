@@ -1,280 +1,322 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\nodes\node\qemu\vmid;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId;
+
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\Exec;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\ExecStatus;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\FileRead;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\FileWrite;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\FsfreezeFreeze;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\FsfreezeStatus;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\FsfreezeThaw;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\Fsstrim;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\GetFsinfo;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\GetHostName;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\GetMemoryBlockInfo;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\GetMemoryBlocks;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\GetOsinfo;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\GetTime;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\GetTimezone;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\GetUsers;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\GetVcpus;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\Info;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\NetworkGetInterfaces;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\Ping;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\SetUserPassword;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\Shutdown;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\SuspendDisk;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\SuspendHybrid;
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\SuspendRam;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class agent
- * @package Stratum\Proxmox\api\nodes\node\qemu\vmid
+ * Class Agent
+ * @package Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId
  */
-class agent
+class Agent extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
-
     /**
-     * agent constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * Init constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'agent/');
     }
 
     /**
-     * GET
+     * Executes the given command in the vm via the guest-agent and returns an object with the pid
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/agent/exec
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\Exec
      */
-
-    /**
-     * Qemu Agent command index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/agent
-     * @return mixed
-     */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function exec(): Exec
+    {
+        return new Exec($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Gets the status of the given pid started by the guest-agent
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/agent/exec-status
-     * @param $params array
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/agent/exec-status
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\ExecStatus
      */
-    public function getExecStatus($params){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'exec-status/',$this->cookie,$params));
+    public function execStatus(): ExecStatus
+    {
+        return new ExecStatus($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Reads the given file via guest agent. Is limited to 16777216 bytes.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/agent/file-read
-     * @param $params array
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/agent/file-read
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\FileRead
      */
-    public function getFileRead($params){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'file-read/',$this->cookie,$params));
-    }
-
-    /**
-     * Execute get-host-name.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/agent/get-host-name
-     * @return mixed
-     */
-    public function getGetHostName(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'get-host-name/',$this->cookie));
-    }
-
-    /**
-     * Execute get-memory-block-info.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/agent/get-memory-block-info
-     * @return mixed
-     */
-    public function getGetMemoryBlockInfo(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'get-memory-block-info/',$this->cookie));
-    }
-
-    /**
-     * Execute get-memory-blocks.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/agent/get-memory-blocks
-     * @return mixed
-     */
-    public function getGetMemoryBlocks(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'get-memory-blocks/',$this->cookie));
-    }
-
-    /**
-     * Execute get-osinfo.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/agent/get-osinfo
-     * @return mixed
-     */
-    public function getGetOsinfo(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'get-osinfo/',$this->cookie));
-    }
-
-    /**
-     * Execute get-time.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/agent/get-time
-     * @return mixed
-     */
-    public function getGetTime(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'get-time/',$this->cookie));
-    }
-
-    /**
-     * Execute get-timezone.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/agent/get-timezone
-     * @return mixed
-     */
-    public function getGetTimezone(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'get-timezone/',$this->cookie));
-    }
-
-    /**
-     * Execute get-users.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/agent/get-users
-     * @return mixed
-     */
-    public function getGetUsers(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'get-users/',$this->cookie));
-    }
-
-    /**
-     * Execute get-vcpus.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/agent/get-vcpus
-     * @return mixed
-     */
-    public function getGetVcpus(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'get-vcpus/',$this->cookie));
-    }
-
-    /**
-     * Execute info.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/agent/info
-     * @return mixed
-     */
-    public function getInfo(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'info/',$this->cookie));
-    }
-
-    /**
-     * Execute network-get-interfaces.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/agent/network-get-interfaces
-     * @return mixed
-     */
-    public function getNetworkGetInterfaces(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'network-get-interfaces/',$this->cookie));
-    }
-
-    /**
-     * POST
-     */
-
-    /**
-     * Execute Qemu Guest Agent commands.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/agent
-     * @param $params array
-     * @return mixed
-     */
-    public function post($params){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL,$this->cookie,$params));
-    }
-
-    /**
-     * Executes the given command in the vm via the guest-agent and returns an object with the pid.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/agent/exec
-     * @param $params array
-     * @return mixed
-     */
-    public function postExec($params){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.'exec/',$this->cookie,$params));
+    public function fileRead(): FileRead
+    {
+        return new FileRead($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Writes the given file via guest agent.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/agent/file-write
-     * @param $params array
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/agent/file-write
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\FileWrite
      */
-    public function postFileWrite($params){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.'file-write/',$this->cookie,$params));
+    public function fileWrite(): FileWrite
+    {
+        return new FileWrite($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Execute fsfreeze-freeze.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/agent/fsfreeze-freeze
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/agent/fsfreeze-freeze
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\FsfreezeFreeze
      */
-    public function postFsfreezeFreeze(){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.'fsfreeze-freeze/',$this->cookie));
+    public function fsfreezeFreeze(): FsfreezeFreeze
+    {
+        return new FsfreezeFreeze($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Execute fsfreeze-status.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/agent/fsfreeze-status
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/agent/fsfreeze-status
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\FsfreezeStatus
      */
-    public function postFsfreezeStatus(){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.'fsfreeze-status/',$this->cookie));
+    public function fsfreezeStatus(): FsfreezeStatus
+    {
+        return new FsfreezeStatus($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Execute fsfreeze-thaw.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/agent/fsfreeze-thaw
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/agent/fsfreeze-thaw
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\FsfreezeThaw
      */
-    public function postFsfreezeThaw(){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.'fsfreeze-thaw/',$this->cookie));
+    public function fsfreezeThaw(): FsfreezeThaw
+    {
+        return new FsfreezeThaw($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Execute fstrim.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/agent/fstrim
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/agent/fstrim
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\Fsstrim
      */
-    public function postFstrim(){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.'fstrim/',$this->cookie));
+    public function fsstrim(): Fsstrim
+    {
+        return new Fsstrim($this->getPve(), $this->getPathAdditional());
+    }
+
+    /**
+     * Execute get-fsinfo.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/agent/get-fsinfo
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\GetFsinfo
+     */
+    public function getFsinfo(): GetFsinfo
+    {
+        return new GetFsinfo($this->getPve(), $this->getPathAdditional());
+    }
+
+    /**
+     * Execute get-host-name.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/agent/get-host-name
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\GetHostName
+     */
+    public function getHostName(): GetHostName
+    {
+        return new GetHostName($this->getPve(), $this->getPathAdditional());
+    }
+
+    /**
+     * Execute get-memory-block-info.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/agent/get-memory-block-info
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\GetMemoryBlockInfo
+     */
+    public function getMemoryBlockInfo(): GetMemoryBlockInfo
+    {
+        return new GetMemoryBlockInfo($this->getPve(), $this->getPathAdditional());
+    }
+
+    /**
+     * Execute get-memory-blocks.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/agent/get-memory-blocks
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\GetMemoryBlocks
+     */
+    public function getMemoryBlocks(): GetMemoryBlocks
+    {
+        return new GetMemoryBlocks($this->getPve(), $this->getPathAdditional());
+    }
+
+    /**
+     * Execute get-osinfo.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/agent/get-osinfo
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\GetOsinfo
+     */
+    public function getOsinfo(): GetOsinfo
+    {
+        return new GetOsinfo($this->getPve(), $this->getPathAdditional());
+    }
+
+    /**
+     * Execute get-time.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/agent/get-time
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\GetTime
+     */
+    public function getTime(): GetTime
+    {
+        return new GetTime($this->getPve(), $this->getPathAdditional());
+    }
+
+    /**
+     * Execute get-timezone.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/agent/get-timezone
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\GetTimezone
+     */
+    public function getTimezone(): GetTimezone
+    {
+        return new GetTimezone($this->getPve(), $this->getPathAdditional());
+    }
+
+    /**
+     * Execute get-users.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/agent/get-users
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\GetUsers
+     */
+    public function getUsers(): GetUsers
+    {
+        return new GetUsers($this->getPve(), $this->getPathAdditional());
+    }
+
+    /**
+     * Execute get-vcpus.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/agent/get-vcpus
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\GetVcpus
+     */
+    public function getVcpus(): GetVcpus
+    {
+        return new GetVcpus($this->getPve(), $this->getPathAdditional());
+    }
+
+    /**
+     * Execute info.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/agent/exec
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\Info
+     */
+    public function info(): Info
+    {
+        return new Info($this->getPve(), $this->getPathAdditional());
+    }
+
+    /**
+     * Execute network-get-interfaces.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/agent/network-get-interfaces
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\NetworkGetInterfaces
+     */
+    public function networkGetInterfaces(): NetworkGetInterfaces
+    {
+        return new NetworkGetInterfaces($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Execute ping.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/agent/ping
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/agent/ping
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\Ping
      */
-    public function postPing(){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.'ping/',$this->cookie));
+    public function ping(): Ping
+    {
+        return new Ping($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Sets the password for the given user to the given password
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/agent/set-user-password
-     * @param $params array
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/agent/set-user-password
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\SetUserPassword
      */
-    public function postSetUserPassword($params){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.'set-user-password/',$this->cookie,$params));
+    public function SetUserPassword(): SetUserPassword
+    {
+        return new SetUserPassword($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Execute shutdown.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/agent/shutdown
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/agent/shutdown
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\Shutdown
      */
-    public function postShutdown(){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.'shutdown/',$this->cookie));
+    public function shutdown(): Shutdown
+    {
+        return new Shutdown($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Execute suspend-disk.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/agent/suspend-disk
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/agent/suspend-disk
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\SuspendDisk
      */
-    public function postSuspendDisk(){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.'suspend-disk/',$this->cookie));
+    public function suspendDisk(): SuspendDisk
+    {
+        return new SuspendDisk($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Execute suspend-hybrid.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/agent/suspend-hybrid
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/agent/suspend-hybrid
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\SuspendHybrid
      */
-    public function postSuspendHybrid(){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.'suspend-hybrid/',$this->cookie));
+    public function suspendHybrid(): SuspendHybrid
+    {
+        return new SuspendHybrid($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Execute suspend-ram.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/agent/suspend-ram
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/agent/suspend-ram
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent\SuspendRam
      */
-    public function postSuspendRam(){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.'suspend-ram/',$this->cookie));
+    public function suspendRam(): SuspendRam
+    {
+        return new SuspendRam($this->getPve(), $this->getPathAdditional());
     }
 
+    /**
+     * Qemu Agent command index.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/agent
+     * @return array|null
+     */
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
+    }
+
+    /**
+     * Execute Qemu Guest Agent commands.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/agent
+     * @param $params array
+     * @return array|null
+     */
+    public function post(array $params = []): ?array
+    {
+        return $this->getPve()->getApi()->post($this->getPathAdditional(), $params);
+    }
 }

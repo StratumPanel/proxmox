@@ -2,91 +2,80 @@
 /**
  * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\access\users;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Api\access\users\userid\token;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Access\Users;
+
+use Stratum\Proxmox\Api\Access\Users\UserId\Tfa;
+use Stratum\Proxmox\Api\access\users\UserId\Token;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class userid
+ * Class UserId
  * @package Stratum\Proxmox\api\access\users
  */
-class userid
+class UserId extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
 
     /**
-     * userid constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * UserId constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional);
     }
 
     /**
      * Get user API tokens.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/access/users/{userid}/token
-     * @return token
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/access/Users/{userid}/token
+     * @return Token
      */
-    public function token(){
-        return new token($this->httpClient,$this->apiURL,$this->cookie);
-    }
-
-    /**
-     * GET
-     */
-
-    /**
-     * Get user configuration.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/access/users/{userid}
-     * @param $params array
-     * @return mixed
-     */
-    public function get($params){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie,$params));
+    public function token(): Token
+    {
+        return new Token($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Get user TFA types (Personal and Realm).
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/access/users/{userid}/tfa
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/access/Users/{userid}/tfa
+     * @return Tfa
      */
-    public function getTfa(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'tfa/',$this->cookie));
+    public function tfa(): Tfa
+    {
+        return new Tfa($this->getPve(), $this->getPathAdditional());
     }
 
     /**
-     * PUT
+     * Get user configuration.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/access/Users/{userid}
+     * @return array|null
      */
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
+    }
 
     /**
      * Update user configuration.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/access/users/{userid}
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/access/Users/{userid}
      * @param $params array
-     * @return mixed
+     * @return array|null
      */
-    public function put($params){
-        return connection::processHttpResponse(connection::putAPI($this->httpClient,$this->apiURL,$this->cookie,$params));
+    public function put(array $params = []): ?array
+    {
+        return $this->getPve()->getApi()->put($this->getPathAdditional(), $params);
     }
 
     /**
-     * DELETE
-     */
-
-    /**
      * Delete user.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/access/users/{userid}
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/access/Users/{userid}
+     * @return array|null
      */
-    public function delete(){
-        return connection::processHttpResponse(connection::deleteAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function delete(): ?array
+    {
+        return $this->getPve()->getApi()->delete($this->getPathAdditional());
     }
 
 }

@@ -1,70 +1,61 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\cluster\firewall;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Api\cluster\firewall\groups\group;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Cluster\Firewall;
+
+use Stratum\Proxmox\Api\Cluster\Firewall\Groups\Group;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class groups
- * @package Stratum\Proxmox\api\cluster\firewall
+ * Class Groups
+ * @package Stratum\Proxmox\Api\Cluster\Firewall
  */
-class groups
+class Groups extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
 
     /**
-     * firewall constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * Groups constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'groups/');
     }
 
     /**
      * List rules.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/firewall/groups/{group}
-     * @param $group string
-     * @return group
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/firewall/groups/{group}
+     * @param string $group
+     * @return Group
      */
-    public function group($group){
-        return new group($this->httpClient,$this->apiURL.$group.'/',$this->cookie);
+    public function group(string $group): Group
+    {
+        return new Group($this->getPve(), $this->getPathAdditional() . $group . '/');
     }
-
-    /**
-     * GET
-     */
 
     /**
      * List security groups.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/firewall/groups
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/firewall/groups
+     * @return array|null
      */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
     }
 
     /**
-     * POST
-     */
-
-    /**
      * Create new security group.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/firewall/groups
-     * @param $param array
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/firewall/groups
+     * @param $params array
+     * @return array|null
      */
-    public function post($param){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL,$this->cookie,$param));
+    public function post(array $params = []): ?array
+    {
+        return $this->getPve()->getApi()->post($this->getPathAdditional(), $params);
     }
 
 }

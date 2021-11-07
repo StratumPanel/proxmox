@@ -2,173 +2,146 @@
 /**
  * @copyright 2019 Daniel Engelschalk <hello@mrkampf.com>
  */
+
 namespace Stratum\Proxmox\Api;
 
-use Stratum\Proxmox\Api\access\domains;
-use Stratum\Proxmox\Api\access\groups;
-use Stratum\Proxmox\Api\access\roles;
-use Stratum\Proxmox\Api\access\users;
-use Stratum\Proxmox\Helper\connection;
+use Stratum\Proxmox\Api\Access\Acl;
+use Stratum\Proxmox\Api\Access\Domains;
+use Stratum\Proxmox\Api\Access\Groups;
+use Stratum\Proxmox\Api\Access\OpenId;
+use Stratum\Proxmox\Api\Access\Password;
+use Stratum\Proxmox\Api\Access\Permission;
+use Stratum\Proxmox\Api\Access\Roles;
+use Stratum\Proxmox\Api\Access\Tfa;
+use Stratum\Proxmox\Api\Access\Ticket;
+use Stratum\Proxmox\Api\Access\Users;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
  * Class access
  * @package Stratum\Proxmox\api
  */
-class access
+class Access extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $ticket, //Auth ticket
-        $hostname, //Pormxox hostname
-        $cookie; //Proxmox auth cookie
 
     /**
-     * access constructor.
-     * @param $httpClient
-     * @param $apiURL
-     * @param $ticket
-     * @param $hostname
+     * Access constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$ticket,$hostname){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL.'/api2/json/access/'; //Save api url in class variable and change this to current api path
-        $this->ticket = $ticket; //Save auth ticket in class variable
-        $this->hostname = $hostname; //Save hostname in class variable
-        $this->cookie = connection::getCookies($this->ticket,$this->hostname); //Get auth cookie and save in class variable
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'access/');
     }
 
     /**
      * Authentication domain index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/access/domains
-     * @return domains
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/access/domains
+     * @return Domains
      */
-    public function domains(){
-        return new domains($this->httpClient,$this->apiURL.'domains/',$this->cookie);
+    public function domains(): Domains
+    {
+        return new Domains($this->getPve(), $this->getPathAdditional());
+    }
+
+    /**
+     * Directory index.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/access/openid
+     * @return OpenId
+     */
+    public function openId(): OpenId
+    {
+        return new OpenId($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Group index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/access/groups
-     * @return groups
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/access/groups
+     * @return Groups
      */
-    public function groups(){
-        return new groups($this->httpClient,$this->apiURL.'groups/',$this->cookie);
+    public function groups(): Groups
+    {
+        return new Groups($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Role index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/access/roles
-     * @return roles
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/access/roles
+     * @return Roles
      */
-    public function roles(){
-        return new roles($this->httpClient,$this->apiURL.'roles/',$this->cookie);
+    public function roles(): Roles
+    {
+        return new Roles($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * User index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/access/users
-     * @return users
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/access/users
+     * @return Users
      */
-    public function users(){
-        return new users($this->httpClient,$this->apiURL.'users/',$this->cookie);
-    }
-
-    /**
-     * GET
-     */
-
-    /**
-     * Directory index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/access
-     * @return mixed
-     */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function users(): Users
+    {
+        return new Users($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Get Access Control List (ACLs).
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/access/acl
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/access/acl
+     * @return Acl
      */
-    public function getAcl(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'acl/',$this->cookie));
-    }
-
-    /**
-     * Retrieve effective permissions of given user/token.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/access/permissions
-     * @param $params array
-     * @return mixed
-     */
-    public function getPermissions($params){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'permissions/',$this->cookie,$params));
-    }
-
-    /**
-     * Dummy. Useful for formatters which want to provide a login page.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/access/ticket
-     * @return mixed
-     */
-    public function getTicket(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'ticket/',$this->cookie));
-    }
-
-    /**
-     * PUT
-     */
-
-    /**
-     * Update Access Control List (add or remove permissions).
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/access/acl
-     * @param $params array
-     * @return mixed
-     */
-    public function putAcl($params){
-        return connection::processHttpResponse(connection::putAPI($this->httpClient,$this->apiURL.'acl/',$this->cookie,$params));
+    public function acl(): Acl
+    {
+        return new Acl($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Change user password.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/access/password
-     * @param $params array
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/access/password
+     * @return Password
      */
-    public function putPassword($params){
-        return connection::processHttpResponse(connection::putAPI($this->httpClient,$this->apiURL.'password/',$this->cookie,$params));
+    public function password(): Password
+    {
+        return new Password($this->getPve(), $this->getPathAdditional());
+    }
+
+    /**
+     * Retrieve effective permissions of given user/token.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/access/permissions
+     * @return Permission
+     */
+    public function permission(): Permission
+    {
+        return new Permission($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Change user u2f authentication.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/access/tfa
-     * @param $params array
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/access/tfa
+     * @return Tfa
      */
-    public function putTfa($params){
-        return connection::processHttpResponse(connection::putAPI($this->httpClient,$this->apiURL.'tfa/',$this->cookie,$params));
+    public function tfa(): Tfa
+    {
+        return new Tfa($this->getPve(), $this->getPathAdditional());
     }
 
     /**
-     * POST
+     * Dummy. Useful for formatters which want to provide a login page.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/access/ticket
+     * @return Ticket
      */
-
-    /**
-     * Finish a u2f challenge.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/access/tfa
-     * @param $params array
-     * @return mixed
-     */
-    public function postTfa($params){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.'tfa/',$this->cookie,$params));
+    public function ticket(): Ticket
+    {
+        return new Ticket($this->getPve(), $this->getPathAdditional());
     }
 
     /**
-     * Create or verify authentication ticket.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/access/ticket
-     * @param $params array
-     * @return mixed
+     * Directory index.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/access
+     * @return array|null
      */
-    public function postTicket($params){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.'ticket/',$this->cookie,$params));
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
     }
 }

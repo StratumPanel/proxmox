@@ -1,99 +1,59 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\nodes\qemu\firewall;
 
+namespace Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Helper\connection;
+use Stratum\Proxmox\Api\Nodes\Node\Firewall\Rules\Pos;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class rules
- * @package Stratum\Proxmox\api\nodes\qemu\firewall
+ * Class Rules
+ * @package Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Firewall
  */
-class rules
+class Rules extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
-
     /**
-     * status constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * Init constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
-    }
-
-    /**
-     * GET
-     */
-
-    /**
-     * List rules.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/firewall/rules
-     * @return mixed|null
-     */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'rules/');
     }
 
     /**
      * Get single rule data.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/firewall/rules/{pos}
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/firewall/rules/{pos}
      * @param string $pos
-     * @return mixed|null
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Firewall\Rules\Pos
      */
-    public function getPos($pos=""){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.$pos.'/',$this->cookie));
+    public function pos(string $pos): Pos
+    {
+        return new Pos($this->getPve(), $this->getPathAdditional() . $pos . '/');
     }
 
     /**
-     * PUT
+     * List rules.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/firewall/rules
+     * @return array|null
      */
-
-    /**
-     * Modify rule data.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/firewall/rules/{pos}
-     * @param string $pos
-     * @param $param array
-     * @return mixed|null
-     */
-    public function putPos($pos="",$param){
-        return connection::processHttpResponse(connection::putAPI($this->httpClient,$this->apiURL.$pos.'/',$this->cookie,$param));
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
     }
-
-    /**
-     * POST
-     */
 
     /**
      * Create new rule.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/firewall/rules
-     * @param $param array
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/firewall/rules
+     * @param $params array
+     * @return array|null
      */
-    public function post($param){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL,$this->cookie,$param));
-    }
-
-    /**
-     * DELETE
-     */
-
-    /**
-     * Delete rule.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/firewall/rules/{pos}
-     * @param string $pos
-     * @param $param array
-     * @return mixed|null
-     */
-    public function deletePos($pos="",$param){
-        return connection::processHttpResponse(connection::deleteAPI($this->httpClient,$this->apiURL.$pos.'/',$this->cookie,$param));
+    public function post(array $params = []): ?array
+    {
+        return $this->getPve()->getApi()->post($this->getPathAdditional(), $params);
     }
 }

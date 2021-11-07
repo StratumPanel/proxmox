@@ -1,98 +1,60 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\cluster\ha;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Cluster\Ha;
+
+use Stratum\Proxmox\Api\Cluster\Ha\Groups\Group;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class groups
- * @package Stratum\Proxmox\api\cluster\ha
+ * Class Groups
+ * @package Stratum\Proxmox\Api\Cluster\Ha
  */
-class groups
+class Groups extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
-
     /**
-     * groups constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * Groups constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
-    }
-
-    /**
-     * GET
-     */
-
-    /**
-     * Get HA groups.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ha/groups
-     * @return mixed|null
-     */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'groups/');
     }
 
     /**
      * Read ha group configuration.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ha/groups/{group}
-     * @param $group string
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/ha/groups/{group}
+     * @param string $group
+     * @return Group
      */
-    public function getGroup($group){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.$group.'/',$this->cookie));
+    public function group(string $group): Group
+    {
+        return new Group($this->getPve(), $this->getPathAdditional() . $group . '/');
     }
 
     /**
-     * PUT
+     * Get HA groups.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/ha/groups
+     * @return array|null
      */
-
-    /**
-     * Update ha group configuration.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ha/groups/{group}
-     * @param $group string
-     * @param $param array
-     * @return mixed|null
-     */
-    public function putGroup($group,$param){
-        return connection::processHttpResponse(connection::putAPI($this->httpClient,$this->apiURL.$group.'/',$this->cookie,$param));
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
     }
-
-    /**
-     * POST
-     */
 
     /**
      * Create a new HA group.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ha/groups
-     * @param $param array
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/ha/groups
+     * @param $params array
+     * @return array|null
      */
-    public function post($param){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL,$this->cookie,$param));
-    }
-
-    /**
-     * DELETE
-     */
-
-    /**
-     * Delete ha group configuration.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ha/groups/{group}
-     * @param $group string
-     * @return mixed|null
-     */
-    public function deleteGroup($group){
-        return connection::processHttpResponse(connection::deleteAPI($this->httpClient,$this->apiURL.$group.'/',$this->cookie));
+    public function post(array $params = []): ?array
+    {
+        return $this->getPve()->getApi()->post($this->getPathAdditional(), $params);
     }
 
 }

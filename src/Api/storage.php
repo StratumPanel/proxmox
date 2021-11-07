@@ -1,101 +1,60 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
+
 namespace Stratum\Proxmox\Api;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Helper\connection;
+
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class version
- * @package Stratum\Proxmox\api
+ * Class Storage
+ * @package Stratum\Proxmox\Api
  */
-class storage
+class Storage extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $ticket, //Auth ticket
-        $hostname, //Pormxox hostname
-        $cookie; //Proxmox auth cookie
 
     /**
-     * version constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $ticket string
-     * @param $hostname string
+     * Storage constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$ticket,$hostname){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL.'/api2/json/storage/'; //Save api url in class variable and change this to current api path
-        $this->ticket = $ticket; //Save auth ticket in class variable
-        $this->hostname = $hostname; //Save hostname in class variable
-        $this->cookie = connection::getCookies($this->ticket,$this->hostname); //Get auth cookie and save in class variable
-    }
-
-    /**
-     * GET
-     */
-
-    /**
-     * Storage index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/storage
-     * @return mixed
-     */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'storage/');
     }
 
     /**
      * Read storage configuration.
      * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/storage/{storage}
-     * @param $storage string
-     * @return mixed
+     * @param String $storage
+     * @return Storage\Storage
      */
-    public function getStorage($storage){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.$storage.'/',$this->cookie));
+    public function storage(string $storage): Storage\Storage
+    {
+        return new Storage\Storage($this->getPve(), $this->getPathAdditional() . $storage . '/');
     }
 
     /**
-     * PUT
+     * Storage index.
+     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/storage
+     * @return array|null
      */
-
-    /**
-     * Update storage configuration.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/storage/{storage}
-     * @param $storage string
-     * @param $params array
-     * @return mixed
-     */
-    public function putStorage($storage,$params){
-        return connection::processHttpResponse(connection::putAPI($this->httpClient,$this->apiURL.$storage.'/',$this->cookie,$params));
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
     }
-
-    /**
-     * POST
-     */
 
     /**
      * Create a new storage.
      * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/storage
-     * @return mixed
+     * @param array $params
+     * @return array|null
      */
-    public function post(){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL,$this->cookie));
-    }
-
-    /**
-     * DELETE
-     */
-
-    /**
-     * Delete storage configuration.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/storage/{storage}
-     * @param $storage string
-     * @return mixed
-     */
-    public function deleteStorage($storage){
-        return connection::processHttpResponse(connection::deleteAPI($this->httpClient,$this->apiURL.$storage.'/',$this->cookie));
+    public function post(array $params = []): ?array
+    {
+        return $this->getPve()->getApi()->post($this->getPathAdditional(), $params);
     }
 }

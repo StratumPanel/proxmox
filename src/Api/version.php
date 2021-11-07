@@ -1,49 +1,38 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
+
 namespace Stratum\Proxmox\Api;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Helper\connection;
+
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class version
- * @package Stratum\Proxmox\api
+ * Class Version
+ * @package Stratum\Proxmox\Api
  */
-class version
+class Version extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $ticket, //Auth ticket
-        $hostname, //Pormxox hostname
-        $cookie; //Proxmox auth cookie
 
     /**
-     * version constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $ticket string
-     * @param $hostname string
+     * Version constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$ticket,$hostname){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL.'/api2/json/version/'; //Save api url in class variable and change this to current api path
-        $this->ticket = $ticket; //Save auth ticket in class variable
-        $this->hostname = $hostname; //Save hostname in class variable
-        $this->cookie = connection::getCookies($this->ticket,$this->hostname); //Get auth cookie and save in class variable
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'version/');
     }
 
     /**
-     * GET
-     */
-
-    /**
      * API version details. The result also includes the global datacenter confguration.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/version
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/version
+     * @return array|null
      */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
     }
 }

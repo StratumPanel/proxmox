@@ -1,127 +1,114 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\cluster;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Api\cluster\firewall\aliases;
-use Stratum\Proxmox\Api\cluster\firewall\groups;
-use Stratum\Proxmox\Api\cluster\firewall\rules;
-use Stratum\Proxmox\Api\cluster\firewall\ipSet;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Cluster;
+
+use Stratum\Proxmox\Api\Cluster\Firewall\Aliases;
+use Stratum\Proxmox\Api\Cluster\Firewall\Groups;
+use Stratum\Proxmox\Api\Cluster\Firewall\IpSet;
+use Stratum\Proxmox\Api\Cluster\Firewall\Macros;
+use Stratum\Proxmox\Api\Cluster\Firewall\Options;
+use Stratum\Proxmox\Api\Cluster\Firewall\Refs;
+use Stratum\Proxmox\Api\Cluster\Firewall\Rules;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class firewall
- * @package Stratum\Proxmox\api\cluster
+ * Class Firewall
+ * @package Stratum\Proxmox\Api\Cluster
  */
-class firewall
+class Firewall extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
-
     /**
-     * firewall constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * Firewall constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'firewall/');
     }
 
     /**
      * List aliases
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/firewall/aliases
-     * @return aliases
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/firewall/aliases
+     * @return Aliases
      */
-    public function aliases(){
-        return new aliases($this->httpClient,$this->apiURL.'aliases/',$this->cookie);
+    public function aliases(): Aliases
+    {
+        return new Aliases($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * List security groups.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/firewall/groups
-     * @return groups
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/firewall/groups
+     * @return Groups
      */
-    public function groups(){
-        return new groups($this->httpClient,$this->apiURL.'groups/',$this->cookie);
+    public function groups(): Groups
+    {
+        return new Groups($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * List IPSets
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/firewall/ipset
-     * @return ipSet
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/firewall/ipset
+     * @return IpSet
      */
-    public function ipSet(){
-        return new ipSet($this->httpClient,$this->apiURL.'ipset/',$this->cookie);
+    public function ipSet(): IpSet
+    {
+        return new IpSet($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * List rules.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/firewall/rules
-     * @return rules
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/firewall/rules
+     * @return Rules
      */
-    public function rules(){
-        return new rules($this->httpClient,$this->apiURL.'rules/',$this->cookie);
-    }
-
-    /**
-     * GET
-     */
-
-    /**
-     * Directory index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/firewall
-     * @return mixed|null
-     */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function rules(): Rules
+    {
+        return new Rules($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * List available macros
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/firewall/macros
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/firewall/macros
+     * @return Macros
      */
-    public function getMacros(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'macros/',$this->cookie));
+    public function macros(): Macros
+    {
+        return new Macros($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Get Firewall options.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/firewall/options
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/firewall/options
+     * @return Options
      */
-    public function getOptions(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'options/',$this->cookie));
+    public function options(): Options
+    {
+        return new Options($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Lists possible IPSet/Alias reference which are allowed in source/dest properties.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/firewall/refs
-     * @param $params array
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/firewall/refs
+     * @return Refs
      */
-    public function getRefs($params){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'refs/',$this->cookie,$params));
+    public function refs(): Refs
+    {
+        return new Refs($this->getPve(), $this->getPathAdditional());
     }
 
     /**
-     * PUT
+     * Directory index.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/firewall
+     * @return array|null
      */
-
-    /**
-     * Set Firewall options.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/firewall/options
-     * @param $params array
-     * @return mixed|null
-     */
-    public function putOptions($params){
-        return connection::processHttpResponse(connection::putAPI($this->httpClient,$this->apiURL.'options/',$this->cookie,$params));
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
     }
 
 }

@@ -1,96 +1,59 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\nodes\node\qemu\vmid;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Api\nodes\qemu\snapshot\snapname;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId;
+
+use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Snapshot\Snapname;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class snapshot
- * @package Stratum\Proxmox\api\nodes\qemu\vmid
+ * Class Snapshot
+ * @package Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId
  */
-class snapshot
+class Snapshot extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
-
     /**
-     * snapshot constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * Init constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'snapshot/');
     }
 
     /**
-     * -
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/snapshot/{snapname}
-     * @param $snapName string
-     * @return snapname
+     * Read network device configuration
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/network/{iface}
+     * @param string $snapname
+     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Snapshot\Snapname
      */
-    public function snapname($snapName){
-        return new snapname($this->httpClient,$this->apiURL.$snapName.'/',$this->cookie);
+    public function snapname(string $snapname): Snapname
+    {
+        return new Snapname($this->getPve(), $this->getPathAdditional() . $snapname . '/');
     }
-
-    /**
-     * GET
-     */
 
     /**
      * List all snapshots.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/snapshot
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/snapshot
+     * @return array|null
      */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
     }
 
     /**
-     * POST
-     */
-
-    /**
-     * Snapshot a VM.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/snapshot
+     * Snapshot a container.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/snapshot
      * @param $params array
-     * @return mixed|null
+     * @return array|null
      */
-    public function post($params){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL,$this->cookie,$params));
-    }
-
-        /**
-     * POST
-     */
-
-    /**
-     * Rollback VM state to specified snapshot.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/snapshot/{snapname}/rollback
-     * @return mixed|null
-     */
-    public function postRollback($name){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.$name.'/rollback/',$this->cookie));
-    }
-
-    /**
-     * DELETE
-     */
-
-    /**
-     * Delete a VM snapshot.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/snapshot/{snapname}
-     * @param $params array
-     * @return mixed|null
-     */
-    public function delete($name){
-        return connection::processHttpResponse(connection::deleteAPI($this->httpClient,$this->apiURL.$name,$this->cookie));
+    public function post(array $params = []): ?array
+    {
+        return $this->getPve()->getApi()->post($this->getPathAdditional(), $params);
     }
 }

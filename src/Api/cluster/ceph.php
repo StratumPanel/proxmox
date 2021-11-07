@@ -1,73 +1,71 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\cluster;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Api\cluster\ceph\flags;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Cluster;
+
+use Stratum\Proxmox\Api\Cluster\Ceph\Flags;
+use Stratum\Proxmox\Api\Cluster\Ceph\MetaData;
+use Stratum\Proxmox\Api\Cluster\Ceph\Status;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class ceph
- * @package Stratum\Proxmox\api\cluster
+ * Class Ceph
+ * @package Stratum\Proxmox\Api\Cluster
  */
-class ceph
+class Ceph extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
-
     /**
-     * ceph constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * Ceph constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'ceph/');
     }
 
     /**
-     * get the status of all ceph flags
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ceph/flags
-     * @return flags
+     * Get the status of all ceph flags
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ceph/flags
+     * @param string $tokenId
+     * @return Flags
      */
-    public function flags(){
-        return new flags($this->httpClient,$this->apiURL.'flags/',$this->cookie);
-    }
-
-    /**
-     * GET
-     */
-
-    /**
-     * Cluster ceph index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ceph
-     * @return mixed
-     */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function flags(string $tokenId): Flags
+    {
+        return new Flags($this->getPve(), $this->getPathAdditional() . $tokenId . '/');
     }
 
     /**
      * Get ceph metadata.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ceph/metadata
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ceph/metadata
+     * @return MetaData
      */
-    public function getMetadata(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'metadata/',$this->cookie));
+    public function metaData(): MetaData
+    {
+        return new MetaData($this->getPve(), $this->getPathAdditional());
     }
 
     /**
      * Get ceph status.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ceph/status
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ceph/status
+     * @return Status
      */
-    public function getStatus(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'status/',$this->cookie));
+    public function status(): Status
+    {
+        return new Status($this->getPve(), $this->getPathAdditional());
+    }
+
+    /**
+     * Cluster ceph index.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ceph
+     * @return array|null
+     */
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
     }
 
 }

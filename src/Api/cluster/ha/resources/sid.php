@@ -1,94 +1,80 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\cluster\ha\resources;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Cluster\Ha\Resources;
+
+use Stratum\Proxmox\Api\Cluster\Ha\Resources\Sid\Migrate;
+use Stratum\Proxmox\Api\Cluster\Ha\Resources\Sid\Relocate;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class sid
- * @package Stratum\Proxmox\api\cluster\ha\resources
+ * Class Sid
+ * @package Stratum\Proxmox\Api\Cluster\Ha\Resources
  */
-class sid
+class Sid extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
-
     /**
-     * sid constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * Sid constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional);
     }
-
-    /**
-     * GET
-     */
-
-    /**
-     * Read resource configuration.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ha/resources/{sid}
-     * @return mixed|null
-     */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
-    }
-
-    /**
-     * PUT
-     */
-
-    /**
-     * Update resource configuration.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ha/resources/{sid}
-     * @param $params array
-     * @return mixed|null
-     */
-    public function put($params){
-        return connection::processHttpResponse(connection::putAPI($this->httpClient,$this->apiURL,$this->cookie,$params));
-    }
-
-    /**
-     * POST
-     */
 
     /**
      * Request resource migration (online) to another node.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ha/resources/{sid}/migrate
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/ha/resources/{sid}/migrate
+     * @return Migrate
      */
-    public function postMigrate(){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.'migrate/',$this->cookie));
+    public function migrate(): Migrate
+    {
+        return new Migrate($this->getPve(), $this->getPathAdditional());
     }
 
     /**
-     * Request resource relocatzion to another node. This stops the service on the old node, and restarts it on the target node.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ha/resources/{sid}/relocate
-     * @return mixed|null
+     * Request resource migration (online) to another node.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/ha/resources/{sid}/migrate
+     * @return Relocate
      */
-    public function postRelocate(){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.'relocate/',$this->cookie));
+    public function relocate(): Relocate
+    {
+        return new Relocate($this->getPve(), $this->getPathAdditional());
     }
 
     /**
-     * DELETE
+     * Read resource configuration.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/ha/resources/{sid}
+     * @return array|null
      */
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
+    }
+
+    /**
+     * Update resource configuration.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/ha/resources/{sid}
+     * @param $params array
+     * @return array|null
+     */
+    public function put(array $params = []): ?array
+    {
+        return $this->getPve()->getApi()->put($this->getPathAdditional(), $params);
+    }
 
     /**
      * Delete resource configuration.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/ha/resources/{sid}
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/ha/resources/{sid}
+     * @return array|null
      */
-    public function delete(){
-        return connection::processHttpResponse(connection::deleteAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function delete(): ?array
+    {
+        return $this->getPve()->getApi()->delete($this->getPathAdditional());
     }
 
 }

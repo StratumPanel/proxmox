@@ -1,91 +1,70 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\nodes\node;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Api\nodes\node\certificates\acme;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Nodes\Node;
+
+use Stratum\Proxmox\Api\Nodes\Node\Certificates\Acme;
+use Stratum\Proxmox\Api\Nodes\Node\Certificates\Custom;
+use Stratum\Proxmox\Api\Nodes\Node\Certificates\Info;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class certificates
- * @package Stratum\Proxmox\api\nodes\node
+ * Class Certificates
+ * @package Stratum\Proxmox\Api\Nodes\Node
  */
-class certificates
+class Certificates extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
-
     /**
-     * certificates constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * Apt constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'certificates/');
     }
 
     /**
      * ACME index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/certificates/acme
-     * @return acme
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/certificates/acme
+     * @return Acme
      */
-    public function Acme(){
-        return new acme($this->httpClient,$this->apiURL.'acme/',$this->cookie);
+    public function acme(): Acme
+    {
+        return new Acme($this->getPve(), $this->getPathAdditional());
     }
-
-    /**
-     * GET
-     */
-
-    /**
-     * Node index.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/certificates
-     * @return mixed
-     */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
-    }
-
-    /**
-     * Get information about node's certificates
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/certificates/info
-     * @return mixed
-     */
-    public function getInfo(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL.'info/',$this->cookie));
-    }
-
-    /**
-     * POST
-     */
 
     /**
      * Upload or update custom certificate chain and key.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/certificates/custom
-     * @param $param
-     * @return mixed
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/certificates/custom
+     * @return Custom
      */
-    public function postCustom($param){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.'custom/',$this->cookie,$param));
+    public function custom(): Custom
+    {
+        return new Custom($this->getPve(), $this->getPathAdditional());
     }
 
     /**
-     * DELETE
+     * Get information about node's certificates.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/certificates/info
+     * @return Info
      */
+    public function info(): Info
+    {
+        return new Info($this->getPve(), $this->getPathAdditional());
+    }
 
     /**
-     * DELETE custom certificate chain and key.
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/certificates/custom
-     * @param $param
-     * @return mixed
+     * Node index.
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/certificates
+     * @return array|null
      */
-    public function deleteCustom($param){
-        return connection::processHttpResponse(connection::deleteAPI($this->httpClient,$this->apiURL.'custom/',$this->cookie,$param));
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
     }
+
 }

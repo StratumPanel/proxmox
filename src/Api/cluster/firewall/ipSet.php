@@ -1,69 +1,61 @@
 <?php
-/**
- * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
+/*
+ * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
-namespace Stratum\Proxmox\Api\cluster\firewall;
 
-use GuzzleHttp\Client;
-use Stratum\Proxmox\Api\cluster\firewall\ipset\name;
-use Stratum\Proxmox\Helper\connection;
+namespace Stratum\Proxmox\Api\Cluster\Firewall;
+
+use Stratum\Proxmox\Api\Cluster\Firewall\IpSet\Name;
+use Stratum\Proxmox\Helper\PVEPathClassBase;
+use Stratum\Proxmox\PVE;
 
 /**
- * Class ipset
- * @package Stratum\Proxmox\api\cluster\firewall
+ * Class IpSet
+ * @package Stratum\Proxmox\Api\Cluster\Firewall
  */
-class ipSet
+class IpSet extends PVEPathClassBase
 {
-    private $httpClient, //The http client for connection to proxmox
-        $apiURL, //API url
-        $cookie; //Proxmox auth cookie
 
     /**
-     * ipSet constructor.
-     * @param $httpClient Client
-     * @param $apiURL string
-     * @param $cookie mixed
+     * IpSet constructor.
+     * @param PVE $pve
+     * @param string $parentAdditional
      */
-    public function __construct($httpClient,$apiURL,$cookie){
-        $this->httpClient = $httpClient; //Save the http client from GuzzleHttp in class variable
-        $this->apiURL = $apiURL; //Save api url in class variable and change this to current api path
-        $this->cookie = $cookie; //Save auth cookie in class variable
+    public function __construct(PVE $pve, string $parentAdditional)
+    {
+        parent::__construct($pve, $parentAdditional . 'ipset/');
     }
 
     /**
      * List IPSet content
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/firewall/ipset/{name}
-     * @param $name string
-     * @return name
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/firewall/ipset/{name}
+     * @param string $name
+     * @return Name
      */
-    public function name($name){
-        return new name($this->httpClient,$this->apiURL.$name.'/',$this->cookie);
+    public function cidr(string $name): Name
+    {
+        return new Name($this->getPve(), $this->getPathAdditional() . $name . '/');
     }
-
-    /**
-     * GET
-     */
 
     /**
      * List IPSets
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/firewall/ipset
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/firewall/ipset
+     * @return array|null
      */
-    public function get(){
-        return connection::processHttpResponse(connection::getAPI($this->httpClient,$this->apiURL,$this->cookie));
+    public function get(): ?array
+    {
+        return $this->getPve()->getApi()->get($this->getPathAdditional());
     }
-
-    /**
-     * POST
-     */
 
     /**
      * Create new IPSet
-     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/cluster/firewall/ipset
-     * @param $param array
-     * @return mixed|null
+     * @link https://pve.proxmox.com/pve-docs/api-viewer/#/cluster/firewall/ipset
+     * @param $params array
+     * @return array|null
      */
-    public function post($param){
-        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL,$this->cookie,$param));
+    public function post(array $params = []): ?array
+    {
+        return $this->getPve()->getApi()->post($this->getPathAdditional(), $params);
     }
+
 }
