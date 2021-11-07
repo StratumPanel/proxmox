@@ -66,4 +66,31 @@ class snapshot
     public function post($params){
         return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL,$this->cookie,$params));
     }
+    
+        /**
+     * POST
+     */
+
+    /**
+     * Rollback VM state to specified snapshot.
+     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/snapshot/{snapname}/rollback
+     * @return mixed|null
+     */
+    public function postRollback($name){
+        return connection::processHttpResponse(connection::postAPI($this->httpClient,$this->apiURL.$name.'/rollback/',$this->cookie));
+    }
+
+    /**
+     * DELETE
+     */
+
+    /**
+     * Delete a VM snapshot.
+     * @url https://pve.proxmox.com/pve-docs/api-viewer/index.html#/nodes/{node}/qemu/{vmid}/snapshot/{snapname}
+     * @param $params array
+     * @return mixed|null
+     */
+    public function delete($name, $params){
+        return connection::processHttpResponse(connection::deleteAPI($this->httpClient,$this->apiURL.$name,$this->cookie,$params));
+    }
 }
