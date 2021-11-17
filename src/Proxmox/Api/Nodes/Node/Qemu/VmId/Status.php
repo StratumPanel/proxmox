@@ -3,21 +3,21 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId;
+namespace Proxmox\Api\Nodes\Node\Qemu\VmId;
 
-use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Status\Current;
-use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Status\Reboot;
-use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Status\Resume;
-use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Status\Shutdown;
-use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Status\Start;
-use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Status\Stop;
-use Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Status\Suspend;
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Api\Nodes\Node\Qemu\VmId\Status\Current;
+use Proxmox\Api\Nodes\Node\Qemu\VmId\Status\Reboot;
+use Proxmox\Api\Nodes\Node\Qemu\VmId\Status\Resume;
+use Proxmox\Api\Nodes\Node\Qemu\VmId\Status\Shutdown;
+use Proxmox\Api\Nodes\Node\Qemu\VmId\Status\Start;
+use Proxmox\Api\Nodes\Node\Qemu\VmId\Status\Stop;
+use Proxmox\Api\Nodes\Node\Qemu\VmId\Status\Suspend;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Status
- * @package Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId
+ * @package Proxmox\Api\Nodes\Node\Qemu\VmId
  */
 class Status extends PVEPathClassBase
 {
@@ -34,7 +34,7 @@ class Status extends PVEPathClassBase
     /**
      * Get virtual machine status.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/status/current
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Status\Current
+     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\Status\Current
      */
     public function current(): Current
     {
@@ -44,7 +44,7 @@ class Status extends PVEPathClassBase
     /**
      * Reboot the container by shutting it down, and starting it again. Applies pending changes.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/status/reboot
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Status\Reboot
+     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\Status\Reboot
      */
     public function reboot(): Reboot
     {
@@ -54,7 +54,7 @@ class Status extends PVEPathClassBase
     /**
      * Resume the container.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/status/resume
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Status\Resume
+     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\Status\Resume
      */
     public function resume(): Resume
     {
@@ -64,7 +64,7 @@ class Status extends PVEPathClassBase
     /**
      * Shutdown the container. This will trigger a clean shutdown of the container, see lxc-stop(1) for details.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/status/shutdown
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Status\Shutdown
+     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\Status\Shutdown
      */
     public function shutdown(): Shutdown
     {
@@ -74,7 +74,7 @@ class Status extends PVEPathClassBase
     /**
      * Start the container.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/status/start
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Status\Start
+     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\Status\Start
      */
     public function start(): Start
     {
@@ -84,7 +84,7 @@ class Status extends PVEPathClassBase
     /**
      * Stop the container. This will abruptly stop all processes running in the container.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/status/stop
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Status\Stop
+     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\Status\Stop
      */
     public function stop(): Stop
     {
@@ -94,7 +94,7 @@ class Status extends PVEPathClassBase
     /**
      * Suspend the container.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/status/suspend
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Status\Suspend
+     * @return \Proxmox\Api\Nodes\Node\Qemu\VmId\Status\Suspend
      */
     public function suspend(): Suspend
     {

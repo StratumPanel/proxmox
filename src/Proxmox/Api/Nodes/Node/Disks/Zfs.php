@@ -3,15 +3,15 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Nodes\Node\Disks;
+namespace Proxmox\Api\Nodes\Node\Disks;
 
-use Stratum\Proxmox\Api\Nodes\Node\Disks\Zfs\Name;
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Api\Nodes\Node\Disks\Zfs\Name;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Zfs
- * @package Stratum\Proxmox\Api\Nodes\Node\Disks
+ * @package Proxmox\Api\Nodes\Node\Disks
  */
 class Zfs extends PVEPathClassBase
 {

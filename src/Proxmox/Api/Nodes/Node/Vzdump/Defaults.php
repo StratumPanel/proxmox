@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Nodes\Node\Vzdump;
+namespace Proxmox\Api\Nodes\Node\Vzdump;
 
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Defaults
- * @package Stratum\Proxmox\Api\Nodes\Node\Vzdump
+ * @package Proxmox\Api\Nodes\Node\Vzdump
  */
 class Defaults extends PVEPathClassBase
 {

@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Nodes\Node\Tasks\UpId;
+namespace Proxmox\Api\Nodes\Node\Tasks\UpId;
 
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Log
- * @package Stratum\Proxmox\Api\Nodes\Node\Tasks\UpId
+ * @package Proxmox\Api\Nodes\Node\Tasks\UpId
  */
 class Log extends PVEPathClassBase
 {

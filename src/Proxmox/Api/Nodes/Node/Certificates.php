@@ -3,17 +3,17 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Nodes\Node;
+namespace Proxmox\Api\Nodes\Node;
 
-use Stratum\Proxmox\Api\Nodes\Node\Certificates\Acme;
-use Stratum\Proxmox\Api\Nodes\Node\Certificates\Custom;
-use Stratum\Proxmox\Api\Nodes\Node\Certificates\Info;
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Api\Nodes\Node\Certificates\Acme;
+use Proxmox\Api\Nodes\Node\Certificates\Custom;
+use Proxmox\Api\Nodes\Node\Certificates\Info;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Certificates
- * @package Stratum\Proxmox\Api\Nodes\Node
+ * @package Proxmox\Api\Nodes\Node
  */
 class Certificates extends PVEPathClassBase
 {

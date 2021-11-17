@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Nodes\Node\Ceph;
+namespace Proxmox\Api\Nodes\Node\Ceph;
 
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Rules
- * @package Stratum\Proxmox\Api\Nodes\Node\Ceph
+ * @package Proxmox\Api\Nodes\Node\Ceph
  */
 class Rules extends PVEPathClassBase
 {

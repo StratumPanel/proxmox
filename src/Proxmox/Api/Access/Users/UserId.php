@@ -3,16 +3,16 @@
  * @copyright 2020 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Access\Users;
+namespace Proxmox\Api\Access\Users;
 
-use Stratum\Proxmox\Api\Access\Users\UserId\Tfa;
-use Stratum\Proxmox\Api\access\users\UserId\Token;
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Api\Access\Users\UserId\Tfa;
+use Proxmox\Api\access\users\UserId\Token;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class UserId
- * @package Stratum\Proxmox\api\access\users
+ * @package proxmox\api\access\users
  */
 class UserId extends PVEPathClassBase
 {

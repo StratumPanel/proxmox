@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId;
+namespace Proxmox\Api\Nodes\Node\Qemu\VmId;
 
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Pending
- * @package Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId
+ * @package Proxmox\Api\Nodes\Node\Qemu\VmId
  */
 class Pending extends PVEPathClassBase
 {

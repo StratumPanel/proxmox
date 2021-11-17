@@ -3,15 +3,15 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Nodes\Node\Firewall;
+namespace Proxmox\Api\Nodes\Node\Firewall;
 
-use Stratum\Proxmox\Api\Nodes\Node\Firewall\Rules\Pos;
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Api\Nodes\Node\Firewall\Rules\Pos;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Rules
- * @package Stratum\Proxmox\Api\Nodes\Node\Firewall
+ * @package Proxmox\Api\Nodes\Node\Firewall
  */
 class Rules extends PVEPathClassBase
 {

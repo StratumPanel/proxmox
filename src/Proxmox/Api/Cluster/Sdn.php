@@ -3,19 +3,19 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Cluster;
+namespace Proxmox\Api\Cluster;
 
-use Stratum\Proxmox\Api\Cluster\Sdn\Controllers;
-use Stratum\Proxmox\Api\Cluster\Sdn\Dns;
-use Stratum\Proxmox\Api\Cluster\Sdn\Ipams;
-use Stratum\Proxmox\Api\Cluster\Sdn\VNets;
-use Stratum\Proxmox\Api\Cluster\Sdn\Zones;
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Api\Cluster\Sdn\Controllers;
+use Proxmox\Api\Cluster\Sdn\Dns;
+use Proxmox\Api\Cluster\Sdn\Ipams;
+use Proxmox\Api\Cluster\Sdn\VNets;
+use Proxmox\Api\Cluster\Sdn\Zones;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Sdn
- * @package Stratum\Proxmox\Api\Cluster
+ * @package Proxmox\Api\Cluster
  */
 class Sdn extends PVEPathClassBase
 {

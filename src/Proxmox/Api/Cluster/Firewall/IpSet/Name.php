@@ -3,15 +3,15 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Cluster\Firewall\IpSet;
+namespace Proxmox\Api\Cluster\Firewall\IpSet;
 
-use Stratum\Proxmox\Api\Cluster\Firewall\IpSet\Name\Cidr;
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Api\Cluster\Firewall\IpSet\Name\Cidr;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Name
- * @package Stratum\Proxmox\Api\Cluster\Firewall\IpSet
+ * @package Proxmox\Api\Cluster\Firewall\IpSet
  */
 class Name extends PVEPathClassBase
 {

@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Nodes\Node\Storage\Storage\Content;
+namespace Proxmox\Api\Nodes\Node\Storage\Storage\Content;
 
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Volume
- * @package Stratum\Proxmox\Api\Nodes\Node\Storage\Storage\Content
+ * @package Proxmox\Api\Nodes\Node\Storage\Storage\Content
  */
 class Volume extends PVEPathClassBase
 {

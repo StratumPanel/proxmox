@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Cluster\Sdn\Ipams;
+namespace Proxmox\Api\Cluster\Sdn\Ipams;
 
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Ipam
- * @package Stratum\Proxmox\Api\Cluster\Sdn\Ipams
+ * @package Proxmox\Api\Cluster\Sdn\Ipams
  */
 class Ipam extends PVEPathClassBase
 {

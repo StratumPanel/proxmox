@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Helper;
+namespace Proxmox\Helper;
 
-use Stratum\Proxmox\Helper\Interfaces\PVEPathClassInterface;
-use Stratum\Proxmox\PVE;
+use Proxmox\Helper\Interfaces\PVEPathClassInterface;
+use Proxmox\PVE;
 
 /**
  * Class PVEPathClassBase
- * @package Stratum\Proxmox\Helper\Interfaces
+ * @package Proxmox\Helper\Interfaces
  */
 class PVEPathClassBase implements PVEPathClassInterface
 {

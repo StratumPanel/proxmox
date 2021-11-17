@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent;
+namespace Proxmox\Api\Nodes\Node\Qemu\VmId\Agent;
 
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Shutdown
- * @package Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Agent
+ * @package Proxmox\Api\Nodes\Node\Qemu\VmId\Agent
  */
 class Shutdown extends PVEPathClassBase
 {

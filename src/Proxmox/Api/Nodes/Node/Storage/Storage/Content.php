@@ -3,15 +3,15 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Nodes\Node\Storage\Storage;
+namespace Proxmox\Api\Nodes\Node\Storage\Storage;
 
-use Stratum\Proxmox\Api\Nodes\Node\Storage\Storage\Content\Volume;
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Api\Nodes\Node\Storage\Storage\Content\Volume;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Content
- * @package Stratum\Proxmox\Api\Nodes\Node\Storage\Storage
+ * @package Proxmox\Api\Nodes\Node\Storage\Storage
  */
 class Content extends PVEPathClassBase
 {
@@ -29,7 +29,7 @@ class Content extends PVEPathClassBase
      * Get volume attributes
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/storage/{storage}/content/{volume}
      * @param string $Volume
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Storage\Storage\Content\Volume
+     * @return \Proxmox\Api\Nodes\Node\Storage\Storage\Content\Volume
      */
     public function volume(string $Volume): Volume
     {

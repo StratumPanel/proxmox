@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Cluster\Firewall;
+namespace Proxmox\Api\Cluster\Firewall;
 
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Options
- * @package Stratum\Proxmox\Api\Cluster\Firewall
+ * @package Proxmox\Api\Cluster\Firewall
  */
 class Options extends PVEPathClassBase
 {

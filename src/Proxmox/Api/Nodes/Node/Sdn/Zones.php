@@ -3,15 +3,15 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Nodes\Node\Sdn;
+namespace Proxmox\Api\Nodes\Node\Sdn;
 
-use Stratum\Proxmox\Api\Cluster\Sdn\Zones\Zone;
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Api\Cluster\Sdn\Zones\Zone;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Zones
- * @package Stratum\Proxmox\Api\Nodes\Node\Sdn
+ * @package Proxmox\Api\Nodes\Node\Sdn
  */
 class Zones extends PVEPathClassBase
 {
@@ -29,7 +29,7 @@ class Zones extends PVEPathClassBase
      * Index of available pci methods
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/hardware/pci/{pciid}
      * @param string $zone
-     * @return \Stratum\Proxmox\Api\Cluster\Sdn\Zones\Zone
+     * @return \Proxmox\Api\Cluster\Sdn\Zones\Zone
      */
     public function zone(string $zone): Zone
     {

@@ -3,22 +3,22 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Nodes\Node;
+namespace Proxmox\Api\Nodes\Node;
 
-use Stratum\Proxmox\Api\Nodes\Node\Disks\Directory;
-use Stratum\Proxmox\Api\Nodes\Node\Disks\Initgpt;
-use Stratum\Proxmox\Api\Nodes\Node\Disks\Lists;
-use Stratum\Proxmox\Api\Nodes\Node\Disks\Lvm;
-use Stratum\Proxmox\Api\Nodes\Node\Disks\Lvmthin;
-use Stratum\Proxmox\Api\Nodes\Node\Disks\Smart;
-use Stratum\Proxmox\Api\Nodes\Node\Disks\Wipedisk;
-use Stratum\Proxmox\Api\Nodes\Node\Disks\Zfs;
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Api\Nodes\Node\Disks\Directory;
+use Proxmox\Api\Nodes\Node\Disks\Initgpt;
+use Proxmox\Api\Nodes\Node\Disks\Lists;
+use Proxmox\Api\Nodes\Node\Disks\Lvm;
+use Proxmox\Api\Nodes\Node\Disks\Lvmthin;
+use Proxmox\Api\Nodes\Node\Disks\Smart;
+use Proxmox\Api\Nodes\Node\Disks\Wipedisk;
+use Proxmox\Api\Nodes\Node\Disks\Zfs;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Disks
- * @package Stratum\Proxmox\Api\Nodes\Node
+ * @package Proxmox\Api\Nodes\Node
  */
 class Disks extends PVEPathClassBase
 {
@@ -35,7 +35,7 @@ class Disks extends PVEPathClassBase
     /**
      * List Zpools.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/disks/zfs
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Disks\Zfs
+     * @return \Proxmox\Api\Nodes\Node\Disks\Zfs
      */
     public function zfs(): Zfs
     {
@@ -45,7 +45,7 @@ class Disks extends PVEPathClassBase
     /**
      * PVE Managed Directory storages.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/disks/directory
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Disks\Directory
+     * @return \Proxmox\Api\Nodes\Node\Disks\Directory
      */
     public function directory(): Directory
     {
@@ -55,7 +55,7 @@ class Disks extends PVEPathClassBase
     /**
      * Initialize Disk with GPT
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/disks/initgpt
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Disks\Initgpt
+     * @return \Proxmox\Api\Nodes\Node\Disks\Initgpt
      */
     public function initgpt(): Initgpt
     {
@@ -65,7 +65,7 @@ class Disks extends PVEPathClassBase
     /**
      * List local disks.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/disks/list
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Disks\Lists
+     * @return \Proxmox\Api\Nodes\Node\Disks\Lists
      */
     public function list(): Lists
     {
@@ -75,7 +75,7 @@ class Disks extends PVEPathClassBase
     /**
      * List LVM Volume Groups
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/disks/lvm
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Disks\Lvm
+     * @return \Proxmox\Api\Nodes\Node\Disks\Lvm
      */
     public function lvm(): Lvm
     {
@@ -85,7 +85,7 @@ class Disks extends PVEPathClassBase
     /**
      * List LVM thinpools
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/disks/lvmthin
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Disks\Lvmthin
+     * @return \Proxmox\Api\Nodes\Node\Disks\Lvmthin
      */
     public function lvmthin(): Lvmthin
     {
@@ -95,7 +95,7 @@ class Disks extends PVEPathClassBase
     /**
      * Get SMART Health of a disk.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/disks/smart
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Disks\Smart
+     * @return \Proxmox\Api\Nodes\Node\Disks\Smart
      */
     public function smart(): Smart
     {
@@ -105,7 +105,7 @@ class Disks extends PVEPathClassBase
     /**
      * Wipe a disk or partition.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/disks/wipedisk
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Disks\Wipedisk
+     * @return \Proxmox\Api\Nodes\Node\Disks\Wipedisk
      */
     public function wipedisk(): Wipedisk
     {

@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Nodes\Node\Firewall;
+namespace Proxmox\Api\Nodes\Node\Firewall;
 
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Log
- * @package Stratum\Proxmox\Api\Nodes\Node\Firewall
+ * @package Proxmox\Api\Nodes\Node\Firewall
  */
 class Log extends PVEPathClassBase
 {

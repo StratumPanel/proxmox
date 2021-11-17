@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Access\Domains\Realm;
+namespace Proxmox\Api\Access\Domains\Realm;
 
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Sync
- * @package Stratum\Proxmox\Api\Access\Domains\Realm
+ * @package Proxmox\Api\Access\Domains\Realm
  */
 class Sync extends PVEPathClassBase
 {
@@ -18,10 +18,12 @@ class Sync extends PVEPathClassBase
      * Domains constructor.
      * @param PVE $pve
      * @param string $parentAdditional
+     * @param array $params
      */
-    public function __construct(PVE $pve, string $parentAdditional)
+    public function __construct(PVE $pve, string $parentAdditional, array $params = [])
     {
         parent::__construct($pve, $parentAdditional . 'sync/');
+        return $this->post($params);
     }
 
     /**

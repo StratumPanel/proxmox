@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Nodes\Node\Hardware\Pci\PciId;
+namespace Proxmox\Api\Nodes\Node\Hardware\Pci\PciId;
 
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Mdev
- * @package Stratum\Proxmox\Api\Nodes\Node\Hardware\Pci\PciId
+ * @package Proxmox\Api\Nodes\Node\Hardware\Pci\PciId
  */
 class Mdev extends PVEPathClassBase
 {

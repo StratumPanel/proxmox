@@ -3,15 +3,15 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall\IpSet;
+namespace Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall\IpSet;
 
-use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall\IpSet\Name\Cidr;
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall\IpSet\Name\Cidr;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Name
- * @package Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall\ipset
+ * @package Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall\ipset
  */
 class Name extends PVEPathClassBase
 {
@@ -29,7 +29,7 @@ class Name extends PVEPathClassBase
      * Read IP or Network settings from IPSet.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/firewall/ipset/{name}/{cidr}
      * @param string $cidr
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall\IpSet\Name\Cidr
+     * @return \Proxmox\Api\Nodes\Node\Lxc\VmId\Firewall\IpSet\Name\Cidr
      */
     public function cidr(string $cidr): Cidr
     {

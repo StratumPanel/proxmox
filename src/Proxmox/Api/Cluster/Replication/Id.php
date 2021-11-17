@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Cluster\Replication;
+namespace Proxmox\Api\Cluster\Replication;
 
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Id
- * @package Stratum\Proxmox\Api\Cluster\Replication
+ * @package Proxmox\Api\Cluster\Replication
  */
 class Id extends PVEPathClassBase
 {

@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Status;
+namespace Proxmox\Api\Nodes\Node\Qemu\VmId\Status;
 
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Current
- * @package Stratum\Proxmox\Api\Nodes\Node\Qemu\VmId\Status
+ * @package Proxmox\Api\Nodes\Node\Qemu\VmId\Status
  */
 class Current extends PVEPathClassBase
 {

@@ -3,16 +3,16 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Nodes\Node;
+namespace Proxmox\Api\Nodes\Node;
 
-use Stratum\Proxmox\Api\Nodes\Node\Vzdump\Defaults;
-use Stratum\Proxmox\Api\Nodes\Node\Vzdump\Extraconfig;
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Api\Nodes\Node\Vzdump\Defaults;
+use Proxmox\Api\Nodes\Node\Vzdump\Extraconfig;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Vzdump
- * @package Stratum\Proxmox\Api\Nodes\Node
+ * @package Proxmox\Api\Nodes\Node
  */
 class Vzdump extends PVEPathClassBase
 {
@@ -29,7 +29,7 @@ class Vzdump extends PVEPathClassBase
     /**
      * Get the currently configured vzdump defaults.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/disks/defaults
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Vzdump\Defaults
+     * @return \Proxmox\Api\Nodes\Node\Vzdump\Defaults
      */
     public function defaults(): Defaults
     {
@@ -39,7 +39,7 @@ class Vzdump extends PVEPathClassBase
     /**
      * Extract configuration from vzdump backup archive.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/disks/extraconfig
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Vzdump\Extraconfig
+     * @return \Proxmox\Api\Nodes\Node\Vzdump\Extraconfig
      */
     public function extraconfig(): Extraconfig
     {

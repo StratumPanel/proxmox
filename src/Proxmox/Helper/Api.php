@@ -3,16 +3,16 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Helper;
+namespace Proxmox\Helper;
 
 use GuzzleHttp\Cookie\CookieJar;
 use GuzzleHttp\Exception\GuzzleException;
-use Stratum\Proxmox\PVE;
+use Proxmox\PVE;
 use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class api
- * @package Stratum\Proxmox\Helper
+ * @package proxmox\Helper
  */
 class Api
 {
@@ -44,7 +44,6 @@ class Api
                 'debug' => $this->PVE->getDebug(),
                 'headers' => [
                     'CSRFPreventionToken' => $this->PVE->getCSRFPreventionToken(),
-                    'Content-Type' => 'application/json',
                     'Accept' => 'application/json',
                     'Accept-Encoding' => 'gzip',
                 ],
@@ -66,9 +65,6 @@ class Api
      */
     public function getBody(ResponseInterface $response): ?array
     {
-        if ($response === null) {
-            return null;
-        }
         return json_decode($response->getBody(), true);
     }
 
@@ -86,7 +82,7 @@ class Api
                 'debug' => $this->PVE->getDebug(),
                 'headers' => [
                     'CSRFPreventionToken' => $this->PVE->getCSRFPreventionToken(),
-                    'Content-Type' => 'application/json',
+                    'Content-Type' => (count($params) > 0) ? 'application/json' : null,
                     'Accept' => 'application/json',
                     'Accept-Encoding' => 'gzip',
                 ],
@@ -116,7 +112,7 @@ class Api
                 'debug' => $this->PVE->getDebug(),
                 'headers' => [
                     'CSRFPreventionToken' => $this->PVE->getCSRFPreventionToken(),
-                    'Content-Type' => 'application/json',
+                    'Content-Type' => (count($params) > 0) ? 'application/json' : null,
                     'Accept' => 'application/json',
                     'Accept-Encoding' => 'gzip',
                 ],
@@ -146,13 +142,13 @@ class Api
                 'debug' => $this->PVE->getDebug(),
                 'headers' => [
                     'CSRFPreventionToken' => $this->PVE->getCSRFPreventionToken(),
-                    'Content-Type' => 'application/json',
+                    'Content-Type' => (count($params) > 0) ? 'application/json' : null,
                     'Accept' => 'application/json',
                     'Accept-Encoding' => 'gzip',
                 ],
                 'exceptions' => false,
                 'cookies' => $this->PVE->getCookie(),
-                'json' => $params,
+                'json' => (count($params) > 0) ? $params : null,
             ]));
         } catch (GuzzleException $exception) {
             if ($this->PVE->getDebug()) {

@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Cluster\BackupInfo;
+namespace Proxmox\Api\Cluster\BackupInfo;
 
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class NotBackedUp
- * @package Stratum\Proxmox\Api\Cluster\Backupinfo
+ * @package Proxmox\Api\Cluster\Backupinfo
  */
 class NotBackedUp extends PVEPathClassBase
 {

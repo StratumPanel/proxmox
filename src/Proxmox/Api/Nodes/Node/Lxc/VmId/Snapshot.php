@@ -3,15 +3,15 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId;
+namespace Proxmox\Api\Nodes\Node\Lxc\VmId;
 
-use Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Snapshot\Snapname;
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Api\Nodes\Node\Lxc\VmId\Snapshot\Snapname;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Snapshot
- * @package Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId
+ * @package Proxmox\Api\Nodes\Node\Lxc\VmId
  */
 class Snapshot extends PVEPathClassBase
 {
@@ -29,7 +29,7 @@ class Snapshot extends PVEPathClassBase
      * Read network device configuration
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/network/{iface}
      * @param string $snapname
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Snapshot\Snapname
+     * @return \Proxmox\Api\Nodes\Node\Lxc\VmId\Snapshot\Snapname
      */
     public function snapname(string $snapname): Snapname
     {

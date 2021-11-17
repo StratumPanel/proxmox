@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Cluster\Sdn\Controllers;
+namespace Proxmox\Api\Cluster\Sdn\Controllers;
 
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Controller
- * @package Stratum\Proxmox\Api\Cluster\Sdn\Controllers
+ * @package Proxmox\Api\Cluster\Sdn\Controllers
  */
 class Controller extends PVEPathClassBase
 {

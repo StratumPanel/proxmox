@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Access\Roles;
+namespace Proxmox\Api\Access\Roles;
 
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class RoleId
- * @package Stratum\Proxmox\Api\Access\Roles
+ * @package Proxmox\Api\Access\Roles
  */
 class RoleId extends PVEPathClassBase
 {

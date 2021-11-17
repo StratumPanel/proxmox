@@ -3,54 +3,54 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Nodes;
+namespace Proxmox\Api\Nodes;
 
-use Stratum\Proxmox\Api\Nodes\Node\Aplinfo;
-use Stratum\Proxmox\Api\Nodes\Node\Apt;
-use Stratum\Proxmox\Api\Nodes\Node\Capabilities;
-use Stratum\Proxmox\Api\Nodes\Node\Ceph;
-use Stratum\Proxmox\Api\Nodes\Node\Certificates;
-use Stratum\Proxmox\Api\Nodes\Node\Config;
-use Stratum\Proxmox\Api\Nodes\Node\Disks;
-use Stratum\Proxmox\Api\Nodes\Node\Dns;
-use Stratum\Proxmox\Api\Nodes\Node\Execute;
-use Stratum\Proxmox\Api\Nodes\Node\Firewall;
-use Stratum\Proxmox\Api\Nodes\Node\Hardware;
-use Stratum\Proxmox\Api\Nodes\Node\Hosts;
-use Stratum\Proxmox\Api\Nodes\Node\Journal;
-use Stratum\Proxmox\Api\Nodes\Node\Lxc;
-use Stratum\Proxmox\Api\Nodes\Node\Migrateall;
-use Stratum\Proxmox\Api\Nodes\Node\Netstat;
-use Stratum\Proxmox\Api\Nodes\Node\Network;
-use Stratum\Proxmox\Api\Nodes\Node\Qemu;
-use Stratum\Proxmox\Api\Nodes\Node\Replication;
-use Stratum\Proxmox\Api\Nodes\Node\Report;
-use Stratum\Proxmox\Api\Nodes\Node\Rrd;
-use Stratum\Proxmox\Api\Nodes\Node\Rrddata;
-use Stratum\Proxmox\Api\Nodes\Node\Scan;
-use Stratum\Proxmox\Api\Nodes\Node\Sdn;
-use Stratum\Proxmox\Api\Nodes\Node\Services;
-use Stratum\Proxmox\Api\Nodes\Node\Spiceshell;
-use Stratum\Proxmox\Api\Nodes\Node\Startall;
-use Stratum\Proxmox\Api\Nodes\Node\Status;
-use Stratum\Proxmox\Api\Nodes\Node\Stopall;
-use Stratum\Proxmox\Api\Nodes\Node\Storage;
-use Stratum\Proxmox\Api\Nodes\Node\Subscription;
-use Stratum\Proxmox\Api\Nodes\Node\Syslog;
-use Stratum\Proxmox\Api\Nodes\Node\Tasks;
-use Stratum\Proxmox\Api\Nodes\Node\Termproxy;
-use Stratum\Proxmox\Api\Nodes\Node\Time;
-use Stratum\Proxmox\Api\Nodes\Node\Version;
-use Stratum\Proxmox\Api\Nodes\Node\Vncshell;
-use Stratum\Proxmox\Api\Nodes\Node\Vncwebsocket;
-use Stratum\Proxmox\Api\Nodes\Node\Vzdump;
-use Stratum\Proxmox\Api\Nodes\Node\Wakeonlan;
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Api\Nodes\Node\Aplinfo;
+use Proxmox\Api\Nodes\Node\Apt;
+use Proxmox\Api\Nodes\Node\Capabilities;
+use Proxmox\Api\Nodes\Node\Ceph;
+use Proxmox\Api\Nodes\Node\Certificates;
+use Proxmox\Api\Nodes\Node\Config;
+use Proxmox\Api\Nodes\Node\Disks;
+use Proxmox\Api\Nodes\Node\Dns;
+use Proxmox\Api\Nodes\Node\Execute;
+use Proxmox\Api\Nodes\Node\Firewall;
+use Proxmox\Api\Nodes\Node\Hardware;
+use Proxmox\Api\Nodes\Node\Hosts;
+use Proxmox\Api\Nodes\Node\Journal;
+use Proxmox\Api\Nodes\Node\Lxc;
+use Proxmox\Api\Nodes\Node\Migrateall;
+use Proxmox\Api\Nodes\Node\Netstat;
+use Proxmox\Api\Nodes\Node\Network;
+use Proxmox\Api\Nodes\Node\Qemu;
+use Proxmox\Api\Nodes\Node\Replication;
+use Proxmox\Api\Nodes\Node\Report;
+use Proxmox\Api\Nodes\Node\Rrd;
+use Proxmox\Api\Nodes\Node\Rrddata;
+use Proxmox\Api\Nodes\Node\Scan;
+use Proxmox\Api\Nodes\Node\Sdn;
+use Proxmox\Api\Nodes\Node\Services;
+use Proxmox\Api\Nodes\Node\Spiceshell;
+use Proxmox\Api\Nodes\Node\Startall;
+use Proxmox\Api\Nodes\Node\Status;
+use Proxmox\Api\Nodes\Node\Stopall;
+use Proxmox\Api\Nodes\Node\Storage;
+use Proxmox\Api\Nodes\Node\Subscription;
+use Proxmox\Api\Nodes\Node\Syslog;
+use Proxmox\Api\Nodes\Node\Tasks;
+use Proxmox\Api\Nodes\Node\Termproxy;
+use Proxmox\Api\Nodes\Node\Time;
+use Proxmox\Api\Nodes\Node\Version;
+use Proxmox\Api\Nodes\Node\Vncshell;
+use Proxmox\Api\Nodes\Node\Vncwebsocket;
+use Proxmox\Api\Nodes\Node\Vzdump;
+use Proxmox\Api\Nodes\Node\Wakeonlan;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Node
- * @package Stratum\Proxmox\Api\Nodes
+ * @package Proxmox\Api\Nodes
  */
 class Node extends PVEPathClassBase
 {
@@ -117,7 +117,7 @@ class Node extends PVEPathClassBase
     /**
      * Directory index.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/firewall
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Firewall
+     * @return \Proxmox\Api\Nodes\Node\Firewall
      */
     public function firewall(): Firewall
     {
@@ -127,7 +127,7 @@ class Node extends PVEPathClassBase
     /**
      * Index of hardware types
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/hardware
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Hardware
+     * @return \Proxmox\Api\Nodes\Node\Hardware
      */
     public function hardware(): Hardware
     {
@@ -137,7 +137,7 @@ class Node extends PVEPathClassBase
     /**
      * LXC container index (per node).
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Lxc
+     * @return \Proxmox\Api\Nodes\Node\Lxc
      */
     public function lxc(): Lxc
     {
@@ -147,7 +147,7 @@ class Node extends PVEPathClassBase
     /**
      * List available networks
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/network
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Network
+     * @return \Proxmox\Api\Nodes\Node\Network
      */
     public function network(): Network
     {
@@ -157,7 +157,7 @@ class Node extends PVEPathClassBase
     /**
      * Virtual machine index (per node).
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Qemu
+     * @return \Proxmox\Api\Nodes\Node\Qemu
      */
     public function qemu(): Qemu
     {
@@ -167,7 +167,7 @@ class Node extends PVEPathClassBase
     /**
      * List status of all replication jobs on this node.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/replication
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Replication
+     * @return \Proxmox\Api\Nodes\Node\Replication
      */
     public function replication(): Replication
     {
@@ -177,7 +177,7 @@ class Node extends PVEPathClassBase
     /**
      * Index of available scan methods
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/scan
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Scan
+     * @return \Proxmox\Api\Nodes\Node\Scan
      */
     public function scan(): Scan
     {
@@ -187,7 +187,7 @@ class Node extends PVEPathClassBase
     /**
      * SDN index.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/sdn
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Sdn
+     * @return \Proxmox\Api\Nodes\Node\Sdn
      */
     public function sdn(): Sdn
     {
@@ -197,7 +197,7 @@ class Node extends PVEPathClassBase
     /**
      * Service list.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/services
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Services
+     * @return \Proxmox\Api\Nodes\Node\Services
      */
     public function services(): Services
     {
@@ -207,7 +207,7 @@ class Node extends PVEPathClassBase
     /**
      * Get status for all datastores.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/storage
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Storage
+     * @return \Proxmox\Api\Nodes\Node\Storage
      */
     public function storage(): Storage
     {
@@ -217,7 +217,7 @@ class Node extends PVEPathClassBase
     /**
      * Read task list for one node (finished tasks).
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/tasks
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Tasks
+     * @return \Proxmox\Api\Nodes\Node\Tasks
      */
     public function tasks(): Tasks
     {

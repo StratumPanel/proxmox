@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Cluster\Ceph;
+namespace Proxmox\Api\Cluster\Ceph;
 
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Status
- * @package Stratum\Proxmox\Api\Cluster\Ceph
+ * @package Proxmox\Api\Cluster\Ceph
  */
 class Status extends PVEPathClassBase
 {

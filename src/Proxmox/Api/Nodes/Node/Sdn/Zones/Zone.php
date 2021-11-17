@@ -3,15 +3,15 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Nodes\Node\Sdn\Zones;
+namespace Proxmox\Api\Nodes\Node\Sdn\Zones;
 
-use Stratum\Proxmox\Api\Nodes\Node\Sdn\Zones\Zone\Content;
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Api\Nodes\Node\Sdn\Zones\Zone\Content;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Zone
- * @package Stratum\Proxmox\Api\Nodes\Node\Sdn\Zones
+ * @package Proxmox\Api\Nodes\Node\Sdn\Zones
  */
 class Zone extends PVEPathClassBase
 {
@@ -28,7 +28,7 @@ class Zone extends PVEPathClassBase
     /**
      * List zone content.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/sdn/zones/{zone}/content
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Sdn\Zones\Zone\Content
+     * @return \Proxmox\Api\Nodes\Node\Sdn\Zones\Zone\Content
      */
     public function content(): Content
     {

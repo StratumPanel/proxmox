@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Cluster\Config;
+namespace Proxmox\Api\Cluster\Config;
 
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class QDevice
- * @package Stratum\Proxmox\Api\Cluster\Config
+ * @package Proxmox\Api\Cluster\Config
  */
 class QDevice extends PVEPathClassBase
 {

@@ -3,19 +3,19 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Nodes\Node\Services;
+namespace Proxmox\Api\Nodes\Node\Services;
 
-use Stratum\Proxmox\Api\Nodes\Node\Services\Service\Reload;
-use Stratum\Proxmox\Api\Nodes\Node\Services\Service\Restart;
-use Stratum\Proxmox\Api\Nodes\Node\Services\Service\Start;
-use Stratum\Proxmox\Api\Nodes\Node\Services\Service\State;
-use Stratum\Proxmox\Api\Nodes\Node\Services\Service\Stop;
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Api\Nodes\Node\Services\Service\Reload;
+use Proxmox\Api\Nodes\Node\Services\Service\Restart;
+use Proxmox\Api\Nodes\Node\Services\Service\Start;
+use Proxmox\Api\Nodes\Node\Services\Service\State;
+use Proxmox\Api\Nodes\Node\Services\Service\Stop;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Service
- * @package Stratum\Proxmox\Api\Nodes\Node\Services
+ * @package Proxmox\Api\Nodes\Node\Services
  */
 class Service extends PVEPathClassBase
 {
@@ -32,7 +32,7 @@ class Service extends PVEPathClassBase
     /**
      * Reload service. Falls back to restart if service cannot be reloaded.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/services/{service}/reload
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Services\Service\Reload
+     * @return \Proxmox\Api\Nodes\Node\Services\Service\Reload
      */
     public function reload(): Reload
     {
@@ -42,7 +42,7 @@ class Service extends PVEPathClassBase
     /**
      * Hard restart service. Use reload if you want to reduce interruptions.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/services/{service}/restart
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Services\Service\Restart
+     * @return \Proxmox\Api\Nodes\Node\Services\Service\Restart
      */
     public function restart(): Restart
     {
@@ -52,7 +52,7 @@ class Service extends PVEPathClassBase
     /**
      * Start service.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/services/{service}/start
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Services\Service\Start
+     * @return \Proxmox\Api\Nodes\Node\Services\Service\Start
      */
     public function start(): Start
     {
@@ -62,7 +62,7 @@ class Service extends PVEPathClassBase
     /**
      * Read service properties
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/services/{service}/state
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Services\Service\State
+     * @return \Proxmox\Api\Nodes\Node\Services\Service\State
      */
     public function state(): State
     {
@@ -72,7 +72,7 @@ class Service extends PVEPathClassBase
     /**
      * Stop service.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/services/{service}/stop
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Services\Service\Stop
+     * @return \Proxmox\Api\Nodes\Node\Services\Service\Stop
      */
     public function stop(): Stop
     {

@@ -3,17 +3,17 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Nodes\Node;
+namespace Proxmox\Api\Nodes\Node;
 
-use Stratum\Proxmox\Api\Nodes\Node\Firewall\Log;
-use Stratum\Proxmox\Api\Nodes\Node\Firewall\Options;
-use Stratum\Proxmox\Api\Nodes\Node\Firewall\Rules;
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Api\Nodes\Node\Firewall\Log;
+use Proxmox\Api\Nodes\Node\Firewall\Options;
+use Proxmox\Api\Nodes\Node\Firewall\Rules;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Firewall
- * @package Stratum\Proxmox\Api\Nodes\Node
+ * @package Proxmox\Api\Nodes\Node
  */
 class Firewall extends PVEPathClassBase
 {
@@ -30,7 +30,7 @@ class Firewall extends PVEPathClassBase
     /**
      * Read firewall log
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/firewall/log
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Firewall\Log
+     * @return \Proxmox\Api\Nodes\Node\Firewall\Log
      */
     public function log(): Log
     {
@@ -40,7 +40,7 @@ class Firewall extends PVEPathClassBase
     /**
      * Get host firewall options.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/firewall/options
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Firewall\Options
+     * @return \Proxmox\Api\Nodes\Node\Firewall\Options
      */
     public function options(): Options
     {
@@ -50,7 +50,7 @@ class Firewall extends PVEPathClassBase
     /**
      * List rules.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/firewall/rules
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Firewall\Rules
+     * @return \Proxmox\Api\Nodes\Node\Firewall\Rules
      */
     public function rules(): Rules
     {

@@ -3,30 +3,30 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Nodes\Node;
+namespace Proxmox\Api\Nodes\Node;
 
-use Stratum\Proxmox\Api\Nodes\Node\Ceph\Config;
-use Stratum\Proxmox\Api\Nodes\Node\Ceph\ConfigDb;
-use Stratum\Proxmox\Api\Nodes\Node\Ceph\Crush;
-use Stratum\Proxmox\Api\Nodes\Node\Ceph\Fs;
-use Stratum\Proxmox\Api\Nodes\Node\Ceph\Init;
-use Stratum\Proxmox\Api\Nodes\Node\Ceph\Log;
-use Stratum\Proxmox\Api\Nodes\Node\Ceph\Mds;
-use Stratum\Proxmox\Api\Nodes\Node\Ceph\Mgr;
-use Stratum\Proxmox\Api\Nodes\Node\Ceph\Mon;
-use Stratum\Proxmox\Api\Nodes\Node\Ceph\Osd;
-use Stratum\Proxmox\Api\Nodes\Node\Ceph\Pools;
-use Stratum\Proxmox\Api\Nodes\Node\Ceph\Restart;
-use Stratum\Proxmox\Api\Nodes\Node\Ceph\Rules;
-use Stratum\Proxmox\Api\Nodes\Node\Ceph\Start;
-use Stratum\Proxmox\Api\Nodes\Node\Ceph\Status;
-use Stratum\Proxmox\Api\Nodes\Node\Ceph\Stop;
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Api\Nodes\Node\Ceph\Config;
+use Proxmox\Api\Nodes\Node\Ceph\ConfigDb;
+use Proxmox\Api\Nodes\Node\Ceph\Crush;
+use Proxmox\Api\Nodes\Node\Ceph\Fs;
+use Proxmox\Api\Nodes\Node\Ceph\Init;
+use Proxmox\Api\Nodes\Node\Ceph\Log;
+use Proxmox\Api\Nodes\Node\Ceph\Mds;
+use Proxmox\Api\Nodes\Node\Ceph\Mgr;
+use Proxmox\Api\Nodes\Node\Ceph\Mon;
+use Proxmox\Api\Nodes\Node\Ceph\Osd;
+use Proxmox\Api\Nodes\Node\Ceph\Pools;
+use Proxmox\Api\Nodes\Node\Ceph\Restart;
+use Proxmox\Api\Nodes\Node\Ceph\Rules;
+use Proxmox\Api\Nodes\Node\Ceph\Start;
+use Proxmox\Api\Nodes\Node\Ceph\Status;
+use Proxmox\Api\Nodes\Node\Ceph\Stop;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Ceph
- * @package Stratum\Proxmox\Api\Nodes\Node
+ * @package Proxmox\Api\Nodes\Node
  */
 class Ceph extends PVEPathClassBase
 {

@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Cluster\Metrics\Server;
+namespace Proxmox\Api\Cluster\Metrics\Server;
 
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Id
- * @package Stratum\Proxmox\Api\Cluster\Metrics\Server
+ * @package Proxmox\Api\Cluster\Metrics\Server
  */
 class Id extends PVEPathClassBase
 {

@@ -3,16 +3,16 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Cluster\Backup;
+namespace Proxmox\Api\Cluster\Backup;
 
 
-use Stratum\Proxmox\Api\Cluster\Backup\Id\IncludedVolumes;
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Api\Cluster\Backup\Id\IncludedVolumes;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Id
- * @package Stratum\Proxmox\Api\Cluster\Backup
+ * @package Proxmox\Api\Cluster\Backup
  */
 class Id extends PVEPathClassBase
 {

@@ -3,15 +3,15 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Nodes\Node\Hardware\Pci;
+namespace Proxmox\Api\Nodes\Node\Hardware\Pci;
 
-use Stratum\Proxmox\Api\Nodes\Node\Hardware\Pci\PciId\Mdev;
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Api\Nodes\Node\Hardware\Pci\PciId\Mdev;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class PciId
- * @package Stratum\Proxmox\Api\Nodes\Node\Qemu
+ * @package Proxmox\Api\Nodes\Node\Qemu
  */
 class PciId extends PVEPathClassBase
 {
@@ -28,7 +28,7 @@ class PciId extends PVEPathClassBase
     /**
      * List mediated device types for given PCI device.
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/hardware/pci/{pciid}/mdev
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Hardware\Pci\PciId\Mdev
+     * @return \Proxmox\Api\Nodes\Node\Hardware\Pci\PciId\Mdev
      */
     public function hardware(): Mdev
     {

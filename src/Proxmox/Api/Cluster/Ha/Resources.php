@@ -3,15 +3,15 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Cluster\Ha;
+namespace Proxmox\Api\Cluster\Ha;
 
-use Stratum\Proxmox\Api\Cluster\Ha\Resources\Sid;
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Api\Cluster\Ha\Resources\Sid;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Resources
- * @package Stratum\Proxmox\Api\Cluster\Ha
+ * @package Proxmox\Api\Cluster\Ha
  */
 class Resources extends PVEPathClassBase
 {

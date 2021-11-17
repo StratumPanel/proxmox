@@ -3,15 +3,15 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Nodes\Node\Hardware;
+namespace Proxmox\Api\Nodes\Node\Hardware;
 
-use Stratum\Proxmox\Api\Nodes\Node\Hardware\Pci\PciId;
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Api\Nodes\Node\Hardware\Pci\PciId;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Pci
- * @package Stratum\Proxmox\Api\Nodes\Node\Hardware
+ * @package Proxmox\Api\Nodes\Node\Hardware
  */
 class Pci extends PVEPathClassBase
 {
@@ -29,7 +29,7 @@ class Pci extends PVEPathClassBase
      * Index of available pci methods
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/hardware/pci/{pciid}
      * @param string $pciId
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Hardware\Pci\PciId
+     * @return \Proxmox\Api\Nodes\Node\Hardware\Pci\PciId
      */
     public function pciId(string $pciId): PciId
     {

@@ -3,15 +3,15 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Cluster\Sdn\VNets;
+namespace Proxmox\Api\Cluster\Sdn\VNets;
 
-use Stratum\Proxmox\Api\Cluster\Sdn\VNets\VNet\Subnets;
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Api\Cluster\Sdn\VNets\VNet\Subnets;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Vnet
- * @package Stratum\Proxmox\Api\Cluster\Sdn\VNets
+ * @package Proxmox\Api\Cluster\Sdn\VNets
  */
 class VNet extends PVEPathClassBase
 {

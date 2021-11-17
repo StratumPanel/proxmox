@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Cluster\Config\Nodes;
+namespace Proxmox\Api\Cluster\Config\Nodes;
 
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Node
- * @package Stratum\Proxmox\Api\Cluster\Config\Nodes
+ * @package Proxmox\Api\Cluster\Config\Nodes
  */
 class Node extends PVEPathClassBase
 {

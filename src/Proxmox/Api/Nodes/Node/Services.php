@@ -3,15 +3,15 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Nodes\Node;
+namespace Proxmox\Api\Nodes\Node;
 
-use Stratum\Proxmox\Api\Nodes\Node\Services\Service;
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Api\Nodes\Node\Services\Service;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Services
- * @package Stratum\Proxmox\Api\Nodes\Node
+ * @package Proxmox\Api\Nodes\Node
  */
 class Services extends PVEPathClassBase
 {
@@ -29,7 +29,7 @@ class Services extends PVEPathClassBase
      * Directory index
      * @link https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/services/{service}
      * @param string $service
-     * @return \Stratum\Proxmox\Api\Nodes\Node\Services\Service
+     * @return \Proxmox\Api\Nodes\Node\Services\Service
      */
     public function service(string $service): Service
     {

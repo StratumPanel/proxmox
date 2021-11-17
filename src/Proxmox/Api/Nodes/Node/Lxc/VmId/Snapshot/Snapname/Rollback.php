@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Snapshot\Snapname;
+namespace Proxmox\Api\Nodes\Node\Lxc\VmId\Snapshot\Snapname;
 
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Rollback
- * @package Stratum\Proxmox\Api\Nodes\Node\Lxc\VmId\Snapshot\Snapname
+ * @package Proxmox\Api\Nodes\Node\Lxc\VmId\Snapshot\Snapname
  */
 class Rollback extends PVEPathClassBase
 {

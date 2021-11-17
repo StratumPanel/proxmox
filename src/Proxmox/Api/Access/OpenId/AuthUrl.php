@@ -3,15 +3,15 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Access\OpenId;
+namespace Proxmox\Api\Access\OpenId;
 
 
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class AuthUrl
- * @package Stratum\Proxmox\Api\Access\OpenId
+ * @package Proxmox\Api\Access\OpenId
  */
 class AuthUrl extends PVEPathClassBase
 {
@@ -20,10 +20,12 @@ class AuthUrl extends PVEPathClassBase
      * AuthUrl constructor.
      * @param PVE $pve
      * @param string $parentAdditional
+     * @param array $params
      */
-    public function __construct(PVE $pve, string $parentAdditional)
+    public function __construct(PVE $pve, string $parentAdditional, array $params = [])
     {
         parent::__construct($pve, $parentAdditional . 'auth-url/');
+        return $this->post($params);
     }
 
     /**

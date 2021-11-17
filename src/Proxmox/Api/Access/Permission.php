@@ -3,14 +3,14 @@
  * @copyright 2021 Daniel Engelschalk <hello@mrkampf.com>
  */
 
-namespace Stratum\Proxmox\Api\Access;
+namespace Proxmox\Api\Access;
 
-use Stratum\Proxmox\Helper\PVEPathClassBase;
-use Stratum\Proxmox\PVE;
+use Proxmox\Helper\PVEPathClassBase;
+use Proxmox\PVE;
 
 /**
  * Class Permission
- * @package Stratum\Proxmox\Api\Access
+ * @package Proxmox\Api\Access
  */
 class Permission extends PVEPathClassBase
 {
